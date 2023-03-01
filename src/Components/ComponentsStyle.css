@@ -1,0 +1,115 @@
+.Step1Title{
+    color: #999;
+    text-align: center;
+}
+
+/* .MuiStepIcon-root.Mui-active{
+    color: brown;
+} */
+
+.mainContainerSignUp{
+    display: grid;
+    justify-content: center;
+    position: relative;
+    z-index: 5;
+}
+.formContainerSignUp{
+    position: relative;
+    /* width: 28.125rem; */
+    /* height: auto; */
+    /* padding: 2rem; */
+}
+
+.SubmitBtn{
+    width: 100%;
+    height: 3rem;
+    
+}
+
+.StepperContainer {
+    width: 90%;
+    /* margin: auto; */
+    /* height: 70vh; */
+    margin: 35px auto 0 auto;
+    /* border: 1px solid #999; */
+}
+
+/* /////////Step 2//////////// */
+.UploadProfile{
+    display: flex;
+    column-gap: 56px;
+    /* width: 28.125rem; */
+}
+
+.UploadProfileSection2 {
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+    row-gap: 25px;
+}
+
+.UploadProfileSection2 > label{
+    color: #999;
+}
+
+.UploadProfileSection2 > button{
+    width: 100px;
+}
+
+
+/* //////////////////////// */
+
+.VerificationBox > p {
+    /* border: 1px solid blue; */
+    color: #706f6f;
+    width: 85%;
+    margin: auto;
+    text-align: center;
+    font-size: 14px;
+}
+
+.VerificationBox {
+    /* position: relative; */
+    /* width: 28.125rem; */
+    /* height: auto; */
+    /* padding: 2rem; */
+    /* margin: auto; */
+    width: 77%;
+    margin: auto;
+    /* height: 100%; */
+    margin-top: 68px;
+}
+
+
+/* //// */
+
+.StepperBottomBtns{
+    position: absolute;
+    bottom: 10px;
+}
+
+.css-1t1j96h-MuiPaper-root-MuiDialog-paper{
+    width: 100%;
+    height: 100%;
+}
+
+.VerificationIcon{
+    text-align-last: center;
+}
+
+.css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
+    display: -webkit-inline-box;
+    display: -webkit-inline-flex;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    position: relative;
+    min-width: 0;
+    padding: 0;
+    /* margin: 0; */
+    border: 0;
+    vertical-align: top;
+    margin-top: 10px;
+}
