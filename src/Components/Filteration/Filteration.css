@@ -1,0 +1,56 @@
+.Filteration {
+    width: 90%;
+    margin: auto;
+}
+
+.FilterationForm{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    row-gap: 10px;
+}
+
+
+.dropdownsFilters{
+    display: flex;
+    justify-content: space-between;
+    /* column-gap: 10px; */
+    flex-wrap: wrap;
+}
+.dropdownCities,
+.dropdownStatus {
+    width: 49%;
+}
+
+.sliderFilters {
+    display: flex;
+    justify-content: space-between;
+    /* column-gap: 10px; */
+    flex-wrap: wrap;
+}
+
+.areaSlider , .priceSlider{
+    width: 48%;
+    height: 53px;
+}
+
+.featuresANDsearchbtn{
+    display: flex;
+    justify-content: space-between;
+}
+
+.featuresBox{
+    margin-top: 10px;
+    width: 80%;
+    justify-content: start;
+}
+
+.slider {
+    margin: 0;
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+    font-weight: 400;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    letter-spacing: 0.00938em;
+    color: #94a3b5;
+}

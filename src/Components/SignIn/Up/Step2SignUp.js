@@ -1,29 +1,19 @@
 
 import * as React from 'react';
 import dayjs from 'dayjs';
-import Stack from '@mui/material/Stack';
-import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-import { MuiTelInput } from 'mui-tel-input'
 import { useState } from 'react';
-import FolderIcon from '@mui/icons-material/Folder';
 import PostAddIcon from '@mui/icons-material/PostAdd';
 import axios from 'axios';
 import SendSharp from '@mui/icons-material/SendSharp';
-
 import {
   Avatar,
   DialogContent,
-  DialogContentText,
-  Typography,
 } from '@mui/material';
 
 
 export default function Step2SignUp() {
-  const [value, setValue] = useState(dayjs('2014-08-18T21:11:54'));
+  const [value, setValue] = useState(dayjs(''));
   const [phone, setPhone] = useState('')
   const [profilePicURL, setProfilePicURL] = useState('')
   const [profileFormData, setProfileFormData] = useState()
@@ -35,7 +25,8 @@ export default function Step2SignUp() {
     console.log(file)
     const formData = new FormData();
     formData.append('image', file);
-    setProfileFormData(formData);
+    formData.append('_method', 'PATCH')
+    setProfileFormData('_method', 'PATCH');
 
     if (file) {
       const photoURL = URL.createObjectURL(file);
@@ -53,10 +44,6 @@ export default function Step2SignUp() {
     }
   };
 
-
-  const handleChange = (newValue) => {
-    setValue(newValue);
-  };
 
   const Remove_PROF_URL = () => {
     setProfilePicURL('');
@@ -86,11 +73,6 @@ export default function Step2SignUp() {
     <div className='mainContainerSignUp'>
       <form onSubmit={handleSubmit}>
       <DialogContent>
-        {/* <DialogContentText>
-          You can update your profile by updating these fields:
-        </DialogContentText> */}
-        {/* <Typography variant='h5' className='Step1Title'>Fill Personal Information</Typography> */}
-
         
         <div className='UploadProfile'>
           <label>
@@ -105,7 +87,6 @@ export default function Step2SignUp() {
               src={profilePicURL}
               sx={{ width: 120, height: 120, cursor: 'pointer' }}
             >
-              {/* <FolderIcon /> */}
             </Avatar>
           </label>
 
@@ -120,12 +101,6 @@ export default function Step2SignUp() {
       </DialogContent>
 
       <DialogContent>
-        {/* <DialogContentText>
-          You can update your profile by updating these fields:
-        </DialogContentText> */}
-        {/* <Typography variant='h5' className='Step1Title'>Fill Personal Information</Typography> */}
-
-
         <div className='UploadProfile'>
           <label>
             <input
@@ -163,28 +138,6 @@ export default function Step2SignUp() {
         SIGN UP
       </Button>
       </form>
-
-      {/* <Stack spacing={3}>
-        <label>Phone Number</label>
-        <MuiTelInput value={phone} onChange={handleChange}
-          style={{ width: "100%", margin: "7px 0" }}
-        />
-      </Stack> */}
-
-
-
-
-      {/* <Button variant="contained" component="label" onClick={RemoveURL}>
-        Upload ID
-        <input
-          accept="image/*"
-          id="IDPhoto"
-          type="file"
-          style={{ display: 'none' }}
-          onChange={handleChangeID}
-        />
-      </Button>
-      <label>{idURL}</label> */}
     </div>
 
 

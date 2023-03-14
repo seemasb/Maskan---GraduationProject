@@ -11,7 +11,6 @@ export default function Step3SignUp(){
             <div className="VerificationIcon">
                 {verified ?  <CheckCircleOutlineIcon sx={{fontSize: 80 }} color="success"/> : <MailOutlineOutlinedIcon sx={{fontSize: 80 }} color="primary" />}
             </div>
-            {/* <label>Verify your email address</label> */}
             <Typography variant='h6' className='Step1Title'>Verify your email address</Typography>
 
             <hr></hr>

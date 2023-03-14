@@ -1,15 +1,14 @@
-import SignInForm from '../../Components/SignInForm'
-import StepperSignUp from '../../Components/StepperSignUp'
-import Navbar from '../../Components/Navbar'
-import SignInModal from '../../Components/SignInModal'
-import SignUpModal from '../../Components/SignUpModal'
+import PopularListing from '../../Components/PopularListing/PopularListing'
 
 export default function Home() {
     return (
       <div className="HomeBody">
+        <PopularListing/>
+        {/* <div>Discover best properties in Maskan</div> */}
+      {/* <HomeCard image="" address="mota" city="Nablus" state="rent"  price="2500$"/> */}
         {/* <Navbar/> */}
-        <SignInModal/>
-        <SignUpModal/>
+        {/* <SignInModal/>
+        <SignUpModal/> */}
         {/* <StepperSignUp/> */}
       </div>
     );

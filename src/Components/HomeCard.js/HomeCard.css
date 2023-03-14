@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;700&display=swap');
+
+.HomeCard{
+font-family: 'Cairo';
+font-weight: 600;
+cursor: pointer;
+width: fit-content;
+position: relative;
+}
+
+.CardTitle{
+    font-weight: 700;
+    font-size: 22px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.CardLocationDiv{
+    color: gray;
+    font-weight: 300;
+    display: flex;
+    column-gap: 7px;
+    font-size: 13px;
+}
+
+.InfoCard{
+    display: flex;
+    flex-direction: column;
+    float: left;
+    width: 100%;
+}
+
+.CardFeatures {
+    display: flex;
+    column-gap: 10px;
+    /* justify-content: space-between; */
+    font-size: 13px;
+    margin: 10px 0 10px 0;
+}
+
+.FeaturesDiv{
+    display: flex;
+    column-gap: 6px;
+}
+
+.ViewsCard{
+    color: rgb(179, 179, 179);
+    display: flex;
+    font-size: 11px;
+    float: right;
+    padding-top: 9px;
+    column-gap: 5px;
+}
+
+.footerCard{
+    margin: 5px 0 5px 0;
+}
+
+
+.css-ft4jij-MuiDivider-root {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+
+.PriceCard{
+    color: dimgray;
+}
+
+
+ 

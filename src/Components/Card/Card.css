@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;700&display=swap');
+
+.Card {
+    font-family: 'Cairo';
+    font-weight: 600;
+    cursor: pointer;
+    width: -moz-fit-content;
+    
+    width: fit-content;
+    position: relative;
+    
+    display: flex;
+    flex-direction: column;
+    border-radius: 13px;
+    border-radius: 13px;
+    /* background-color: rgb(250, 249, 249); */
+}
+
+.Card:hover{
+border: 1px solid #6594c0;
+}
+
+.cardImg{
+    border-radius: 13px 13px 0 0;
+    height: 160px;
+    width: 220px;
+}
+
+.CardTitle{
+    font-weight: 700;
+    font-size: 22px;
+}
+
+.CardLocationDiv{
+    color: gray;
+    font-weight: 300;
+    display: flex;
+    column-gap: 7px;
+    font-size: 13px;
+}
+
+.InfoSection{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(223, 222, 222, 0.548); 
+    border-radius: 0 0 13px 13px;
+    padding: 11px;
+}
+
+.featuresSection {
+    display: flex;
+    justify-content: space-between;
+    color: rgb(177, 176, 176);
+    font-size: 12px;
+}
+
+.FeaturesDiv{
+    display: flex;
+    column-gap: 6px;
+}
+
+.featureIcon{
+    color: #547cc9;
+    background-color: #e0e8f8;
+    border-radius: 100%;
+    width: 20px;
+}
+
+
+
+/* .PriceCard{
+    color: dimgray;
+} */
+
+
+ 

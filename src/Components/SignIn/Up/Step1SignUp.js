@@ -1,4 +1,4 @@
-import { Typography, Button, Grid, Checkbox, TextField, OutlinedInput, FormControl, InputLabel, Stack } from '@mui/material'
+import { Typography, Button,TextField, OutlinedInput, FormControl, InputLabel, Stack } from '@mui/material'
 import './ComponentsStyle.css'
 import dayjs from 'dayjs';
 import { MuiTelInput } from 'mui-tel-input'
@@ -12,9 +12,6 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import axios from 'axios';
-
-import { display } from '@mui/system';
-
 
 
 export default function Step1SignUp({ setActiveStep }) {
@@ -45,14 +42,18 @@ export default function Step1SignUp({ setActiveStep }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // let person = { "Email": Email }
-        const step1Data = { FirstName, LastName, Email, UserName, phone, BirthDate, Password };
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
 
-        console.log(step1Data);
-
         axios.post('/user', {
-            step1Data
+            
+                first_name: FirstName,
+                laset_name: LastName,
+                email: Email,
+                username: UserName, 
+                phone_number: phone,
+                date_of_birth: BirthDate,
+                password:  Password 
+            
           })
           .then(function (response) {
             console.log(response);
@@ -62,9 +63,10 @@ export default function Step1SignUp({ setActiveStep }) {
           });
     }
 
+
     return (
         <div className='mainContainerSignUp'>
-            <Typography variant='h5' className='Step1Title'>Sign Up with Email</Typography>
+            {/* <Typography variant='h5' className='Step1Title'>Sign Up with Email</Typography> */}
 
             <div className='formContainerSignUp'>
                 <form onSubmit={handleSubmit}>
@@ -75,7 +77,6 @@ export default function Step1SignUp({ setActiveStep }) {
                             value={FirstName}
                             onChange={(e) => {
                                 setFirstName(e.target.value)
-                                // console.log(FirstName)
                             }}
                         />
                         <TextField label="Last name" variant='outlined'
@@ -106,7 +107,6 @@ export default function Step1SignUp({ setActiveStep }) {
 
                     <div style={{ display: "flex", columnGap: "10px" }}>
                         <Stack spacing={3}>
-                            {/* <label>Phone Number</label> */}
                             <MuiTelInput value={phone} onChange={handleChangePhone}
                                 style={{ width: "100%", margin: "9px 0 0 0" }}
                                 label="Phone number"
@@ -136,7 +136,6 @@ export default function Step1SignUp({ setActiveStep }) {
                             type={showPassword ? 'text' : 'password'}
                             onChange={(e) => {
                                 setPassword(e.target.value)
-                                // console.log(FirstName)
                             }}
                             endAdornment={
                                 <InputAdornment position="end">

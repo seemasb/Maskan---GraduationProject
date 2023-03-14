@@ -11,9 +11,11 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import axios from 'axios';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 function Copyright(props) {
+
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
@@ -29,16 +31,28 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignInForm() {
+
+  const [Email, setEmail] = React.useState('');
+  const [Password, setPassword] = React.useState('');
+
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    const SignInData = { Email, Password };
+    axios.post('/user', {
+      SignInData
+    })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
 
-    // console.log(data);
+      
+    console.log({ Email, Password });
   };
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -58,7 +72,7 @@ export default function SignInForm() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Box component="form" onSubmit={handleSubmit}  sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required
@@ -68,6 +82,9 @@ export default function SignInForm() {
               name="email"
               autoComplete="email"
               autoFocus
+              onChange={(e) => {
+                setEmail(e.target.value)
+              }}
             />
             <TextField
               margin="normal"
@@ -78,6 +95,9 @@ export default function SignInForm() {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={(e) => {
+                setPassword(e.target.value)
+              }}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}

@@ -1,0 +1,11 @@
+.properitiesDisplayHalf{
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+    margin-top: 45px;
+}
+
+.HalfHomesDisplay{
+    width: 90%;
+    margin: auto;
+}
