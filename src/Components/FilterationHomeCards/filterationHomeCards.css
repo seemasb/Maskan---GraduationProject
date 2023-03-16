@@ -1,7 +1,16 @@
-
-
-.filterationHomeCards{
+.filterationHomeCards {
     width: 90%;
     margin: auto;
     margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+}
+
+.FilteredCards {
+    /* width: 90%;
+    margin: auto; */
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    row-gap: 35px;
 }

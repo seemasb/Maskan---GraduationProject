@@ -5,31 +5,32 @@
     font-family: 'Cairo';
     font-weight: 600;
     cursor: pointer;
-    width: -moz-fit-content;
-    
+    /* width: 47%; */
     width: fit-content;
     position: relative;
-    
     display: flex;
     flex-direction: column;
     border-radius: 13px;
     border-radius: 13px;
-    /* background-color: rgb(250, 249, 249); */
+    background-color: rgba(250, 249, 249, 0.623);
+    /* background-color: whitesmoke; */
 }
 
 .Card:hover{
-border: 1px solid #6594c0;
+border: 1px solid #1976d2;
+background-color: white;
 }
 
 .cardImg{
     border-radius: 13px 13px 0 0;
-    height: 160px;
-    width: 220px;
+    /* height: 160px; */
+    height: 189px;
 }
 
 .CardTitle{
     font-weight: 700;
     font-size: 22px;
+    margin-top: -6px;
 }
 
 .CardLocationDiv{
@@ -50,7 +51,8 @@ border: 1px solid #6594c0;
 
 .featuresSection {
     display: flex;
-    justify-content: space-between;
+    column-gap: 20px;
+    /* justify-content: space-between; */
     color: rgb(177, 176, 176);
     font-size: 12px;
 }
@@ -61,17 +63,11 @@ border: 1px solid #6594c0;
 }
 
 .featureIcon{
-    color: #547cc9;
-    background-color: #e0e8f8;
+    color: #1976d2;
+    background-color: #f1f4fc;
     border-radius: 100%;
-    width: 20px;
+    padding: 2px;
 }
-
-
-
-/* .PriceCard{
-    color: dimgray;
-} */
 
 
  

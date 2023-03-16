@@ -2,15 +2,15 @@ import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import Divider from '@mui/material/Divider';
 import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 import { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
     IconButton,
 } from '@mui/material';
 import { Favorite, FavoriteBorder } from '@mui/icons-material';
-import Home1 from '../../Images/home1.jpg'
+import Home1 from '../../Images/pool_1.jpg'
 import './Card.css'
 import ShowerOutlinedIcon from '@mui/icons-material/ShowerOutlined';
 import BedOutlinedIcon from '@mui/icons-material/BedOutlined';
+import {MdOutlineBed} from 'react-icons/md'
 
 
 export default function Card() {
@@ -25,7 +25,10 @@ export default function Card() {
             <img src={Home1} className="cardImg"></img>
             <IconButton
                         onClick={handleFavoriteClick}
-            
+                        sx={{
+                            position: 'absolute'
+                        }}
+                        color="disable"
                     >
                         {isFavorite ? <Favorite /> : <FavoriteBorder />}
                     </IconButton>
@@ -43,14 +46,14 @@ export default function Card() {
 
                 <div className='featuresSection'>
                     <div className='FeaturesDiv'>
-                        <ShowerOutlinedIcon className='featureIcon' />
+                        <ShowerOutlinedIcon className='featureIcon' fontSize="small"/>
                         <span>3</span>
                         <span>Bathrooms</span>
                     </div>
 
                     <div className='FeaturesDiv'>
-                        <BedOutlinedIcon className='featureIcon'/>
-                        {/* <FontAwesomeIcon icon="fa-light fa-bed-front" /> */}
+                        <BedOutlinedIcon className='featureIcon' fontSize="small"/>
+                        {/* <MdOutlineBed className='featureIcon'/> */}
                         <span>2</span>
                         <span>Rooms</span>
                     </div>

@@ -1,0 +1,31 @@
+.selectProperty {
+    background-color: rgba(250, 249, 249, 0.623) !important;
+    color: #3f51b5 !important;
+    border-radius: 13px;
+    height: 150px;
+    width: 150px;
+    transition: border-color 0.2s ease-in-out;
+}
+
+.disabledProperty{
+    height: 150px;
+    width: 150px;
+}
+
+
+.selectProperty:hover,
+.selectProperty:focus {
+    border: 1px solid #1976d2;
+    background-color: white;
+}
+
+.TypeBtns {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 60%;
+    justify-content: space-between;
+    margin: auto;
+    row-gap: 30px;
+    margin-top: 10vh;
+}

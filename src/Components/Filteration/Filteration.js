@@ -246,7 +246,7 @@ export default function Filteration() {
           <div>
             <FormControl component="fieldset">
               <FormGroup className="featuresBox"
-              sx={{ display: 'flex', flexDirection: 'row' }}
+                sx={{ display: 'flex', flexDirection: 'row' }}
               >
                 <FormControlLabel
                   control={
