@@ -44,16 +44,16 @@ export default function Step1SignUp({ setActiveStep }) {
         e.preventDefault();
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
 
-        axios.post('/user', {
-            
+        axios.post('http://127.0.0.1:8000/users/', {
+
                 first_name: FirstName,
                 laset_name: LastName,
                 email: Email,
-                username: UserName, 
+                username: UserName,
                 phone_number: phone,
                 date_of_birth: BirthDate,
-                password:  Password 
-            
+                password:  Password
+
           })
           .then(function (response) {
             console.log(response);
@@ -123,7 +123,7 @@ export default function Step1SignUp({ setActiveStep }) {
                                 value={BirthDate}
                                 onChange={DatehandleChange}
                                 renderInput={(params) => <TextField {...params} />}
-                                
+
                             />
                         </LocalizationProvider>
                     </div>

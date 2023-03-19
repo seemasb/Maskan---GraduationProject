@@ -56,7 +56,7 @@ export default function Step2SignUp() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    axios.patch('/user', profileFormData ,{
+    axios.patch('http://127.0.0.1:8000/users', profileFormData ,{
         headers:{
           'Content-Type' : 'multipart/form-data'
         }
@@ -73,7 +73,7 @@ export default function Step2SignUp() {
     <div className='mainContainerSignUp'>
       <form onSubmit={handleSubmit}>
       <DialogContent>
-        
+
         <div className='UploadProfile'>
           <label>
             <input
