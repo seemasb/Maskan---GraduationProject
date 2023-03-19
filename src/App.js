@@ -7,6 +7,7 @@ import Home from './Pages/Home/Home';
 import Contact from './Pages/Home/Contact';
 import Properities from './Pages/Home/Properities';
 import Sell from './Pages/Home/Sell';
+import PropertyDetails from './Pages/Home/PropertyDetails';
 
 
 function App() {
@@ -24,7 +25,7 @@ function App() {
         <Routes>
           {/* <Route index element={<Home />} /> */}
           <Route path="/Home" element={<Home />} />
-          <Route path="/Contact" element={<Contact />} />
+          <Route path="/Contact" element={<PropertyDetails />} />
           <Route path="/Properities" element={<Properities />} />
           <Route path="/Sell" element={<Sell />} />
         </Routes>
