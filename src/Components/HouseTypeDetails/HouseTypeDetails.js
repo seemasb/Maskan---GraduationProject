@@ -1,5 +1,5 @@
 import './HouseTypeDetails.css'
-import { useState , forwardRef } from 'react';
+import { useState, forwardRef } from 'react';
 import { TextField, Checkbox, FormControlLabel, FormGroup, Button, Grid } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
@@ -23,11 +23,13 @@ import AddLocationAltRoundedIcon from '@mui/icons-material/AddLocationAltRounded
 import { styled } from '@mui/material/styles';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import axios from 'axios';
+
 
 
 const Alert = forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-  });
+});
 
 const styles = {
     formGroup: {
@@ -68,7 +70,10 @@ export default function HouseTypeDetails() {
     const [numFloors, setNumFloors] = useState('');
     const [city, setCity] = useState('');
     const [address, setAddress] = useState('');
-    const [location, setLocation] = useState(null);
+    const [location, setLocation] = useState({
+        lat: 1,
+        lng: 1,
+    });
     const [numBathrooms, setNumBathrooms] = useState(0);
     const [numBedrooms, setNumBedrooms] = useState(0);
     const [numHalls, setNumHalls] = useState(0);
@@ -88,17 +93,74 @@ export default function HouseTypeDetails() {
     const [isLoading, setIsLoading] = useState(false);
     const [open, setOpen] = useState(false);
 
-  const handleSnackBar = () => {
-    setOpen(true);
-  };
 
-  const handleCloseSnackBar = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
 
-    setOpen(false);
-  };
+    const handleSnackBar = (event) => {
+        setOpen(true);
+        console.log('hello')
+        let featuresArray = [elevator, balcony, garage, gym, garden, swimmingPool, mafrog]
+        let featuresArrayFiltered = [];
+        featuresArray.map((feature) => {
+            if (feature) {
+                featuresArrayFiltered.push({
+                    key: feature,
+                    icon: ''
+                })
+            }
+        })
+
+        // event.preventDefault();
+        const PropertyData = {
+            price: price,
+            area: area,
+            state: status,
+            description: notes,
+            built_year: '2020',
+            type: 'AP',
+            Owner: '22',
+
+            living_space: {
+                bedrooms: numBedrooms,
+                bathrooms: numBathrooms,
+                kitchens: numKitchens,
+                halls: numHalls
+            },
+            features: {
+                data: featuresArrayFiltered
+            },
+            location: {
+                coordinates: {
+                    x: location.lat,
+                    y: location.lng
+                }
+            },
+            apartment: {
+                floor: numFloors,
+                out_of_floors: '4'
+            }
+        };
+
+        // axios.post('/user', {
+        //     PropertyData
+        // })
+        //     .then(function (response) {
+        //         console.log(response);
+        //     })
+        //     .catch(function (error) {
+        //         console.log(error);
+        //     });
+
+        console.log('in sending');
+        console.log(PropertyData);
+    };
+
+    const handleCloseSnackBar = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
 
     const handleBuiltYearChange = (date) => {
         setBuiltYear(date);
@@ -132,21 +194,21 @@ export default function HouseTypeDetails() {
     const handleSubmit = (e) => {
         e.preventDefault();
         // Submit the form data to your backend here
-        console.log({
-            area,
-            numFloors,
-            price,
-            city,
-            address,
-            location,
-            numBathrooms,
-            numBedrooms,
-            numHalls,
-            numKitchens,
-            elevator,
-            balcony,
-            garage,
-        });
+        // console.log({
+        //     area,
+        //     numFloors,
+        //     price,
+        //     city,
+        //     address,
+        //     location,
+        //     numBathrooms,
+        //     numBedrooms,
+        //     numHalls,
+        //     numKitchens,
+        //     elevator,
+        //     balcony,
+        //     garage,
+        // });
     };
 
     return (
@@ -389,31 +451,31 @@ export default function HouseTypeDetails() {
                 <Grid item xs={12}>
                     <FormGroup style={styles.formGroup}>
                         <FormControlLabel
-                            control={<Checkbox checked={elevator} onChange={(e) => setElevator(e.target.checked)} color='primary' icon={<MdElevator />} />}
+                            control={<Checkbox checked={elevator} onChange={(e) => setElevator(e.target.checked ? 'elevator' : false)} color='primary' icon={<MdElevator />} />}
                             label="Elevator"
                         />
                         <FormControlLabel
-                            control={<Checkbox checked={balcony} onChange={(e) => setBalcony(e.target.checked)} color='primary' icon={<MdBalcony />} />}
+                            control={<Checkbox checked={balcony} onChange={(e) => setBalcony(e.target.checked ? 'balcony' : false)} color='primary' icon={<MdBalcony />} />}
                             label="Balcony"
                         />
                         <FormControlLabel
-                            control={<Checkbox checked={garage} onChange={(e) => setGarage(e.target.checked)} color='primary' icon={<MdGarage />} />}
+                            control={<Checkbox checked={garage} onChange={(e) => setGarage(e.target.checked ? 'garage' : false)} color='primary' icon={<MdGarage />} />}
                             label="Garage"
                         />
                         <FormControlLabel
-                            control={<Checkbox checked={gym} onChange={(e) => setGym(e.target.checked)} color='primary' icon={<FaDumbbell />} />}
+                            control={<Checkbox checked={gym} onChange={(e) => setGym(e.target.checked ? 'gym' : false)} color='primary' icon={<FaDumbbell />} />}
                             label="Gym"
                         />
                         <FormControlLabel
-                            control={<Checkbox checked={garden} onChange={(e) => setGarden(e.target.checked)} color='primary' icon={<FaTree />} />}
+                            control={<Checkbox checked={garden} onChange={(e) => setGarden(e.target.checked ? 'garden' : false)} color='primary' icon={<FaTree />} />}
                             label="Garden"
                         />
                         <FormControlLabel
-                            control={<Checkbox checked={swimmingPool} onChange={(e) => setSwimmingPool(e.target.checked)} color='primary' icon={<FaSwimmingPool />} />}
+                            control={<Checkbox checked={swimmingPool} onChange={(e) => setSwimmingPool(e.target.checked ? 'swimming pool' : false)} color='primary' icon={<FaSwimmingPool />} />}
                             label="Swimming Pool"
                         />
                         <FormControlLabel
-                            control={<Checkbox checked={mafrog} onChange={(e) => setMafrog(e.target.checked)} color='primary' icon={<GiSofa />} />}
+                            control={<Checkbox checked={mafrog} onChange={(e) => setMafrog(e.target.checked ? 'Mafrosh' : false)} color='primary' icon={<GiSofa />} />}
                             label="Mafrosh"
                         />
                     </FormGroup>

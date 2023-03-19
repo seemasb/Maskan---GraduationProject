@@ -55,18 +55,19 @@ export default function Step2SignUp() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(profileFormData)
 
-    axios.patch('http://127.0.0.1:8000/users', profileFormData ,{
-        headers:{
-          'Content-Type' : 'multipart/form-data'
-        }
-      })
-      .then(function (response) {
-        // console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    // axios.patch('/user', profileFormData ,{
+    //     headers:{
+    //       'Content-Type' : 'multipart/form-data'
+    //     }
+    //   })
+    //   .then(function (response) {
+    //     // console.log(response);
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   });
 }
 
   return (

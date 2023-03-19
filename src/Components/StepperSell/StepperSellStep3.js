@@ -45,52 +45,77 @@ const StyledButton = styled(Button)({
 
 export default function StepperSellStep3() {
 
-
-    const [property, setProperty] = useState({
-        photos: [],
-    });
-
-    const [Ownership, setOwnership] = useState([]);
-    const classes = useStyles();
-    const [ownershipImage, setOwnershipImage] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+    const classes = useStyles();
+    const [property, setProperty] = useState([]);
+    const [ownershipImage, setOwnershipImage] = useState(null);
 
 
-    const handleOwnershipImageChange = (newImage) => {
-        setOwnershipImage(newImage);
-        console.log(ownershipImage)
-    };
-
-
-    const handlePhotoUpload = (event) => {
+    function handleOwnershipImageChange(event) {
         const files = event.target.files;
-        const photosArray = Array.from(files).map((file) => URL.createObjectURL(file));
+        if (files && files.length > 0) {
+            const imageUrl = URL.createObjectURL(files[0]);
+            setOwnershipImage(imageUrl);
+        }
+    }
 
-        setProperty((prevProperty) => ({
-            ...prevProperty,
-            photos: [...prevProperty.photos, ...photosArray],
+
+
+    const handleDropzoneChange = (files) => {
+        const newImages = files.map((file) => ({
+            preview: URL.createObjectURL(file),
+            file: file,
         }));
-    };
-
-    const handlePhotoUploadOwner = (event) => {
-        const files = event.target.files;
-        const photosArray = Array.from(files).map((file) => URL.createObjectURL(file));
-
-        setOwnership(
-            [...Ownership, ...photosArray]
-        );
-    };
-
-    const handlePhotoDelete = (photoUrl) => {
-        setProperty((prevProperty) => ({
-            ...prevProperty,
-            photos: prevProperty.photos.filter((photo) => photo !== photoUrl),
-        }));
+        setProperty([...property, ...newImages]);
+        console.log(property)
     };
 
 
 
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+      
+        const formData = new FormData();
+        property.forEach((image) => formData.append('property', image.file));
+        formData.append('ownershipImage', ownershipImage);
+      
+        console.log(formData)
+        // try {
+        //   const response = await axios.post('/api/submit', formData, {
+        //     headers: {
+        //       'Content-Type': 'multipart/form-data',
+        //     },
+        //   });
+        //   console.log(response);
+        // } catch (error) {
+        //   console.log(error);
+        // }
+      };
 
+    
+    function handlePhotoDelete(imageUrl) {
+        URL.revokeObjectURL(imageUrl);
+        setOwnershipImage(null);
+    }
+
+
+
+    
+
+    // const handleSubmit = () => {
+
+    //     axios.patch('/user', profileFormData ,{
+    //         headers:{
+    //           'Content-Type' : 'multipart/form-data'
+    //         }
+    //       })
+    //       .then(function (response) {
+    //         // console.log(response);
+    //       })
+    //       .catch(function (error) {
+    //         console.log(error);
+    //       });
+    // }
 
     return (
         <Grid container spacing={2}>
@@ -107,7 +132,7 @@ export default function StepperSellStep3() {
                     acceptedFiles={["image/*"]}
                     dropzoneClass={classes.dropzone}
                     filesLimit={10}
-                    onChange={handleOwnershipImageChange}
+                    onChange={handleDropzoneChange}
                 />
             </Grid>
 
@@ -127,7 +152,7 @@ export default function StepperSellStep3() {
                         multiple
                         type="file"
                         style={{ display: 'none' }}
-                        onChange={handlePhotoUpload}
+                        onChange={handleOwnershipImageChange}
                     />
                     <label htmlFor="photo-upload">
                         <Button variant="contained" component="span">
@@ -136,10 +161,11 @@ export default function StepperSellStep3() {
                     </label>
                 </Box>
             </Grid>
-            {property.photos.map((photo) => (
-                <Grid item key={photo} xs={12} sm={4}>
+            {/* {ownershipImage.map((photo) => ( */}
+            {ownershipImage && (
+                <Grid item key={ownershipImage} xs={12} sm={4}>
                     <Box sx={{ position: 'relative' }}>
-                        <img src={photo} alt="Property Photo" style={{ maxWidth: '100%' }} />
+                        <img src={ownershipImage} alt="Property Photo" style={{ maxWidth: '100%' }} />
                         <Box
                             sx={{
                                 position: 'absolute',
@@ -150,13 +176,14 @@ export default function StepperSellStep3() {
                                 padding: '4px 8px',
                                 cursor: 'pointer',
                             }}
-                            onClick={() => handlePhotoDelete(photo)}
+                            onClick={() => handlePhotoDelete(ownershipImage)}
                         >
                             Delete
                         </Box>
                     </Box>
                 </Grid>
-            ))}
+            )}
+            {/* ))} */}
 
             {/* <Grid item xs={12}>
                 <Box>
@@ -198,7 +225,7 @@ export default function StepperSellStep3() {
                 </Grid>
             ))} */}
             <Grid item xs={12} container justifyContent="flex-end">
-                <StyledButton variant="contained" type="submit">
+                <StyledButton variant="contained" type="submit" onClick={handleSubmit}>
                     {isLoading ? <CircularProgress size={24} /> : 'Add property'}
                 </StyledButton>
             </Grid>
