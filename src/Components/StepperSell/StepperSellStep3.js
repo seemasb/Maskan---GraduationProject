@@ -1,5 +1,5 @@
 import { Box, Button, Grid, CircularProgress } from '@mui/material';
-import { useState , useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { DropzoneArea } from "material-ui-dropzone";
 import { makeStyles } from "@material-ui/core/styles";
 import Divider from '@mui/material/Divider';
@@ -76,7 +76,7 @@ export default function StepperSellStep3() {
 
     }
 
-    
+
     useEffect(() => {
         console.log("ownershipImage changed:", ownershipImage);
     }, [ownershipImage]);
@@ -88,8 +88,10 @@ export default function StepperSellStep3() {
 
     const handleDropzoneChange = (files) => {
         const newImages = files.map((file) => ({
-            preview: URL.createObjectURL(file),
-            file: file,
+            'image': {
+                preview: URL.createObjectURL(file),
+                file: file,
+            }
         }));
         setProperty([...property, ...newImages]);
         console.log(property)
@@ -97,18 +99,48 @@ export default function StepperSellStep3() {
 
 
 
+    // const handleSubmit = async (event) => {
+    //     event.preventDefault();
+    //     console.log('in submit')
+    //     console.log(ownershipImage)
+
+    //     const formData = new FormData();
+    //     // property.forEach((image) => formData.append('property', image.file));
+    //     formData.append('property', property);
+    //     formData.append('ownershipImage', ownershipImage);
+
+    //     console.log(formData)
+        // try {
+        //   const response = await axios.post('/api/submit', formData, {
+        //     headers: {
+        //       'Content-Type': 'multipart/form-data',
+        //     },
+        //   });
+        //   console.log(response);
+        // } catch (error) {
+        //   console.log(error);
+        // }
+    // };
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         console.log('in submit')
         console.log(ownershipImage)
 
+         const ownership ={
+             record: ownershipImage,
+             is_accepted: true,
+             is_viewable: true,
+         };
         const formData = new FormData();
-        property.forEach((image) => formData.append('property', image.file));
-        formData.append('ownershipImage', ownershipImage);
+        formData.append('ownership',ownership)
+        property.forEach((image) => {
+          formData.append('images', image.file);
+        });
 
         console.log(formData)
         // try {
-        //   const response = await axios.post('/api/submit', formData, {
+        //   const response = await axios.patch('http://127.0.0.1:8001/upload/31/', formData, {
         //     headers: {
         //       'Content-Type': 'multipart/form-data',
         //     },

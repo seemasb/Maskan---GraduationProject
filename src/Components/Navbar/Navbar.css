@@ -12,6 +12,15 @@ ul {
     text-decoration: none;
 }
 
+.naving:focus{
+background-color: transparent !important;
+}
+
+.naving:focus-visible{
+    background-color: transparent !important;
+    }
+    
+
 .NavContainer{
     display: flex;
     justify-content: space-between;
