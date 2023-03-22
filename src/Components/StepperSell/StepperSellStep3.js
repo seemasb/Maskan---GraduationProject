@@ -7,7 +7,7 @@ import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 import DescriptionIcon from '@mui/icons-material/Description';
 import UploadIcon from '@mui/icons-material/Upload';
 import { styled } from '@mui/material/styles';
-
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -59,8 +59,6 @@ export default function StepperSellStep3() {
         }
     }
 
-
-
     const handleDropzoneChange = (files) => {
         const newImages = files.map((file) => ({
             preview: URL.createObjectURL(file),
@@ -70,37 +68,49 @@ export default function StepperSellStep3() {
         console.log(property)
     };
 
-
-
     const handleSubmit = async (event) => {
         event.preventDefault();
-      
-        const formData = new FormData();
-        property.forEach((image) => formData.append('property', image.file));
-        formData.append('ownershipImage', ownershipImage);
-      
-        console.log(formData)
-        // try {
-        //   const response = await axios.post('/api/submit', formData, {
-        //     headers: {
-        //       'Content-Type': 'multipart/form-data',
-        //     },
-        //   });
-        //   console.log(response);
-        // } catch (error) {
-        //   console.log(error);
-        // }
-      };
+        console.log('in submit')
+        console.log(ownershipImage)
 
-    
+         const ownership ={
+             record: ownershipImage,
+             is_accepted: true,
+             is_viewable: true,
+         };
+        // property.forEach((image) => {
+        //     requestData.images.push({ image: image.preview});
+        // });
+        const formData = new FormData();
+        formData.append('ownership',ownership)
+        property.forEach((image) => {
+          formData.append('images', image.file);
+        });
+        // property.forEach((image) => formData.append('property', image.file));
+        // property.forEach((image) => formData.append('property', image.file));
+        // formData.append('images', property);
+        //formData.append('ownershipImage', ownershipImage);
+
+        console.log(formData)
+        try {
+          const response = await axios.patch('http://127.0.0.1:8001/upload/31/', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          });
+          console.log(response);
+        } catch (error) {
+          console.log(error);
+        }
+    };
+
+
+
+
     function handlePhotoDelete(imageUrl) {
         URL.revokeObjectURL(imageUrl);
         setOwnershipImage(null);
     }
-
-
-
-    
 
     // const handleSubmit = () => {
 
@@ -233,4 +243,3 @@ export default function StepperSellStep3() {
 
     )
 }
-
