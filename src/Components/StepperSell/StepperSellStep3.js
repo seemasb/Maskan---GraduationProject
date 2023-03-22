@@ -48,33 +48,37 @@ export default function StepperSellStep3() {
     const [isLoading, setIsLoading] = useState(false);
     const classes = useStyles();
     const [property, setProperty] = useState([]);
+    // const [ownershipImage, setOwnershipImage] = useState(null);
     const [ownershipImage, setOwnershipImage] = useState(null);
 
 
     function handleOwnershipImageChange(event) {
         const files = event.target.files;
-        if (files && files.length > 0) {
-            const imageUrl = URL.createObjectURL(files[0]);
-            const reader = new FileReader();
-            reader.readAsDataURL(files[0]);
-            reader.onloadend = () => {
-                const base64data = reader.result;
-                // Store the base64 encoded string in your hook or state
-                setOwnershipImage(base64data);
-                console.log('test data:')
-                console.log(base64data)
-                // console.log('ownershipImage : ')
-                // console.log(ownershipImage)
-            };
+        console.log('my files:')
+        console.log(files)
+        const newOwnerImages = {
+            'OwnerImage': {
+                preview: URL.createObjectURL(files[0]),
+                file: files[0],
+            }
+        }
+        
 
-            // console.log('file :')
-            // console.log(URL.createObjectURL(files[0]))
-            // setOwnershipImage(imageUrl.toString());
-            // console.log('ownershipImage : ')
-            // console.log(ownershipImage)
+        setOwnershipImage(newOwnerImages);
+        // const files = event.target.files;
+        // if (files && files.length > 0) {
+        //     const imageUrl = URL.createObjectURL(files[0]);
+            // const reader = new FileReader();
+            // reader.readAsDataURL(files[0]);
+            // reader.onloadend = () => {
+            //     const base64data = reader.result;
+            //     setOwnershipImage(base64data);
+            //     console.log('test data:')
+            //     console.log(base64data)
+            // };
         }
 
-    }
+    
 
 
     useEffect(() => {
