@@ -1,11 +1,14 @@
 import PropertyDescription from './PropertyDescription'
 import PropertyLocation from './PropertyLocation';
+import PropertyFeatures from './PropertyFeatures';
 
 function PropertyDetailsS1() {
     return (
         <div>
-            <PropertyDescription/>
-            <PropertyLocation/>
+            <PropertyDescription />
+            <PropertyFeatures />
+            <PropertyLocation />
+            
         </div>
     );
 }
