@@ -26,7 +26,7 @@ export default function Step2SignUp() {
     const formData = new FormData();
     formData.append('image', file);
     formData.append('_method', 'PATCH')
-    setProfileFormData('_method', 'PATCH');
+    // setProfileFormData('_method', 'PATCH');
 
     if (file) {
       const photoURL = URL.createObjectURL(file);

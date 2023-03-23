@@ -48,37 +48,27 @@ export default function StepperSellStep3() {
     const [isLoading, setIsLoading] = useState(false);
     const classes = useStyles();
     const [property, setProperty] = useState([]);
-    const [ownershipImage, setOwnershipImage] = useState();
+    const [ownershipImage, setOwnershipImage] = useState('');
     const [Sellfile, setSellfile] = useState()
 
 
     function handleOwnershipImageChange(event) {
         const file = event.target.files[0];
-        // const formData = new FormData();
-        // const OwnerImage = {
-        //     preview: URL.createObjectURL(file),
-        //     file: file,
-        // }
-        // formData.append('record', file);
-        // formData.append('_method', 'PATCH')
         setSellfile(file);
 
         if (file) {
             const photoURL = URL.createObjectURL(file);
             setOwnershipImage(photoURL);
         }
-        // const files = event.target.files;
-        // if (files && files.length > 0) {
-        //     const imageUrl = URL.createObjectURL(files[0]);
-        // const reader = new FileReader();
-        // reader.readAsDataURL(files[0]);
-        // reader.onloadend = () => {
-        //     const base64data = reader.result;
-        //     setOwnershipImage(base64data);
-        //     console.log('test data:')
-        //     console.log(base64data)
-        // };
     }
+
+
+    useEffect(() => {
+        console.log("ownershipImage changed:", ownershipImage);
+    }, [ownershipImage]);
+
+
+
 
     const handleDropzoneChange = (files) => {
         const newImages = files.map((file) => ({
@@ -89,20 +79,14 @@ export default function StepperSellStep3() {
         console.log(property)
     };
 
+
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         console.log('in submit')
         console.log(ownershipImage)
         console.log('sell form data')
-        // console.log(SellFormData)
-
-        // const ownership = {
-        //     record: ownershipImage,
-        //     is_accepted: true,
-        //     is_viewable: true,
-        // };
         const formData = new FormData();
-        // formData.append('ownershipFormData', SellFormData)
         property.forEach((image) => {
             formData.append('images', image.file);
         });
@@ -129,20 +113,7 @@ export default function StepperSellStep3() {
         setOwnershipImage(null);
     }
 
-    // const handleSubmit = () => {
 
-    //     axios.patch('/user', profileFormData ,{
-    //         headers:{
-    //           'Content-Type' : 'multipart/form-data'
-    //         }
-    //       })
-    //       .then(function (response) {
-    //         // console.log(response);
-    //       })
-    //       .catch(function (error) {
-    //         console.log(error);
-    //       });
-    // }
 
     return (
         <Grid container spacing={2}>
