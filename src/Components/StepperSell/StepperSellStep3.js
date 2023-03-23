@@ -1,5 +1,5 @@
 import { Box, Button, Grid, CircularProgress } from '@mui/material';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { DropzoneArea } from "material-ui-dropzone";
 import { makeStyles } from "@material-ui/core/styles";
 import Divider from '@mui/material/Divider';
@@ -48,113 +48,66 @@ export default function StepperSellStep3() {
     const [isLoading, setIsLoading] = useState(false);
     const classes = useStyles();
     const [property, setProperty] = useState([]);
-    const [ownershipImage, setOwnershipImage] = useState(null);
+    const [ownershipImage, setOwnershipImage] = useState();
+    const [Sellfile, setSellfile] = useState()
 
 
     function handleOwnershipImageChange(event) {
-        const files = event.target.files;
-        if (files && files.length > 0) {
-            const imageUrl = URL.createObjectURL(files[0]);
-            const reader = new FileReader();
-            reader.readAsDataURL(files[0]);
-            reader.onloadend = () => {
-                const base64data = reader.result;
-                // Store the base64 encoded string in your hook or state
-                setOwnershipImage(base64data);
-                console.log('test data:')
-                console.log(base64data)
-                // console.log('ownershipImage : ')
-                // console.log(ownershipImage)
-            };
+        const file = event.target.files[0];
+        // const formData = new FormData();
+        // const OwnerImage = {
+        //     preview: URL.createObjectURL(file),
+        //     file: file,
+        // }
+        // formData.append('record', file);
+        // formData.append('_method', 'PATCH')
+        setSellfile(file);
 
-            // console.log('file :')
-            // console.log(URL.createObjectURL(files[0]))
-            // setOwnershipImage(imageUrl.toString());
-            // console.log('ownershipImage : ')
-            // console.log(ownershipImage)
+        if (file) {
+            const photoURL = URL.createObjectURL(file);
+            setOwnershipImage(photoURL);
         }
-
+        // const files = event.target.files;
+        // if (files && files.length > 0) {
+        //     const imageUrl = URL.createObjectURL(files[0]);
+        // const reader = new FileReader();
+        // reader.readAsDataURL(files[0]);
+        // reader.onloadend = () => {
+        //     const base64data = reader.result;
+        //     setOwnershipImage(base64data);
+        //     console.log('test data:')
+        //     console.log(base64data)
+        // };
     }
 
-<<<<<<< HEAD
-=======
-
-    useEffect(() => {
-        console.log("ownershipImage changed:", ownershipImage);
-    }, [ownershipImage]);
-
-
-
-
-
-
->>>>>>> 0754a6b729f8a8f81279b3ac99d3aa9ec47fc56c
     const handleDropzoneChange = (files) => {
         const newImages = files.map((file) => ({
-            'image': {
-                preview: URL.createObjectURL(file),
-                file: file,
-            }
+            preview: URL.createObjectURL(file),
+            file: file,
         }));
         setProperty([...property, ...newImages]);
         console.log(property)
     };
 
-<<<<<<< HEAD
-=======
-
-
-    // const handleSubmit = async (event) => {
-    //     event.preventDefault();
-    //     console.log('in submit')
-    //     console.log(ownershipImage)
-
-    //     const formData = new FormData();
-    //     // property.forEach((image) => formData.append('property', image.file));
-    //     formData.append('property', property);
-    //     formData.append('ownershipImage', ownershipImage);
-
-    //     console.log(formData)
-        // try {
-        //   const response = await axios.post('/api/submit', formData, {
-        //     headers: {
-        //       'Content-Type': 'multipart/form-data',
-        //     },
-        //   });
-        //   console.log(response);
-        // } catch (error) {
-        //   console.log(error);
-        // }
-    // };
-
->>>>>>> 0754a6b729f8a8f81279b3ac99d3aa9ec47fc56c
     const handleSubmit = async (event) => {
         event.preventDefault();
         console.log('in submit')
         console.log(ownershipImage)
+        console.log('sell form data')
+        // console.log(SellFormData)
 
-         const ownership ={
-             record: ownershipImage,
-             is_accepted: true,
-             is_viewable: true,
-         };
-<<<<<<< HEAD
-        // property.forEach((image) => {
-        //     requestData.images.push({ image: image.preview});
-        // });
-=======
->>>>>>> 0754a6b729f8a8f81279b3ac99d3aa9ec47fc56c
+        // const ownership = {
+        //     record: ownershipImage,
+        //     is_accepted: true,
+        //     is_viewable: true,
+        // };
         const formData = new FormData();
-        formData.append('ownership',ownership)
+        // formData.append('ownershipFormData', SellFormData)
         property.forEach((image) => {
-          formData.append('images', image.file);
+            formData.append('images', image.file);
         });
-<<<<<<< HEAD
-        // property.forEach((image) => formData.append('property', image.file));
-        // property.forEach((image) => formData.append('property', image.file));
-        // formData.append('images', property);
-        //formData.append('ownershipImage', ownershipImage);
-
+        formData.append('record' , Sellfile)
+        console.log('total form data')
         console.log(formData)
         try {
           const response = await axios.patch('http://127.0.0.1:8001/upload/31/', formData, {
@@ -171,35 +124,11 @@ export default function StepperSellStep3() {
 
 
 
-=======
-
-        console.log(formData)
-        // try {
-        //   const response = await axios.patch('http://127.0.0.1:8001/upload/31/', formData, {
-        //     headers: {
-        //       'Content-Type': 'multipart/form-data',
-        //     },
-        //   });
-        //   console.log(response);
-        // } catch (error) {
-        //   console.log(error);
-        // }
-    };
-
-
->>>>>>> 0754a6b729f8a8f81279b3ac99d3aa9ec47fc56c
     function handlePhotoDelete(imageUrl) {
         URL.revokeObjectURL(imageUrl);
         setOwnershipImage(null);
     }
 
-<<<<<<< HEAD
-=======
-
-
-
-
->>>>>>> 0754a6b729f8a8f81279b3ac99d3aa9ec47fc56c
     // const handleSubmit = () => {
 
     //     axios.patch('/user', profileFormData ,{
