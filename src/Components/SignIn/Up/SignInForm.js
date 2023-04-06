@@ -39,7 +39,7 @@ export default function SignInForm() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const SignInData = { Email, Password };
-    axios.post('/user', {
+    axios.post('http://127.0.0.1:8000/login/', {
       SignInData
     })
       .then(function (response) {
@@ -49,7 +49,7 @@ export default function SignInForm() {
         console.log(error);
       });
 
-      
+
     console.log({ Email, Password });
   };
 

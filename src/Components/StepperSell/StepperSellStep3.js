@@ -1,5 +1,5 @@
 import { Box, Button, Grid, CircularProgress } from '@mui/material';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { DropzoneArea } from "material-ui-dropzone";
 import { makeStyles } from "@material-ui/core/styles";
 import Divider from '@mui/material/Divider';
@@ -7,7 +7,7 @@ import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 import DescriptionIcon from '@mui/icons-material/Description';
 import UploadIcon from '@mui/icons-material/Upload';
 import { styled } from '@mui/material/styles';
-
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -72,10 +72,8 @@ export default function StepperSellStep3() {
 
     const handleDropzoneChange = (files) => {
         const newImages = files.map((file) => ({
-            'image': {
-                preview: URL.createObjectURL(file),
-                file: file,
-            }
+            preview: URL.createObjectURL(file),
+            file: file,
         }));
         setProperty([...property, ...newImages]);
         console.log(property)
@@ -95,17 +93,19 @@ export default function StepperSellStep3() {
         formData.append('record' , Sellfile)
         console.log('total form data')
         console.log(formData)
-        // try {
-        //   const response = await axios.patch('http://127.0.0.1:8001/upload/31/', formData, {
-        //     headers: {
-        //       'Content-Type': 'multipart/form-data',
-        //     },
-        //   });
-        //   console.log(response);
-        // } catch (error) {
-        //   console.log(error);
-        // }
+        try {
+          const response = await axios.patch('http://127.0.0.1:8001/upload/31/', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          });
+          console.log(response);
+        } catch (error) {
+          console.log(error);
+        }
     };
+
+
 
 
     function handlePhotoDelete(imageUrl) {
@@ -231,4 +231,3 @@ export default function StepperSellStep3() {
 
     )
 }
-

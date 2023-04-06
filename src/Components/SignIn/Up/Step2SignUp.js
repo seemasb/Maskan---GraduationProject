@@ -74,7 +74,7 @@ export default function Step2SignUp() {
     <div className='mainContainerSignUp'>
       <form onSubmit={handleSubmit}>
       <DialogContent>
-        
+
         <div className='UploadProfile'>
           <label>
             <input
