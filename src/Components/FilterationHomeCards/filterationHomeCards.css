@@ -9,6 +9,8 @@
 .FilteredCards {
     /* width: 90%;
     margin: auto; */
+    height: 400px; /* set a fixed height for the div */
+    overflow: auto; /* set overflow to auto to make it scrollable */
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;

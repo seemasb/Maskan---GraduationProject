@@ -5,6 +5,7 @@ import Navbar from './Components/Navbar/Navbar';
 import { Route, BrowserRouter, Switch, Redirect, Routes, NavLink } from 'react-router-dom';
 import Home from './Pages/Home/Home';
 import Contact from './Pages/Home/Contact';
+import Profile from './Pages/Home/Profile';
 import Properities from './Pages/Home/Properities';
 import Sell from './Pages/Home/Sell';
 import PropertyDetails from './Pages/Home/PropertyDetails';
@@ -28,6 +29,7 @@ function App() {
           <Route path="/Contact" element={<PropertyDetails />} />
           <Route path="/Properities" element={<Properities />} />
           <Route path="/Sell" element={<Sell />} />
+          <Route path="/Profile" element={<Profile />} />
         </Routes>
       </main>
 

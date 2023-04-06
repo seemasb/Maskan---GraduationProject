@@ -10,7 +10,8 @@ import CheckCircleOutlineSharpIcon from '@mui/icons-material/CheckCircleOutlineS
 
 const FeaturesContainer = styled(Box)`
   background-color: #fff;
-  box-shadow: 0px 0px 10px ${grey[400]};
+//   box-shadow: 0px 0px 10px ${grey[400]};
+box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
   border-radius: 7px;
 `;

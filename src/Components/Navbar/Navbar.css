@@ -16,10 +16,9 @@ ul {
 background-color: transparent !important;
 }
 
-.naving:focus-visible{
+.active, .dot:hover {
     background-color: transparent !important;
-    }
-    
+}
 
 .NavContainer{
     display: flex;

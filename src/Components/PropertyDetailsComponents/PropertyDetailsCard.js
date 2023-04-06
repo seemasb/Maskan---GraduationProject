@@ -9,6 +9,7 @@ import AspectRatioIcon from '@material-ui/icons/AspectRatio';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import Divider from '@mui/material/Divider';
 import OwnerCard from './OwnerCard';
+import { grey } from '@material-ui/core/colors';
 
 
 
@@ -109,7 +110,7 @@ const StyledBuyButton = styled(Button)({
 
 const StyledDivider = styled(Divider)`
   margin: 10px 0;
-  background-color: gray;
+  background-color: lightgray;
   height: 2px;
   width: 30px;
 `;
@@ -124,8 +125,9 @@ const StyledLocation = styled.div`
 const PropertyDetailsContainer = styled.div`
   background-color: white;
   border-radius: 10px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  // box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  // box-shadow: 0px 0px 10px ${grey[400]};
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  // box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -156,13 +158,18 @@ const StyledRow = styled.div`
 const StyledFeature = styled.div`
 align-items: flex-start;
 margin-right: 16px;
-box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+// box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 padding: 7px 0px 7px 7px;
 border-radius: 4px;
 display: flex;
 flex-direction: column;
 width: 110px;
 // width: 40%;
+
+@media (max-width: 1200px) {
+  width: 150px;
+    }
+
   `;
 
 const ButtonsContainer = styled.div`

@@ -12,8 +12,11 @@
     flex-direction: column;
     border-radius: 13px;
     border-radius: 13px;
-    background-color: rgba(250, 249, 249, 0.623);
-    /* background-color: whitesmoke; */
+    /* background-color: rgba(250, 249, 249, 0.623); */
+    background-color: white;
+    /* border: 1px solid #45729d; */
+    border: 1px solid lightgray;
+    box-shadow: 3px 4px 8px lightgray;
 }
 
 .Card:hover{
@@ -24,7 +27,7 @@ background-color: white;
 .cardImg{
     border-radius: 13px 13px 0 0;
     /* height: 160px; */
-    height: 189px;
+    height: 174px;
 }
 
 .CardTitle{
@@ -47,6 +50,7 @@ background-color: white;
     border: 1px solid rgba(223, 222, 222, 0.548); 
     border-radius: 0 0 13px 13px;
     padding: 11px;
+    row-gap: 15px;
 }
 
 .featuresSection {

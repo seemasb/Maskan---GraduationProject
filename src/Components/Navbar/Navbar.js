@@ -62,6 +62,16 @@ export default function Navbar() {
               Contact-us
             </NavLink>
           </li>
+          <li>
+            <NavLink
+              to="/Profile"
+              className="naving"
+              id="Profile"
+
+            >
+              Profile
+            </NavLink>
+          </li>
         </ul>
       </div>
 

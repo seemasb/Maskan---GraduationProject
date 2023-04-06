@@ -5,10 +5,13 @@ import IconButton from '@material-ui/core/IconButton';
 import ReportIcon from '@material-ui/icons/Report';
 import MessageIcon from '@material-ui/icons/Message';
 import styled from 'styled-components';
+import { grey } from '@material-ui/core/colors';
 
 const OwnerContainer = styled.div`
   background-color: white;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+//   box-shadow: 0px 0px 10px ${grey[400]};
+//   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   padding: 16px;
   display: flex;
 //   flex-direction: column;

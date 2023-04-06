@@ -1,5 +1,6 @@
 import PropertyDetailsCard from "./PropertyDetailsCard";
 import OwnerCard from './OwnerCard'
+import ScheduleTour from "./ScheduleTour";
 import avatar from '../../Images/h1.jpg'
 import styled from 'styled-components';
 
@@ -22,6 +23,7 @@ function PropertyDetailsS2() {
                 area={2000}
             />
             <OwnerCard avatarUrl={avatar} name={'Seema Sbouh'} bio={'hello my name is seema sbouh im an owner hhhh'} />
+            <ScheduleTour/>
         </StyledPropertyDetailsS2>
     );
 }
