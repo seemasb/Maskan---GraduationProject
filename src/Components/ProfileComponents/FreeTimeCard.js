@@ -3,6 +3,10 @@ import styled from "styled-components";
 import { Card, CardContent, IconButton, Snackbar, Typography, Button } from "@material-ui/core";
 import { Edit } from "@material-ui/icons";
 import { TimePicker } from '@material-ui/pickers';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 
 const StyledCard = styled(Card)`
@@ -32,7 +36,7 @@ const DayLabel = styled(Typography)`
 
 
 const TimeInput = styled.input`
-  width: 70px;
+  width: 74px;
   text-align: center;
   color: #45729d;
   border: 1px solid #45729d;
@@ -66,6 +70,10 @@ row-gap: 25px;
 `;
 
 const FreeTimeCard = () => {
+  const [SaturdayStart, setSaturdayStart] = useState("");
+  const [SaturdayEnd, setSaturdayEnd] = useState("");
+  const [SundayStart, setSundayStart] = useState("");
+  const [SundayEnd, setSundayEnd] = useState("");
   const [mondayStart, setMondayStart] = useState("");
   const [mondayEnd, setMondayEnd] = useState("");
   const [tuesdayStart, setTuesdayStart] = useState("");
@@ -80,6 +88,13 @@ const FreeTimeCard = () => {
 
   const handleSaveChanges = () => {
     setIsSnackbarOpen(true);
+    let list = [];
+    list.push({
+      day: 'monday',
+      start: mondayStart,
+      end: mondayEnd
+    })
+    console.log(list)
   };
 
   const handleCloseSnackbar = () => {
@@ -91,6 +106,18 @@ const FreeTimeCard = () => {
       <StyledCardContent>
         <Title variant="h6">Available Time</Title>
         <div>
+        <DaySelector>
+            <DayLabel>Saturday:</DayLabel>
+            <TimeInput type="time" value={SaturdayStart} onChange={(e) => setSaturdayStart(e.target.value)} />
+            <Typography>-</Typography>
+            <TimeInput type="time" value={SaturdayEnd} onChange={(e) => setSaturdayEnd(e.target.value)} />
+          </DaySelector>
+          <DaySelector>
+            <DayLabel>Sunday:</DayLabel>
+            <TimeInput type="time" value={SundayStart} onChange={(e) => setSundayStart(e.target.value)} />
+            <Typography>-</Typography>
+            <TimeInput type="time" value={SundayEnd} onChange={(e) => setSundayEnd(e.target.value)} />
+          </DaySelector>
           <DaySelector>
             <DayLabel>Monday:</DayLabel>
             <TimeInput type="time" value={mondayStart} onChange={(e) => setMondayStart(e.target.value)} />
@@ -121,15 +148,15 @@ const FreeTimeCard = () => {
             <Typography>-</Typography>
             <TimeInput type="time" value={fridayEnd} onChange={(e) => setFridayEnd(e.target.value)} />
           </DaySelector>
-        
-        <ButtonContainer>
-          {/* <IconButton color="primary" aria-label="edit">
+
+          <ButtonContainer>
+            {/* <IconButton color="primary" aria-label="edit">
                         <Edit />
                     </IconButton> */}
-          <Button variant="contained" onClick={handleSaveChanges} style={{backgroundColor: '#45729d' , color: 'white' , width: '35%'}}>
-            Update
-          </Button>
-        </ButtonContainer>
+            <Button variant="contained" onClick={handleSaveChanges} style={{ backgroundColor: '#45729d', color: 'white', width: '35%' }}>
+              Update
+            </Button>
+          </ButtonContainer>
         </div>
       </StyledCardContent>
       <SuccessSnackbar
