@@ -4,8 +4,61 @@ import { Button, IconButton, Snackbar } from '@material-ui/core';
 import { Schedule } from '@material-ui/icons';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import MuiAlert from '@mui/material/Alert';
+import axios from 'axios';
 
+const response = [
+    {
+        id: 42,
+        start_time: 9,
+        end_time: 10,
+        date: '2023-04-10',
+        day: 'monday',
+        user: 1
+    },
+    {
+        id: 43,
+        start_time: 4,
+        end_time: 5,
+        date: '2023-04-12',
+        day: 'wednesday',
+        user: 1
+    },
+    {
+        id: 45,
+        start_time: 7,
+        end_time: 8,
+        date: '2023-04-12',
+        day: 'wednesday',
+        user: 1
+    }
+]
 
+let daysFree = [];
+let daysAndDate = [];
+let daysCheck = [];
+response.map((element) => {
+    //  const x = daysAndDate.find((day) => day.name == element.name);
+    //  console.log(x)
+    if (!daysCheck.includes(element.day)) {
+        daysCheck.push(element.day)
+        console.log('days check')
+        console.log(daysCheck)
+        daysAndDate.push({
+            name: element.day,
+            date: element.date
+        })
+    }
+    console.log(daysAndDate)
+    daysFree.push({
+        name: element.day,
+        date: element.date,
+        slotOfTime: element.start_time + ':00 - ' + element.end_time + ':00',
+        id: element.id,
+        user: element.user
+    })
+})
+
+console.log(daysFree)
 
 const Alert = forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -109,6 +162,7 @@ width: 100%;
 const ScheduleTour = () => {
     const [selectedDay, setSelectedDay] = useState(null);
     const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
+    const [ColoredselectedTimeSlot, setColoredSelectedTimeSlot] = useState(null);
     const [showSnackbar, setShowSnackbar] = useState(false);
     const [scrollPosition, setScrollPosition] = useState(0);
     const vertical = 'bottom';
@@ -133,15 +187,36 @@ const ScheduleTour = () => {
         }
         else {
             setSelectedDay(day);
+            console.log(selectedDay)
             setSelectedTimeSlot(null);
         }
     };
 
     const handleTimeSlotButtonClick = (timeSlot) => {
         setSelectedTimeSlot(timeSlot);
+        setColoredSelectedTimeSlot(timeSlot.slotOfTime)
     };
 
     const handleScheduleButtonClick = () => {
+        console.log(selectedTimeSlot)
+        //////////////////////////////////////////how to send axios with param/////////////////////
+        async function sendSlotId() {
+            const res = await axios.post(
+                'https://fake-api.kindacode.com/tutorials',
+                {
+                    // data to sent to the server - post body
+                    // it can be an empty object
+                },
+                {
+                    // specify query parameters
+                    params: {
+                        slotId: selectedTimeSlot.id,
+                    },
+                }
+            );
+        }
+
+        sendSlotId()
         setShowSnackbar(true);
         //send days
         setSelectedDay(null);
@@ -159,14 +234,17 @@ const ScheduleTour = () => {
                     {'<'}
                 </ArrowButton>
                 <StyledDaysScroller id="days-scroller">
-                    {days.map((day) => (
+                    {daysAndDate.map((day) => (
                         <StyledDayButton
                             key={day.date}
                             variant="contained"
                             selected={day === selectedDay}
                             onClick={() => handleDayButtonClick(day)}
                         >
-                            {day.name} {day.date}
+                            <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                <span>{day.name}</span>
+                                <span>{day.date.split("-")[2]}</span>
+                            </div>
                         </StyledDayButton>
                     ))}
                 </StyledDaysScroller>
@@ -194,15 +272,19 @@ const ScheduleTour = () => {
             </StyledDaysScroller> */}
             {selectedDay && (
                 <StyledTimeSlotsContainer>
-                    {timeSlots.map((timeSlot) => (
-                        <StyledTimeSlotButton
-                            key={timeSlot}
-                            variant="contained"
-                            selected={timeSlot === selectedTimeSlot}
-                            onClick={() => handleTimeSlotButtonClick(timeSlot)}>
-                            {timeSlot}
-                        </StyledTimeSlotButton>
-                    ))}
+                    {daysFree.map((day) =>
+                        day.name == selectedDay.name ?
+                            <StyledTimeSlotButton
+                                key={day.slotOfTime}
+                                variant="contained"
+                                selected={day.slotOfTime == ColoredselectedTimeSlot}
+                                onClick={() => { handleTimeSlotButtonClick(day); }}>
+                                {day.slotOfTime}
+                                {/* {day.name == selectedDay.name ? day.slotOfTime : <span style={{display: 'none'}}></span>} */}
+                            </StyledTimeSlotButton>
+                            : <></>
+                    )}
+
                 </StyledTimeSlotsContainer>
             )
             }
@@ -212,7 +294,7 @@ const ScheduleTour = () => {
             </StyledScheduleButton>
 
             <Snackbar open={showSnackbar} autoHideDuration={3000} onClose={handleSnackbarClose}
-            anchorOrigin={{ vertical, horizontal }}
+                anchorOrigin={{ vertical, horizontal }}
             >
                 <Alert onClose={handleSnackbarClose} severity="success" sx={{ width: '100%' }}>
                     Tour scheduled successfully!

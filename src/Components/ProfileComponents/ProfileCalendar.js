@@ -9,14 +9,24 @@ import DialogContent from '@material-ui/core/DialogContent';
 
 const localizer = momentLocalizer(moment);
 
-const events = [
+const response= [
   {
-    id: 1,
-    title: 'John visit',
-    start: new Date(2023, 3, 5, 9, 0),
-    end: new Date(2023, 3, 5, 10, 0),
-    name: 'hiba sbouh'
-  },
+    id: 42,
+    start_time: 9,
+    end_time: 10,
+    date: '2023-04-10',
+    user: 1
+  }
+]
+
+const events = [
+  // {
+  //   id: response.id,
+  //   title: 'John visit',
+  //   start: new Date(2023, 3, 5, response.start_time, 0),
+  //   end: new Date(2023, 3, 5, response.end_time, 0),
+  //   name: 'hiba sbouh'
+  // },
   {
     id: 2,
     title: 'Meeting 2',
