@@ -29,6 +29,13 @@ const events = [
     start: new Date(2023, 3, 11, 14, 0),
     end: new Date(2023, 3, 11, 15, 0),
   }
+  ,
+  {
+    id: 4,
+    title: 'Hiba visit',
+    start: new Date(2023, 2, 11, 14, 0),
+    end: new Date(2023, 2, 11, 15, 0),
+  }
 ];
 
 const StyledCalendar = styled(Calendar)`

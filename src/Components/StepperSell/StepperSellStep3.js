@@ -63,9 +63,9 @@ export default function StepperSellStep3() {
     }
 
 
-    useEffect(() => {
-        console.log("ownershipImage changed:", ownershipImage);
-    }, [ownershipImage]);
+    // useEffect(() => {
+    //     console.log("ownershipImage changed:", ownershipImage);
+    // }, [ownershipImage]);
 
 
 

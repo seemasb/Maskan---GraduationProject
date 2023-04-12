@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Card, CardContent, IconButton, Snackbar, Typography, Button } from "@material-ui/core";
 import { Edit } from "@material-ui/icons";
-import { TimePicker } from '@material-ui/pickers';
+// import { TimePicker } from '@material-ui/pickers';
 
 
 const StyledCard = styled(Card)`
@@ -41,11 +41,11 @@ const TimeInput = styled.input`
 `;
 
 
-const StyledTimeInput = styled(TimePicker)`
-  && input {
-    color: #45729d;
-  }
-`;
+// const StyledTimeInput = styled(TimePicker)`
+//   && input {
+//     color: #45729d;
+//   }
+// `;
 
 const ButtonContainer = styled.div`
   display: flex;

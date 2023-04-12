@@ -32,25 +32,30 @@ const theme = createTheme();
 
 export default function SignInForm() {
 
-  const [Email, setEmail] = React.useState('');
-  const [Password, setPassword] = React.useState('');
+  const [username_or_email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
 
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const SignInData = { Email, Password };
-    axios.post('http://127.0.0.1:8000/login/', {
+    const SignInData = { username_or_email, password };
+    axios.post('http://127.0.0.1:8001/login/', {
       SignInData
-    })
+    },)
       .then(function (response) {
-        console.log(response);
+        console.log(response.headers);
+        if(response.status === 200){
+            const token =response.data['Token']
+            localStorage.setItem('Token',token)
+            console.log(localStorage.getItem('Token'))
+        }
       })
       .catch(function (error) {
         console.log(error);
       });
 
 
-    console.log({ Email, Password });
+    console.log({ username_or_email, password });
   };
 
 
