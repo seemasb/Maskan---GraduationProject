@@ -4,6 +4,7 @@ import { Button, IconButton, Snackbar } from '@material-ui/core';
 import { Schedule } from '@material-ui/icons';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import MuiAlert from '@mui/material/Alert';
+import axios from 'axios';
 
 const response = [
     {
@@ -198,6 +199,24 @@ const ScheduleTour = () => {
 
     const handleScheduleButtonClick = () => {
         console.log(selectedTimeSlot)
+        //////////////////////////////////////////how to send axios with param/////////////////////
+        async function sendSlotId() {
+            const res = await axios.post(
+                'https://fake-api.kindacode.com/tutorials',
+                {
+                    // data to sent to the server - post body
+                    // it can be an empty object
+                },
+                {
+                    // specify query parameters
+                    params: {
+                        slotId: selectedTimeSlot.id,
+                    },
+                }
+            );
+        }
+
+        sendSlotId()
         setShowSnackbar(true);
         //send days
         setSelectedDay(null);
@@ -224,7 +243,7 @@ const ScheduleTour = () => {
                         >
                             <div style={{ display: 'flex', flexDirection: 'column' }}>
                                 <span>{day.name}</span>
-                                <span>{day.date}</span>
+                                <span>{day.date.split("-")[2]}</span>
                             </div>
                         </StyledDayButton>
                     ))}
@@ -259,7 +278,7 @@ const ScheduleTour = () => {
                                 key={day.slotOfTime}
                                 variant="contained"
                                 selected={day.slotOfTime == ColoredselectedTimeSlot}
-                                onClick={() => { handleTimeSlotButtonClick(day);}}>
+                                onClick={() => { handleTimeSlotButtonClick(day); }}>
                                 {day.slotOfTime}
                                 {/* {day.name == selectedDay.name ? day.slotOfTime : <span style={{display: 'none'}}></span>} */}
                             </StyledTimeSlotButton>

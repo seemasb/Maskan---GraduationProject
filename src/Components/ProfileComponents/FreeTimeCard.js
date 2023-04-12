@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Card, CardContent, IconButton, Snackbar, Typography, Button } from "@material-ui/core";
+import { Card, CardContent, IconButton, Snackbar, Typography, Button  } from "@material-ui/core";
 import { Edit } from "@material-ui/icons";
 import { TimePicker } from '@material-ui/pickers';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-
 
 const StyledCard = styled(Card)`
   background-color: white;
@@ -91,8 +90,8 @@ const FreeTimeCard = () => {
     let list = [];
     list.push({
       day: 'monday',
-      start: mondayStart,
-      end: mondayEnd
+      start: parseInt(mondayStart.split(":")[0]),
+      end: parseInt(mondayEnd.split(":")[0])
     })
     console.log(list)
   };
@@ -106,12 +105,27 @@ const FreeTimeCard = () => {
       <StyledCardContent>
         <Title variant="h6">Available Time</Title>
         <div>
-        <DaySelector>
+          {/* <DaySelector>
             <DayLabel>Saturday:</DayLabel>
             <TimeInput type="time" value={SaturdayStart} onChange={(e) => setSaturdayStart(e.target.value)} />
             <Typography>-</Typography>
             <TimeInput type="time" value={SaturdayEnd} onChange={(e) => setSaturdayEnd(e.target.value)} />
-          </DaySelector>
+          </DaySelector> */}
+          <InputLabel id="demo-select-small">Age</InputLabel>
+          <Select
+            labelId="demo-select-small"
+            id="demo-select-small"
+            value={'Monday'}
+            label="Age"
+            onChange={()=>{}}
+          >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            <MenuItem value={10}>Ten</MenuItem>
+            <MenuItem value={20}>Twenty</MenuItem>
+            <MenuItem value={30}>Thirty</MenuItem>
+          </Select>
           <DaySelector>
             <DayLabel>Sunday:</DayLabel>
             <TimeInput type="time" value={SundayStart} onChange={(e) => setSundayStart(e.target.value)} />
