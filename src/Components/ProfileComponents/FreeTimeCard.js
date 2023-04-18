@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Card, CardContent, IconButton, Snackbar, Typography, Button  } from "@material-ui/core";
+import { Card, CardContent, IconButton, Snackbar, Typography, Button } from "@material-ui/core";
 import { Edit } from "@material-ui/icons";
 import { TimePicker } from '@material-ui/pickers';
 import InputLabel from '@mui/material/InputLabel';
@@ -93,6 +93,8 @@ const FreeTimeCard = () => {
       start: parseInt(mondayStart.split(":")[0]),
       end: parseInt(mondayEnd.split(":")[0])
     })
+
+    
     console.log(list)
   };
 
@@ -111,13 +113,13 @@ const FreeTimeCard = () => {
             <Typography>-</Typography>
             <TimeInput type="time" value={SaturdayEnd} onChange={(e) => setSaturdayEnd(e.target.value)} />
           </DaySelector> */}
-          <InputLabel id="demo-select-small">Age</InputLabel>
+          {/* <InputLabel id="demo-select-small">Age</InputLabel>
           <Select
             labelId="demo-select-small"
             id="demo-select-small"
             value={'Monday'}
             label="Age"
-            onChange={()=>{}}
+            onChange={() => { }}
           >
             <MenuItem value="">
               <em>None</em>
@@ -125,7 +127,7 @@ const FreeTimeCard = () => {
             <MenuItem value={10}>Ten</MenuItem>
             <MenuItem value={20}>Twenty</MenuItem>
             <MenuItem value={30}>Thirty</MenuItem>
-          </Select>
+          </Select> */}
           <DaySelector>
             <DayLabel>Sunday:</DayLabel>
             <TimeInput type="time" value={SundayStart} onChange={(e) => setSundayStart(e.target.value)} />

@@ -20,13 +20,13 @@ const response= [
 ]
 
 const events = [
-  // {
-  //   id: response.id,
-  //   title: 'John visit',
-  //   start: new Date(2023, 3, 5, response.start_time, 0),
-  //   end: new Date(2023, 3, 5, response.end_time, 0),
-  //   name: 'hiba sbouh'
-  // },
+  {
+    id: response.id,
+    title: 'John visit',
+    start: new Date(2023, 3, 5, response.start_time, 0),
+    end: new Date(2023, 3, 5, response.end_time, 0),
+    name: 'hiba sbouh'
+  },
   {
     id: 2,
     title: 'Meeting 2',

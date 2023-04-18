@@ -1,4 +1,4 @@
-import React, { useState, forwardRef } from 'react';
+import React, { useState, forwardRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { Button, IconButton, Snackbar } from '@material-ui/core';
 import { Schedule } from '@material-ui/icons';
@@ -33,57 +33,13 @@ const response = [
     }
 ]
 
-let daysFree = [];
-let daysAndDate = [];
-let daysCheck = [];
-response.map((element) => {
-    //  const x = daysAndDate.find((day) => day.name == element.name);
-    //  console.log(x)
-    if (!daysCheck.includes(element.day)) {
-        daysCheck.push(element.day)
-        console.log('days check')
-        console.log(daysCheck)
-        daysAndDate.push({
-            name: element.day,
-            date: element.date
-        })
-    }
-    console.log(daysAndDate)
-    daysFree.push({
-        name: element.day,
-        date: element.date,
-        slotOfTime: element.start_time + ':00 - ' + element.end_time + ':00',
-        id: element.id,
-        user: element.user
-    })
-})
 
-console.log(daysFree)
 
 const Alert = forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-const days = [
-    { name: 'Mon', date: '24' },
-    { name: 'Tue', date: '25' },
-    { name: 'Wed', date: '26' },
-    { name: 'Thu', date: '27' },
-    { name: 'Fri', date: '28' },
-    { name: 'Sat', date: '29' },
-    { name: 'Sun', date: '30' },
-];
 
-const timeSlots = [
-    '9:00am - 10:00am',
-    '10:00am - 11:00am',
-    '11:00am - 12:00pm',
-    '12:00pm - 1:00pm',
-    '1:00pm - 2:00pm',
-    '2:00pm - 3:00pm',
-    '3:00pm - 4:00pm',
-    '4:00pm - 5:00pm',
-];
 
 const StyledContainer = styled.div`
   display: flex;
@@ -167,6 +123,49 @@ const ScheduleTour = () => {
     const [scrollPosition, setScrollPosition] = useState(0);
     const vertical = 'bottom';
     const horizontal = 'left';
+    const [daysFree, setDaysFree] = useState([]);
+    const [daysAndDate, setDaysAndDate] = useState([]);
+    const [daysCheck, setDaysCheck] = useState([]);
+
+    useEffect(() => {
+        async function getScheduleTourData() {
+            // const res = await axios.get(`some-url/todos`);
+
+            let daysFreeLocal = [];
+            let daysAndDateLocal = [];
+            let daysCheckLocal = [];
+            response.map((element) => {
+                if (!daysCheckLocal.includes(element.day)) {
+                    daysCheckLocal.push(element.day)
+                    daysAndDateLocal.push({
+                        name: element.day,
+                        date: element.date
+                    })
+                }
+                daysFreeLocal.push({
+                    name: element.day,
+                    date: element.date,
+                    slotOfTime: element.start_time + ':00 - ' + element.end_time + ':00',
+                    id: element.id,
+                    user: element.user
+                })
+            })
+
+            setDaysFree(daysFreeLocal)
+            setDaysAndDate(daysAndDateLocal)
+            setDaysCheck(daysCheckLocal)
+        }
+
+        getScheduleTourData();
+
+    },[])
+
+    // useEffect(()=>{
+    //     console.log(daysAndDate)
+    //     console.log(daysFree)
+    //     console.log(daysCheck)
+
+    // },[daysAndDate , daysFree , daysCheck])
 
     const handleLeftArrowClick = () => {
         const scroller = document.getElementById('days-scroller');
@@ -233,21 +232,26 @@ const ScheduleTour = () => {
                 <ArrowButton disabled={scrollPosition === 0} onClick={handleLeftArrowClick}>
                     {'<'}
                 </ArrowButton>
+                {daysAndDate ? 
                 <StyledDaysScroller id="days-scroller">
-                    {daysAndDate.map((day) => (
-                        <StyledDayButton
-                            key={day.date}
-                            variant="contained"
-                            selected={day === selectedDay}
-                            onClick={() => handleDayButtonClick(day)}
-                        >
-                            <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                <span>{day.name}</span>
-                                <span>{day.date.split("-")[2]}</span>
-                            </div>
-                        </StyledDayButton>
-                    ))}
-                </StyledDaysScroller>
+                {daysAndDate.map((day) => (
+                    <StyledDayButton
+                        key={day.date}
+                        variant="contained"
+                        selected={day === selectedDay}
+                        onClick={() => handleDayButtonClick(day)}
+                    >
+                        <div style={{ display: 'flex', flexDirection: 'column' }}>
+                            <span>{day.name}</span>
+                            <span>{day.date.split("-")[2]}</span>
+                        </div>
+                    </StyledDayButton>
+                ))}
+            </StyledDaysScroller>
+            : 
+            <div>loading...</div>    
+            }
+                
                 <ArrowButton
                     // disabled={
                     //     document.getElementById('days-scroller').scrollWidth - document.getElementById('days-scroller').clientWidth ===
@@ -272,10 +276,10 @@ const ScheduleTour = () => {
             </StyledDaysScroller> */}
             {selectedDay && (
                 <StyledTimeSlotsContainer>
-                    {daysFree.map((day) =>
+                    {daysFree.map((day , index) =>
                         day.name == selectedDay.name ?
                             <StyledTimeSlotButton
-                                key={day.slotOfTime}
+                                key={index}
                                 variant="contained"
                                 selected={day.slotOfTime == ColoredselectedTimeSlot}
                                 onClick={() => { handleTimeSlotButtonClick(day); }}>
