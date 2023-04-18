@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import './Filteration.css'
 import {
@@ -58,11 +58,44 @@ export default function Filteration() {
   });
   const [showFeatures, setShowFeatures] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [featuresFinalVersion, setFeaturesFinalVersion] = useState([]);
 
-
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     setIsLoading(true);
+    var tempFeatures =[]
+    for(let key in features){
+      if(features[key])
+      {
+        tempFeatures.push(key);
+      }
+    }
+    setFeaturesFinalVersion(tempFeatures);
+    // const FilterationReq = {
+    //   city: city,
+    //   state: status,
+    //   type: type,
+    //   min_area: areaRange[0],
+    //   max_area: areaRange[1],
+    //   min_price: priceRange[0],
+    //   max_price: priceRange[1],
+    //   features: featuresFinalVersion,
+    // }
+
+    // try {
+    //   // const response = await axios.post('/search', { });
+    //   // console.log(response.data);
+    //   console.log(FilterationReq);
+    // } catch (error) {
+    //   console.error(error);
+    // }
+
+    // setIsLoading(false);
+  };
+
+  useEffect(()=>{
+
+
     const FilterationReq = {
       city: city,
       state: status,
@@ -71,20 +104,33 @@ export default function Filteration() {
       max_area: areaRange[1],
       min_price: priceRange[0],
       max_price: priceRange[1],
-      features: features,
+      features: featuresFinalVersion,
     }
 
-    try {
-      // const response = await axios.post('/search', { });
+    const Search=async ()=>
+    {try {
+      const response = await axios.get('http://127.0.0.1:8001/houses/', { params:{
+        city: city,
+      state: status,
+      type: type,
+      min_area: areaRange[0],
+      max_area: areaRange[1],
+      min_price: priceRange[0],
+      max_price: priceRange[1],
+      features: featuresFinalVersion.join(','),
+
+      }
+          });
       // console.log(response.data);
       console.log(FilterationReq);
     } catch (error) {
       console.error(error);
-    }
-
+    }}
+    Search();
     setIsLoading(false);
-  };
 
+    console.log(featuresFinalVersion)
+  },[featuresFinalVersion])
   const handleToggleFeatures = () => {
     setShowFeatures(!showFeatures);
   };

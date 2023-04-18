@@ -5,7 +5,7 @@ import h1 from '../../Images/h1.jpg'
 import h2 from '../../Images/h2.jpg'
 import h3 from '../../Images/h3.jpg'
 
-export default function PropertyGallary() {
+export default function PropertyGallary({propertyDetails}) {
     const data = [
         {
             image: h1,
@@ -39,7 +39,7 @@ export default function PropertyGallary() {
             // padding: "0 20px"
           }}>
             <Carousel
-              data={data}
+              data={propertyDetails.images}
               time={7000}
               // width="650px"
               width="100%"

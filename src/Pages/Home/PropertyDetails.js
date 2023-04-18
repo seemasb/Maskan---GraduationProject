@@ -5,6 +5,9 @@ import PropertyDetailsS2 from "../../Components/PropertyDetailsComponents/Proper
 import styled from 'styled-components';
 import { IconButton, Typography } from "@material-ui/core";
 import { ArrowBack } from "@material-ui/icons";
+import axios from "axios";
+import { useEffect, useState } from "react";
+
 
 const DescriptionContainer = styled('div')({
     padding: '40px 40px 0 40px'
@@ -47,7 +50,22 @@ const BackButtonText = styled(Typography)`
   }
 `;
 
+
+
 export default function PropertyDetails() {
+  const [propertyDetails , setPropertyDetails] = useState();
+  useEffect(() => {
+    const getPropertyDetails = async () => {
+      try {
+        const fetchData = await axios.get('http://127.0.0.1:8001/home/9/')
+        setPropertyDetails(fetchData.data)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    getPropertyDetails()
+  },[])
+
     return (
         <DescriptionContainer>
 
@@ -61,11 +79,11 @@ export default function PropertyDetails() {
                     </BackButtonWrapper>
                 </Grid>
                 <Grid item md={8} sm={12}>
-                    <PropertyGallary />
-                    <PropertyDetailsS1 />
+                    {propertyDetails?<PropertyGallary propertyDetails={propertyDetails} />:<div>Loading...</div>}
+                    {propertyDetails?<PropertyDetailsS1 propertyDetails={propertyDetails} />:<div>Loading...</div>}
                 </Grid>
                 <Grid item md={4} sm={12}>
-                    <PropertyDetailsS2 />
+                  {propertyDetails?<PropertyDetailsS2 propertyDetails={propertyDetails} />:<div>Loading...</div>}
                 </Grid>
             </Grid>
 

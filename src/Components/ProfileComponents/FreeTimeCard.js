@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Card, CardContent, IconButton, Snackbar, Typography, Button  } from "@material-ui/core";
+import { Card, CardContent, IconButton, Snackbar, Typography, Button } from "@material-ui/core";
 import { Edit } from "@material-ui/icons";
-import { TimePicker } from '@material-ui/pickers';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import axios from "axios";
 
 const StyledCard = styled(Card)`
   background-color: white;
@@ -93,7 +93,25 @@ const FreeTimeCard = () => {
       start: parseInt(mondayStart.split(":")[0]),
       end: parseInt(mondayEnd.split(":")[0])
     })
+
+    async function updateFreeTimes() {
+      const userToken = localStorage.getItem('Token')
+      let header;
+      userToken ? header = {
+        'Authorization': 'Token ' + userToken
+      } : header = {};
+      const res = await axios.post(
+        'http://127.0.0.1:8001/reservations/reserve/',
+        {
+          body:list
+        },
+        {
+          headers: header
+        }
+      );
+    }
     console.log(list)
+    updateFreeTimes()
   };
 
   const handleCloseSnackbar = () => {
@@ -117,7 +135,7 @@ const FreeTimeCard = () => {
             id="demo-select-small"
             value={'Monday'}
             label="Age"
-            onChange={()=>{}}
+            onChange={() => { }}
           >
             <MenuItem value="">
               <em>None</em>

@@ -94,7 +94,7 @@ export default function StepperSellStep3() {
         console.log('total form data')
         console.log(formData)
         try {
-          const response = await axios.patch('http://127.0.0.1:8001/upload/31/', formData, {
+          const response = await axios.patch('http://127.0.0.1:8001/upload/9/', formData, {
             headers: {
               'Content-Type': 'multipart/form-data',
             },
