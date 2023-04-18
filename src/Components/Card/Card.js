@@ -5,7 +5,7 @@ import { useState } from 'react';
 import {
     IconButton,
 } from '@mui/material';
-import { Favorite, FavoriteBorder } from '@mui/icons-material';
+import { Favorite, FavoriteBorder, Home } from '@mui/icons-material';
 import Home1 from '../../Images/pool_1.jpg'
 import './Card.css'
 import ShowerOutlinedIcon from '@mui/icons-material/ShowerOutlined';
@@ -13,7 +13,7 @@ import BedOutlinedIcon from '@mui/icons-material/BedOutlined';
 import { MdOutlineBed } from 'react-icons/md'
 
 
-export default function Card() {
+export default function Card({data}) {
     const [isFavorite, setIsFavorite] = useState(false);
 
     const handleFavoriteClick = () => {
@@ -22,7 +22,7 @@ export default function Card() {
     return (
         <div className="Card">
 
-            <img src={Home1} className="cardImg"></img>
+            <img src={data.first_image? data.first_image.image : Home1} className="cardImg"></img>
             {/* <IconButton
                         onClick={handleFavoriteClick}
                         sx={{
@@ -38,25 +38,25 @@ export default function Card() {
                 <div>
                     <div className='CardLocationDiv'>
                         <span><LocationOnOutlinedIcon sx={{ fontSize: 20 }} color="disabled" /></span>
-                        <span>Rafedia street</span>
+                        <span>{data.location.address} , {data.location.city} </span>
                     </div>
 
-                    <span className='CardTitle'>1500$</span>
+                    <span className='CardTitle'>{data.price}$</span>
 
                 </div>
 
                 <div className='featuresSection'>
                     <div className='FeaturesDiv'>
                         <ShowerOutlinedIcon className='featureIcon' fontSize="small" />
-                        <span>3</span>
+                        <span>{data.living_space.bathrooms}</span>
                         <span>Bathrooms</span>
                     </div>
 
                     <div className='FeaturesDiv'>
                         <BedOutlinedIcon className='featureIcon' fontSize="small" />
                         {/* <MdOutlineBed className='featureIcon'/> */}
-                        <span>2</span>
-                        <span>Rooms</span>
+                        <span>{data.living_space.bedrooms}</span>
+                        <span>Bedrooms</span>
                     </div>
 
 

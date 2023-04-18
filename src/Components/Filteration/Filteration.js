@@ -18,6 +18,7 @@ import {
   Typography,
 } from "@mui/material";
 import { styled } from '@mui/material/styles';
+import Card from "../Card/Card";
 
 const StyledButton = styled(Button)({
   background: 'linear-gradient(45deg, #45729d 30%, #94a3b5 90%)',
@@ -45,8 +46,8 @@ export default function Filteration() {
   const [city, setCity] = useState("");
   const [status, setStatus] = useState("");
   const [type, setType] = useState("");
-  const [areaRange, setAreaRange] = useState([0, 1000]);
-  const [priceRange, setPriceRange] = useState([0, 1000000]);
+  const [areaRange, setAreaRange] = useState([300, 10000]);
+  const [priceRange, setPriceRange] = useState([50000, 1000000]);
   const [features, setFeatures] = useState({
     swimmingPool: false,
     garden: false,
@@ -59,6 +60,8 @@ export default function Filteration() {
   const [showFeatures, setShowFeatures] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [featuresFinalVersion, setFeaturesFinalVersion] = useState([]);
+  const [cardsResponse, setCardsResponse] = useState([]);
+  const [dataFlag, setDataFlag] = useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -123,6 +126,7 @@ export default function Filteration() {
           });
       // console.log(response.data);
       console.log(FilterationReq);
+      setCardsResponse(response.data);
     } catch (error) {
       console.error(error);
     }}
@@ -131,6 +135,17 @@ export default function Filteration() {
 
     console.log(featuresFinalVersion)
   },[featuresFinalVersion])
+
+  useEffect(()=>{
+
+    console.log('im in use effect: ' , cardsResponse)
+    // if([]){
+    //   console.log("trueeeeeeeeeee")
+    // }
+    if(cardsResponse.length != 0)  setDataFlag(true);
+    else setDataFlag(false);
+
+  }, [cardsResponse])
   const handleToggleFeatures = () => {
     setShowFeatures(!showFeatures);
   };
@@ -181,6 +196,7 @@ export default function Filteration() {
   };
 
   return (
+    <div>
     <div className="Filteration">
       <form onSubmit={handleSubmit} className="FilterationForm">
         <div className="dropdownsFilters">
@@ -246,8 +262,8 @@ export default function Filteration() {
               onChange={handleAreaChange}
               valueLabelDisplay="auto"
               aria-labelledby="area-slider"
-              min={0}
-              max={1000}
+              min={300}
+              max={10000}
               size="small"
             />
           </div>
@@ -260,8 +276,8 @@ export default function Filteration() {
               onChange={handlePriceChange}
               valueLabelDisplay="auto"
               aria-labelledby="price-slider"
-              min={0}
-              max={10000}
+              min={50000}
+              max={1000000}
               size="small"
             />
           </div>
@@ -413,6 +429,22 @@ export default function Filteration() {
 
 
       </form>
+    </div>
+
+
+
+    <div className="filterationHomeCards">
+            <div className="FilteredCards">
+              {cardsResponse ? 
+              cardsResponse.map((element)=>
+                <Card data={element} key={element.id}/>
+              )
+              : 
+               dataFlag ? <div>No data found</div>: <div>loading...</div>
+              
+              }
+            </div>
+    </div>
     </div>
   )
 }

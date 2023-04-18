@@ -64,7 +64,7 @@ const StyledButton = styled(Button)({
     },
 });
 
-export default function HouseTypeDetails() {
+export default function HouseTypeDetails({setHomeAddedId}) {
     const [area, setArea] = useState('');
     const [numFloors, setNumFloors] = useState('');
     const [city, setCity] = useState('');
@@ -153,7 +153,8 @@ export default function HouseTypeDetails() {
         }
         )
             .then(function (response) {
-                console.log(response);
+                console.log(response.data.id);
+                setHomeAddedId(response.data.id)
             })
             .catch(function (error) {
                 console.log(error);

@@ -57,7 +57,7 @@ export default function PropertyDetails() {
   useEffect(() => {
     const getPropertyDetails = async () => {
       try {
-        const fetchData = await axios.get('http://127.0.0.1:8001/home/9/')
+        const fetchData = await axios.get('http://127.0.0.1:8001/home/10/')
         setPropertyDetails(fetchData.data)
       } catch (error) {
         console.log(error)
