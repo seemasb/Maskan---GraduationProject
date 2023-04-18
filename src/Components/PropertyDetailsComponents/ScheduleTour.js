@@ -34,7 +34,6 @@ const response = [
 ]
 
 
-
 const Alert = forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -129,14 +128,17 @@ const ScheduleTour = () => {
 
     useEffect(() => {
         async function getScheduleTourData() {
-            // const res = await axios.get(`some-url/todos`);
+            const res = await axios.get(`http://127.0.0.1:8001/reservations/short_slots/`);
+            console.log('my result')
+            console.log(res)
 
             let daysFreeLocal = [];
             let daysAndDateLocal = [];
-            let daysCheckLocal = [];
-            response.map((element) => {
-                if (!daysCheckLocal.includes(element.day)) {
-                    daysCheckLocal.push(element.day)
+            let datesCheckLocal = [];
+            res.data.map((element) => {
+                console.log(element)
+                if (!datesCheckLocal.includes(element.date)) {
+                    datesCheckLocal.push(element.date)
                     daysAndDateLocal.push({
                         name: element.day,
                         date: element.date
@@ -153,19 +155,12 @@ const ScheduleTour = () => {
 
             setDaysFree(daysFreeLocal)
             setDaysAndDate(daysAndDateLocal)
-            setDaysCheck(daysCheckLocal)
+            setDaysCheck(datesCheckLocal)
         }
 
         getScheduleTourData();
 
     },[])
-
-    // useEffect(()=>{
-    //     console.log(daysAndDate)
-    //     console.log(daysFree)
-    //     console.log(daysCheck)
-
-    // },[daysAndDate , daysFree , daysCheck])
 
     const handleLeftArrowClick = () => {
         const scroller = document.getElementById('days-scroller');
@@ -196,23 +191,27 @@ const ScheduleTour = () => {
         setColoredSelectedTimeSlot(timeSlot.slotOfTime)
     };
 
+
+
     const handleScheduleButtonClick = () => {
         console.log(selectedTimeSlot)
         //////////////////////////////////////////how to send axios with param/////////////////////
+        
         async function sendSlotId() {
-            const res = await axios.post(
-                'https://fake-api.kindacode.com/tutorials',
-                {
-                    // data to sent to the server - post body
-                    // it can be an empty object
-                },
-                {
-                    // specify query parameters
-                    params: {
-                        slotId: selectedTimeSlot.id,
-                    },
-                }
-            );
+            const userToken =localStorage.getItem('Token')
+        let header;
+        userToken ? header={
+            'Authorization': 'Token '+ userToken
+        }: header ={};
+        const res = await axios.patch(
+            'http://127.0.0.1:8001/reservations/reserve/'+selectedTimeSlot.id+'/', 
+            {
+                "home": 7
+            },
+            {
+                headers: header
+            }
+        );
         }
 
         sendSlotId()
@@ -234,9 +233,9 @@ const ScheduleTour = () => {
                 </ArrowButton>
                 {daysAndDate ? 
                 <StyledDaysScroller id="days-scroller">
-                {daysAndDate.map((day) => (
+                {daysAndDate.map((day , index)=> (
                     <StyledDayButton
-                        key={day.date}
+                        key={index}
                         variant="contained"
                         selected={day === selectedDay}
                         onClick={() => handleDayButtonClick(day)}
@@ -249,7 +248,7 @@ const ScheduleTour = () => {
                 ))}
             </StyledDaysScroller>
             : 
-            <div>loading...</div>    
+            <div>Loading...</div>
             }
                 
                 <ArrowButton
@@ -277,7 +276,7 @@ const ScheduleTour = () => {
             {selectedDay && (
                 <StyledTimeSlotsContainer>
                     {daysFree.map((day , index) =>
-                        day.name == selectedDay.name ?
+                        day.date == selectedDay.date ?
                             <StyledTimeSlotButton
                                 key={index}
                                 variant="contained"

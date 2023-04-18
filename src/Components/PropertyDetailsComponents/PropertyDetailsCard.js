@@ -13,15 +13,15 @@ import { grey } from '@material-ui/core/colors';
 
 
 
-const PropertyDetails = ({ price, location, bedrooms, bathrooms, kitchens, area }) => {
+const PropertyDetails = ({ propertyDetails }) => {
   return (
     <PropertyDetailsContainer>
       <DetailsContainer>
         <div>
-          <Price>{price}/Year</Price>
+          <Price>{propertyDetails.price}/Year</Price>
           <StyledLocation>
             <LocationOnIcon style={{ color: '#9e9e9e' }} />
-            {location}
+            {propertyDetails.location.address}
           </StyledLocation>
         </div>
         <StyledDivider />
@@ -29,25 +29,25 @@ const PropertyDetails = ({ price, location, bedrooms, bathrooms, kitchens, area 
           <StyledFeature>
             <LocalHotelIcon style={{ color: '#9e9e9e' }} />
             <div>
-              {bedrooms} Bedrooms
+              {propertyDetails.living_space.bedrooms} Bedrooms
             </div>
           </StyledFeature>
           <StyledFeature>
             <BathtubIcon style={{ color: '#9e9e9e' }} />
             <div>
-              {bathrooms} Bathrooms
+              {propertyDetails.living_space.bathrooms} Bathrooms
             </div>
           </StyledFeature>
           <StyledFeature>
             <KitchenIcon style={{ color: '#9e9e9e' }} />
             <div>
-              {kitchens} Kitchens
+              {propertyDetails.living_space.kitchens} Kitchens
             </div>
           </StyledFeature>
           <StyledFeature>
             <AspectRatioIcon style={{ color: '#9e9e9e' }} />
             <div>
-              {area} sqft
+              {propertyDetails.area} sqft
             </div>
           </StyledFeature>
         </StyledRow>

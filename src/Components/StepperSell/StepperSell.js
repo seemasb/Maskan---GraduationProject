@@ -94,6 +94,7 @@ const steps = ['Property type', 'Property details', 'Upload'];
 export default function StepperSell() {
     const [activeStep, setActiveStep] = useState(0);
     const [propertyType , setPropertyType] = useState();
+    const [homeAddedId , setHomeAddedId] = useState();
 
     const handleNext = () => {
 
@@ -113,9 +114,9 @@ export default function StepperSell() {
             case 0:
                 return <StepperSellStep1 onChange={handlePropertyTypeChange}/>
             case 1:
-                return <HouseTypeDetails/>
+                return <HouseTypeDetails setHomeAddedId={setHomeAddedId}/>
             case 2:
-                return <StepperSellStep3/>
+                return <StepperSellStep3 homeAddedId={homeAddedId}/>
 
             default: return <Success/>
         }

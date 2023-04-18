@@ -10,12 +10,13 @@ const StyledPropertyDetailsS1 = styled.div`
     row-gap: 26px;F
 `
 
-function PropertyDetailsS1() {
+function PropertyDetailsS1({propertyDetails}) {
+
     return (
         <StyledPropertyDetailsS1>
-            <PropertyDescription />
-            <PropertyFeatures />
-            <PropertyLocation />
+            <PropertyDescription propertyDetails={propertyDetails}/>
+            <PropertyFeatures propertyDetails={propertyDetails}/>
+            <PropertyLocation propertyDetails={propertyDetails}/>
 
         </StyledPropertyDetailsS1>
     );

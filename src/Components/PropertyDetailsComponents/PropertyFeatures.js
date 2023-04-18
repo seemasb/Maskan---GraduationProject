@@ -61,7 +61,7 @@ const featuresArray = [
 
 ]
 
-const PropertyFeatures = ({ features }) => {
+const PropertyFeatures = ({ propertyDetails }) => {
     return (
         <FeaturesContainer>
             {/* <Typography variant="h6" gutterBottom>
@@ -69,13 +69,13 @@ const PropertyFeatures = ({ features }) => {
             </Typography> */}
             <h2>Features</h2>
             <DisplayFeatures>
-                {featuresArray.map((feature, index) => (
+                {propertyDetails.features.data.map((feature, index) => (
                     <FeatureItem key={index}>
                         <StyledFeatureIcon>
                             {/* {feature.icon} */}
                             <CheckCircleIcon />
                         </StyledFeatureIcon>
-                        <FeatureTitle >{feature.feature}</FeatureTitle>
+                        <FeatureTitle >{feature.key}</FeatureTitle>
                     </FeatureItem>
                 ))}
             </DisplayFeatures>

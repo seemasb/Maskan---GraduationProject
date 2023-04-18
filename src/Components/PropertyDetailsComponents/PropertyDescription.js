@@ -13,15 +13,12 @@ const StyledDiv = styled.div`
 //   }
 `;
 
-function PropertyDescription() {
+function PropertyDescription({propertyDetails}) {
     return (
         <StyledDiv>
             <h2>Property Description</h2>
             <div>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut orci euismod, fermentum ipsum nec,
-                ultrices orci. Sed rhoncus urna eu leo tincidunt, vel molestie ex efficitur. Nam eget dolor id quam
-                congue tincidunt. Sed at eros augue. Fusce eu mollis nisi. Aliquam erat volutpat. Maecenas vitae justo id mauris efficitur faucibus. Integer ut massa euismod, consectetur mi sit amet, venenatis orci. Nulla facilisi. Nam vitae justo non quam aliquam rhoncus. Aenean finibus ex eget augue ultricies, in laoreet ante ultricies. In hac habitasse platea dictumst. Vivamus luctus maximus quam, vitae dignissim magna rhoncus in.
-                Vivamus nec velit ullamcorper, ullamcorper velit id, accumsan tortor.
+                {propertyDetails?propertyDetails.description:<div>loading...</div>}
             </div>
         </StyledDiv>
     );

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import './Filteration.css'
 import {
@@ -18,6 +18,7 @@ import {
   Typography,
 } from "@mui/material";
 import { styled } from '@mui/material/styles';
+import Card from "../Card/Card";
 
 const StyledButton = styled(Button)({
   background: 'linear-gradient(45deg, #45729d 30%, #94a3b5 90%)',
@@ -45,8 +46,8 @@ export default function Filteration() {
   const [city, setCity] = useState("");
   const [status, setStatus] = useState("");
   const [type, setType] = useState("");
-  const [areaRange, setAreaRange] = useState([0, 1000]);
-  const [priceRange, setPriceRange] = useState([0, 1000000]);
+  const [areaRange, setAreaRange] = useState([300, 10000]);
+  const [priceRange, setPriceRange] = useState([50000, 1000000]);
   const [features, setFeatures] = useState({
     swimmingPool: false,
     garden: false,
@@ -58,11 +59,46 @@ export default function Filteration() {
   });
   const [showFeatures, setShowFeatures] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [featuresFinalVersion, setFeaturesFinalVersion] = useState([]);
+  const [cardsResponse, setCardsResponse] = useState([]);
+  const [dataFlag, setDataFlag] = useState(false);
 
-
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     setIsLoading(true);
+    var tempFeatures =[]
+    for(let key in features){
+      if(features[key])
+      {
+        tempFeatures.push(key);
+      }
+    }
+    setFeaturesFinalVersion(tempFeatures);
+    // const FilterationReq = {
+    //   city: city,
+    //   state: status,
+    //   type: type,
+    //   min_area: areaRange[0],
+    //   max_area: areaRange[1],
+    //   min_price: priceRange[0],
+    //   max_price: priceRange[1],
+    //   features: featuresFinalVersion,
+    // }
+
+    // try {
+    //   // const response = await axios.post('/search', { });
+    //   // console.log(response.data);
+    //   console.log(FilterationReq);
+    // } catch (error) {
+    //   console.error(error);
+    // }
+
+    // setIsLoading(false);
+  };
+
+  useEffect(()=>{
+
+
     const FilterationReq = {
       city: city,
       state: status,
@@ -71,20 +107,45 @@ export default function Filteration() {
       max_area: areaRange[1],
       min_price: priceRange[0],
       max_price: priceRange[1],
-      features: features,
+      features: featuresFinalVersion,
     }
 
-    try {
-      // const response = await axios.post('/search', { });
+    const Search=async ()=>
+    {try {
+      const response = await axios.get('http://127.0.0.1:8001/houses/', { params:{
+        city: city,
+      state: status,
+      type: type,
+      min_area: areaRange[0],
+      max_area: areaRange[1],
+      min_price: priceRange[0],
+      max_price: priceRange[1],
+      features: featuresFinalVersion.join(','),
+
+      }
+          });
       // console.log(response.data);
       console.log(FilterationReq);
+      setCardsResponse(response.data);
     } catch (error) {
       console.error(error);
-    }
-
+    }}
+    Search();
     setIsLoading(false);
-  };
 
+    console.log(featuresFinalVersion)
+  },[featuresFinalVersion])
+
+  useEffect(()=>{
+
+    console.log('im in use effect: ' , cardsResponse)
+    // if([]){
+    //   console.log("trueeeeeeeeeee")
+    // }
+    if(cardsResponse.length != 0)  setDataFlag(true);
+    else setDataFlag(false);
+
+  }, [cardsResponse])
   const handleToggleFeatures = () => {
     setShowFeatures(!showFeatures);
   };
@@ -135,6 +196,7 @@ export default function Filteration() {
   };
 
   return (
+    <div>
     <div className="Filteration">
       <form onSubmit={handleSubmit} className="FilterationForm">
         <div className="dropdownsFilters">
@@ -200,8 +262,8 @@ export default function Filteration() {
               onChange={handleAreaChange}
               valueLabelDisplay="auto"
               aria-labelledby="area-slider"
-              min={0}
-              max={1000}
+              min={300}
+              max={10000}
               size="small"
             />
           </div>
@@ -214,8 +276,8 @@ export default function Filteration() {
               onChange={handlePriceChange}
               valueLabelDisplay="auto"
               aria-labelledby="price-slider"
-              min={0}
-              max={10000}
+              min={50000}
+              max={1000000}
               size="small"
             />
           </div>
@@ -367,6 +429,22 @@ export default function Filteration() {
 
 
       </form>
+    </div>
+
+
+
+    <div className="filterationHomeCards">
+            <div className="FilteredCards">
+              {cardsResponse ? 
+              cardsResponse.map((element)=>
+                <Card data={element} key={element.id}/>
+              )
+              : 
+               dataFlag ? <div>No data found</div>: <div>loading...</div>
+              
+              }
+            </div>
+    </div>
     </div>
   )
 }

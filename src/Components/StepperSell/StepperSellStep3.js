@@ -43,7 +43,7 @@ const StyledButton = styled(Button)({
     },
 });
 
-export default function StepperSellStep3() {
+export default function StepperSellStep3({homeAddedId}) {
 
     const [isLoading, setIsLoading] = useState(false);
     const classes = useStyles();
@@ -63,9 +63,9 @@ export default function StepperSellStep3() {
     }
 
 
-    useEffect(() => {
-        console.log("ownershipImage changed:", ownershipImage);
-    }, [ownershipImage]);
+    // useEffect(() => {
+    //     console.log("ownershipImage changed:", ownershipImage);
+    // }, [ownershipImage]);
 
 
 
@@ -94,7 +94,7 @@ export default function StepperSellStep3() {
         console.log('total form data')
         console.log(formData)
         try {
-          const response = await axios.patch('http://127.0.0.1:8001/upload/31/', formData, {
+          const response = await axios.patch('http://127.0.0.1:8001/upload/'+ homeAddedId + '/', formData, {
             headers: {
               'Content-Type': 'multipart/form-data',
             },

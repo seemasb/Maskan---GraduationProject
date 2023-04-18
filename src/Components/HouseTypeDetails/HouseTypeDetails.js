@@ -26,7 +26,6 @@ import MuiAlert from '@mui/material/Alert';
 import axios from 'axios';
 
 
-
 const Alert = forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -65,7 +64,7 @@ const StyledButton = styled(Button)({
     },
 });
 
-export default function HouseTypeDetails() {
+export default function HouseTypeDetails({setHomeAddedId}) {
     const [area, setArea] = useState('');
     const [numFloors, setNumFloors] = useState('');
     const [city, setCity] = useState('');
@@ -103,8 +102,8 @@ export default function HouseTypeDetails() {
         featuresArray.map((feature) => {
             if (feature) {
                 featuresArrayFiltered.push({
-                    key: feature,
-                    icon: ''
+                    key: feature
+                    // icon: ''
                 })
             }
         })
@@ -117,7 +116,7 @@ export default function HouseTypeDetails() {
             description: notes,
             built_year: '2020',
             type: 'AP',
-            Owner: '22',
+            //owner: '22',
 
             living_space: {
                 bedrooms: numBedrooms,
@@ -132,26 +131,38 @@ export default function HouseTypeDetails() {
                 coordinates: {
                     x: location.lat,
                     y: location.lng
-                }
+                },
+                address:address,
+                city:city
             },
             apartment: {
                 floor: numFloors,
                 out_of_floors: '4'
             }
         };
+        const userToken =localStorage.getItem('Token')
+        let header;
+        userToken ? header={
+            'Authorization': 'Token '+ userToken
+        }: header ={}
 
-        // axios.post('/user', {
-        //     PropertyData
-        // })
-        //     .then(function (response) {
-        //         console.log(response);
-        //     })
-        //     .catch(function (error) {
-        //         console.log(error);
-        //     });
+        axios.post('http://127.0.0.1:8001/home_list/', {
+            PropertyData
+        }, {
+            headers: header
+        }
+        )
+            .then(function (response) {
+                console.log(response.data.id);
+                setHomeAddedId(response.data.id)
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
 
         console.log('in sending');
         console.log(PropertyData);
+
     };
 
     const handleCloseSnackBar = (event, reason) => {
