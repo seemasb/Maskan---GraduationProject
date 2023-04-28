@@ -16,6 +16,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import EditIcon from '@material-ui/icons/Edit';
 import FreeTimeCard from "./FreeTimeCard";
 import Grid from '@mui/material/Grid';
+// import ScheduleCreation from "./ScheduleCreation";
+import ScheduleCreation from './ScheduleCreation'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -167,7 +169,7 @@ const PersonalInfo = ({ profilePictureUrl, idPictureUrl, name, email, phoneNumbe
                         value={editableName}
                         onChange={handleNameChange}
                     /> */}
-                    <div style={{ display: 'flex', flexDirection: 'column', rowGap: '20px', width: '60%' }}>
+                    {/* <div style={{ display: 'flex', flexDirection: 'column', rowGap: '20px', width: '60%' }}>
                         <TextField
                             id="email" label="Email" value={email} disabled
                             InputProps={{
@@ -217,18 +219,19 @@ const PersonalInfo = ({ profilePictureUrl, idPictureUrl, name, email, phoneNumbe
                                 ),
                             }}
                         />
-                    </div>
-                    <Button
+                    </div> */}
+                    {/* <Button
                         variant="contained"
                         className={classes.button}
                         onClick={handleSaveChanges}
                         style={{ height: '48px', fontSize: '17px' }}
                     >
                         Save Changes
-                    </Button>
+                    </Button> */}
                 </InfoCardContent>
             </InfoCard>
-            <FreeTimeCard />
+            {/* <FreeTimeCard /> */}
+            <ScheduleCreation/>
         </Wrapper>
     )
 }
