@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import SignInModal from '../SignIn/Up/SignInModal'
 import SignUpModal from '../SignIn/Up/SignUpModal'
 import './Navbar.css';
+import RoofingIcon from '@mui/icons-material/Roofing';
 
 // function check() {
 //   const one = document.getElementById('home');
@@ -20,6 +21,10 @@ export default function Navbar() {
 
   return (
     <div className="NavContainer">
+      <div>
+        <RoofingIcon fontSize="large" color='action' />
+        <span className='logoTitle'>Maskan</span>
+      </div>
       <div className='Nav'>
         <ul>
           <li>
@@ -27,7 +32,8 @@ export default function Navbar() {
               to="/Home"
               className="naving"
               id="home"
-
+              style={{ color: 'gray' }}
+              activeStyle={{ color: '#45729d' }}
             >
               Home
             </NavLink>
@@ -37,6 +43,8 @@ export default function Navbar() {
               to="/Properities"
               className="naving"
               id="Properities"
+              style={{ color: 'gray' }}
+              activeStyle={{ color: '#45729d' }}
 
             >
               Properities
@@ -47,6 +55,8 @@ export default function Navbar() {
               to="/Sell"
               className="naving"
               id="Sell"
+              style={{ color: 'gray' }}
+              activeStyle={{ color: '#45729d' }}
 
             >
               Sell Properity
@@ -57,6 +67,8 @@ export default function Navbar() {
               to="/Contact"
               className="naving"
               id="contact"
+              style={{ color: 'gray' }}
+              activeStyle={{ color: '#45729d' }}
 
             >
               Contact-us
@@ -67,6 +79,8 @@ export default function Navbar() {
               to="/Profile"
               className="naving"
               id="Profile"
+              style={{ color: 'gray' }}
+              activeStyle={{ color: '#45729d' }}
 
             >
               Profile

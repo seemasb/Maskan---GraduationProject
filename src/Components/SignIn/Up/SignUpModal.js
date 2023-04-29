@@ -27,7 +27,7 @@ export default function SignUnModal() {
 
   return (
     <div>
-      <Button onClick={handleClickOpen}>
+      <Button onClick={handleClickOpen} className='SignUpButton'>
         Sign Up
       </Button>
       <BootstrapDialog

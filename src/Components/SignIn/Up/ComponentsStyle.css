@@ -115,5 +115,9 @@
 }
 
 .SignInBtn{
-    color: black;
+    color: #45729d !important;
+}
+
+.SignUpButton{
+    color: #45729d !important;
 }

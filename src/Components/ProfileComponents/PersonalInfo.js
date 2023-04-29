@@ -14,10 +14,12 @@ import EmailIcon from '@material-ui/icons/Email';
 import DateRangeIcon from '@material-ui/icons/DateRange';
 import { makeStyles } from "@material-ui/core/styles";
 import EditIcon from '@material-ui/icons/Edit';
+import DoneOutlineIcon from '@mui/icons-material/DoneOutline';
 import FreeTimeCard from "./FreeTimeCard";
 import Grid from '@mui/material/Grid';
 // import ScheduleCreation from "./ScheduleCreation";
 import ScheduleCreation from './ScheduleCreation'
+import PersonalInfoTabs from "./PersonalInfoTabs";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -54,7 +56,7 @@ const Name = styled.span`
 
 const InfoCard = styled(Card)`
 //   margin-top: 16px;
-  padding: 25px;
+//   padding: 25px;
   width: 50%;
 //   max-width: 600px;
 `;
@@ -76,6 +78,7 @@ const PersonalInfo = ({ profilePictureUrl, idPictureUrl, name, email, phoneNumbe
 
     const [editMode, setEditMode] = useState(false);
     const [editableName, setEditableName] = useState(name);
+    const [editablePhone, setEditablePhone] = useState(phoneNumber);
     const [editableProfilePictureUrl, setEditableProfilePictureUrl] = useState(
         profilePictureUrl
     );
@@ -85,6 +88,10 @@ const PersonalInfo = ({ profilePictureUrl, idPictureUrl, name, email, phoneNumbe
 
     const handleNameChange = (event) => {
         setEditableName(event.target.value);
+    };
+    const handlePhoneChange = (value) => {
+        // setEditablePhone(event.target.value);
+        setEditablePhone(value)
     };
 
     const handleProfilePictureChange = (event) => {
@@ -127,11 +134,14 @@ const PersonalInfo = ({ profilePictureUrl, idPictureUrl, name, email, phoneNumbe
                             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                 {editMode ?
                                     <TextField
-                                        id="name" label="Name" value={name}
-                                    /> : <Name>Sima Sbouh</Name>}
+                                        id="name" label="Name" value={editableName}
+                                        onChange={handleNameChange}
+                                    /> : <Name>{editableName}</Name>}
 
-                                <StyledIconButton aria-label="edit" onClick={() => { setEditMode(true) }}>
-                                    <EditIcon />
+                                <StyledIconButton aria-label="edit" >
+                                    {
+                                        editMode ? <DoneOutlineIcon onClick={handleSaveChanges}/> : <EditIcon onClick={() => { setEditMode(true) }}/>
+                                    }
                                 </StyledIconButton>
                             </div>
                             <label htmlFor="profile-picture-upload">
@@ -228,10 +238,11 @@ const PersonalInfo = ({ profilePictureUrl, idPictureUrl, name, email, phoneNumbe
                     >
                         Save Changes
                     </Button> */}
+                    <PersonalInfoTabs email={email} phoneNumber={editablePhone} birthdate={birthdate} editMode={editMode}  handlePhoneChange={handlePhoneChange}/>
                 </InfoCardContent>
             </InfoCard>
             {/* <FreeTimeCard /> */}
-            <ScheduleCreation/>
+            <ScheduleCreation />
         </Wrapper>
     )
 }

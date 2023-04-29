@@ -1,81 +1,124 @@
 import React from 'react';
 import styled from 'styled-components';
-import { makeStyles } from '@material-ui/core/styles';
-import { Button, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from '@material-ui/core';
-
-const useStyles = makeStyles((theme) => ({
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
-  },
-  searchButton: {
-    backgroundColor: '#45729d',
-    color: '#fff',
-    '&:hover': {
-      backgroundColor: '#305f83',
-    },
-  },
-}));
+import Container from '@material-ui/core/Container';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import SearchIcon from '@material-ui/icons/Search';
+import Typography from '@material-ui/core/Typography';
+import Hero from '../../Images/hero.jpg'
 
 const HomeContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background-image: url('https://example.com/real-estate-background.jpg');
+  height: 80vh;
+  background: url(${Hero}) no-repeat center center fixed;
   background-size: cover;
+  // background-size: 80%;
+  margin: 30px;
+  border-radius: 50px;
+`;
+const SearchForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  // margin-top: 16px;
+  width: 100%;
 `;
 
-const SearchContainer = styled.div`
+const SearchField = styled(TextField)`
+  // margin-top: 8px;
+  width: 100%;
+`;
+
+const SearchIconWrapper = styled(SearchIcon)`
+  margin-right: 8px;
+`;
+
+const RootContainer = styled(Container)`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: rgba(255, 255, 255, 0.8);
-  padding: 20px;
-  border-radius: 10px;
+  // margin-left: -16px;
+  // margin-right: -16px;
+  border-radius: 16px;
+  @media (min-width: 600px) {
+    margin-left: 0;
+    margin-right: 0;
+    border-radius: 0;
+  }
+`;
+
+const FormContainer = styled.div`
+  background-color: white;
+  // padding: 32px;
+  border-radius: 16px;
+  @media (min-width: 600px) {
+    // padding: 5px;
+  }
+`;
+
+const SearchButton = styled(Button)`
+  background-color: #45729d;
+  color: white;
+  margin-top: 16px;
+  &:hover {
+    background-color: #2e4b66;
+  }
 `;
 
 const Slogan = styled(Typography)`
-  color: #fff;
-  font-size: 24px;
-  font-weight: bold;
+  color: darkslategray;
+  font-size: 11px;
   text-align: center;
-  margin-bottom: 20px;
+  // margin-top: 32px;
+  @media (min-width: 600px) {
+    // font-size: 2rem;
+    // margin-top: 48px;
+  }
 `;
 
-const HomeHero = () => {
-  const classes = useStyles();
+const Slogan1 = styled(Typography)`
+font-size: 70px !important;
+font-weight: bold !important;
+color: #2c4a66;
+`
 
+function HomeHero() {
   return (
     <HomeContainer>
-      <SearchContainer>
-        <Slogan variant="h1">Find Your Dream Home</Slogan>
-        <FormControl className={classes.formControl}>
-          <InputLabel id="property-type-label">Property Type</InputLabel>
-          <Select labelId="property-type-label" id="property-type-select">
-            <MenuItem value="house">House</MenuItem>
-            <MenuItem value="apartment">Apartment</MenuItem>
-            <MenuItem value="condo">Condo</MenuItem>
-            <MenuItem value="townhouse">Townhouse</MenuItem>
-          </Select>
-        </FormControl>
-        <TextField label="Location" variant="outlined" margin="normal" />
-        <Button variant="contained" className={classes.searchButton}>
-          Search
-        </Button>
-      </SearchContainer>
+      <RootContainer maxWidth="md">
+        <Slogan1 variant="h4" align="center" gutterBottom>
+          Let's find a home that's perfect for you !
+        </Slogan1>
+        {/* <Slogan variant="h5">Your Home, Our Passion</Slogan> */}
+        <FormContainer>
+          {/* <Typography variant="h4" align="center" gutterBottom>
+            Find Your Dream Home
+          </Typography> */}
+          <SearchForm noValidate autoComplete="off">
+            <SearchField
+              variant="outlined"
+              label="Search by city, address"
+              placeholder="Enter city or address"
+              InputProps={{
+                endAdornment: (
+                  <SearchIconWrapper fontSize="small" color="primary" />
+                ),
+              }}
+            />
+            {/* <SearchButton variant="contained" size="large" fullWidth>
+              Search
+            </SearchButton> */}
+          </SearchForm>
+        </FormContainer>
+        {/* <Slogan variant="h5">Your Home, Our Passion</Slogan> */}
+      </RootContainer>
     </HomeContainer>
   );
-};
+}
 
 export default HomeHero;
 
-
-// generate a home coponent for a real estate website using react , material ui and styled components with the following: 
-// - responsive design
-// - image back ground related to real estate
-// - search component at the middle , drop down for property type , search button
-// - use color #45729d for styling
-// - add slogan related to real estate

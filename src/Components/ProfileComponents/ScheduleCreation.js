@@ -8,7 +8,8 @@ import {
     Switch,
     IconButton,
     Button,
-    Typography
+    Typography,
+    Card
 } from '@material-ui/core';
 import {
     KeyboardTimePicker,
@@ -20,7 +21,7 @@ import AddIcon from '@material-ui/icons/Add';
 import DateFnsUtils from '@date-io/date-fns';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
-const ScheduleCreationWrapper = styled.div`
+const ScheduleCreationWrapper = styled(Card)`
   display: flex;
   flex-direction: column;
 //   align-items: center;
@@ -65,14 +66,27 @@ const TimeInput = styled.input`
 `;
 
 const DayElement = styled.div`
-    display: flex;
-    justify-content: space-between;
-    border: 1px solid lightgray;
-    border-radius: 13px;
-    padding: 5px;
-    padding-left: 22px;
-    // padding-right: 22px;
-`
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid lightgray;
+  border-radius: 13px;
+  padding: 5px;
+  padding-left: 22px;
+  cursor: pointer; /* add pointer cursor */
+  transition: all 0.2s ease-in-out; /* add transition effect */
+  
+  &:hover,
+  &:focus {
+    border-color: #45729d; /* add border color on hover or focus */
+    background-color: #fdf9f9;
+  }
+`;
+
+const UpdateSchedule = styled(Button)`
+background-color: #45729d !important;
+color: white;
+border-radius: 12px !important;
+`;
 
 const ScheduleCreation = () => {
     const [days, setDays] = useState([
@@ -235,13 +249,13 @@ const ScheduleCreation = () => {
                 ))}
             </DayPickerWrapper>
 
-            <Button onClick={handleCreateSchedule} color="primary" 
+            <UpdateSchedule onClick={handleCreateSchedule} color="primary" 
             variant="contained"
             // className={classes.button}
-            style={{ height: '48px', fontSize: '17px' , backgroundColor: "#45729d", }}
+            // style={{ height: '48px', fontSize: '15px' , backgroundColor: "#fff", color: "#45729d" , }}
             >
                 Update Schedule
-            </Button>
+            </UpdateSchedule>
         </ScheduleCreationWrapper>
     )
 }

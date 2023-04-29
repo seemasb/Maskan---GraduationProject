@@ -137,7 +137,7 @@ const ProfileTabs = () => {
                 <Grid item xs={10}>
                     <SidebarContent>
                         {
-                            selectedItem == "Personal Info" && <PersonalInfo email={'seema.sbouh512@gmail.com'} phoneNumber={'0597292545'} birthdate={'5/10/2000'} profilePictureUrl={ProfilePic} />
+                            selectedItem == "Personal Info" && <PersonalInfo email={'seema.sbouh512@gmail.com'} phoneNumber={'0597292545'} birthdate={'5/10/2000'} profilePictureUrl={ProfilePic} name={'Sima Sbouh'}/>
                             ||
                             selectedItem == "Calendar" && <ProfileCalendar />
                             ||
