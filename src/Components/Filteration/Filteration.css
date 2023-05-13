@@ -36,7 +36,10 @@
 
 .featuresANDsearchbtn{
     display: flex;
+    flex-direction: 'row';
     justify-content: space-between;
+    align-items: baseline;
+    column-gap: 22px;
 }
 
 .featuresBox{

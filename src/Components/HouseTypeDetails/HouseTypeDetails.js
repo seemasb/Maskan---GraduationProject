@@ -4,9 +4,7 @@ import { TextField, Checkbox, FormControlLabel, FormGroup, Button, Grid } from '
 import { Autocomplete } from '@material-ui/lab';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import { MenuItem, FormControl, InputLabel, Select, CircularProgress } from '@mui/material';
-// import AdapterDateFns from '@mui/lab/AdapterDateFns';
-// import LocalizationProvider from '@mui/lab/LocalizationProvider';
-// import DatePicker from '@mui/lab/DatePicker';
+// import { FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
 import Input from '@mui/material/Input';
 import InputAdornment from '@mui/material/InputAdornment';
 import { FaBath, FaBed } from 'react-icons/fa';
@@ -24,7 +22,7 @@ import { styled } from '@mui/material/styles';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import axios from 'axios';
-
+import AccessibleIcon from '@mui/icons-material/Accessible'
 
 const Alert = forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -35,8 +33,20 @@ const styles = {
         display: 'flex',
         flexDirection: 'row',
         flexWrap: 'wrap',
-        columnGap: '30px',
+        // columnGap: '30px',
+        justifyContent: 'space-between'
     },
+    dateInput: {
+        // height: '40px',
+        // paddingTop: 10,
+        fontSize: 16,
+        borderTop: 'transparent',
+        borderLeft: 'transparent',
+        borderRight: 'transparent',
+        borderBottom: '1px solid gray',
+        color: 'gray'
+
+    }
 };
 
 const currencyOptions = [
@@ -64,7 +74,7 @@ const StyledButton = styled(Button)({
     },
 });
 
-export default function HouseTypeDetails({setHomeAddedId}) {
+export default function HouseTypeDetails({ setHomeAddedId }) {
     const [area, setArea] = useState('');
     const [numFloors, setNumFloors] = useState('');
     const [city, setCity] = useState('');
@@ -77,13 +87,14 @@ export default function HouseTypeDetails({setHomeAddedId}) {
     const [numBedrooms, setNumBedrooms] = useState(0);
     const [numHalls, setNumHalls] = useState(0);
     const [numKitchens, setNumKitchens] = useState(0);
+    const [numBalconies, setNumBalconies] = useState(0);
     const [elevator, setElevator] = useState(false);
-    const [balcony, setBalcony] = useState(false);
     const [garage, setGarage] = useState(false);
     const [gym, setGym] = useState(false);
     const [garden, setGarden] = useState(false);
     const [swimmingPool, setSwimmingPool] = useState(false);
     const [mafrog, setMafrog] = useState(false);
+    const [Accessable, setAccessable] = useState(false);
     const [builtYear, setBuiltYear] = useState(null);
     const [status, setStatus] = useState('');
     const [price, setPrice] = useState('');
@@ -91,13 +102,18 @@ export default function HouseTypeDetails({setHomeAddedId}) {
     const [notes, setNotes] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [open, setOpen] = useState(false);
+    const [selectedDate, setSelectedDate] = useState('');
+
+    const handleDateChange = (event) => {
+        console.log(event.target.value)
+        setSelectedDate(event.target.value);
+    };
 
 
 
     const handleSnackBar = (event) => {
-        setOpen(true);
-        console.log('hello')
-        let featuresArray = [elevator, balcony, garage, gym, garden, swimmingPool, mafrog]
+        
+        let featuresArray = [elevator, garage, gym, garden, swimmingPool, mafrog . Accessable]
         let featuresArrayFiltered = [];
         featuresArray.map((feature) => {
             if (feature) {
@@ -114,7 +130,7 @@ export default function HouseTypeDetails({setHomeAddedId}) {
             area: area,
             state: status,
             description: notes,
-            built_year: '2020',
+            built_year: selectedDate,
             type: 'AP',
             //owner: '22',
 
@@ -122,7 +138,8 @@ export default function HouseTypeDetails({setHomeAddedId}) {
                 bedrooms: numBedrooms,
                 bathrooms: numBathrooms,
                 kitchens: numKitchens,
-                halls: numHalls
+                halls: numHalls,
+                balconies: numBalconies
             },
             features: {
                 data: featuresArrayFiltered
@@ -132,19 +149,19 @@ export default function HouseTypeDetails({setHomeAddedId}) {
                     x: location.lat,
                     y: location.lng
                 },
-                address:address,
-                city:city
+                address: address,
+                city: city
             },
             apartment: {
                 floor: numFloors,
                 out_of_floors: '4'
             }
         };
-        const userToken =localStorage.getItem('Token')
+        const userToken = localStorage.getItem('Token')
         let header;
-        userToken ? header={
-            'Authorization': 'Token '+ userToken
-        }: header ={}
+        userToken ? header = {
+            'Authorization': 'Token ' + userToken
+        } : header = {}
 
         axios.post('http://127.0.0.1:8001/home_list/', {
             PropertyData
@@ -162,6 +179,7 @@ export default function HouseTypeDetails({setHomeAddedId}) {
 
         console.log('in sending');
         console.log(PropertyData);
+        setOpen(true);
 
     };
 
@@ -365,6 +383,30 @@ export default function HouseTypeDetails({setHomeAddedId}) {
                         onChange={(e) => setAddress(e.target.value)}
                     />
                 </Grid>
+                <Grid item xs={12} sm={6}>
+                    <div style={{ display: 'flex', flexDirection: 'column', rowGap: 10 }}>
+                        <label htmlFor="date-picker" style={{ color: 'gray' }}>Built date</label>
+                        <input
+                            style={styles.dateInput}
+                            required
+                            type="date"
+                            id="date-picker"
+                            value={selectedDate}
+                            onChange={handleDateChange}
+                        />
+                    </div>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                    <TextField
+                        label="Description"
+                        value={notes}
+                        onChange={handleNotesChange}
+                        multiline
+                        required
+                        fullWidth
+                        style={{marginTop: 5}}
+                    />
+                </Grid>
 
                 <Grid item xs={12}>
                     <Divider sx={{ marginTop: '50px' }}>
@@ -375,82 +417,94 @@ export default function HouseTypeDetails({setHomeAddedId}) {
                     </Divider>
                 </Grid>
 
-                <Grid item xs={12} sm={3}>
-                    {/* <TextField
-                        type="number"
-                        required
-                        fullWidth
-                        label="Number of bathrooms"
-                        value={numBathrooms}
-                        onChange={(e) => setNumBathrooms(e.target.value)}
-                    /> */}
-                    <TextField
-                        label="Number of Bathrooms"
-                        type="number"
-                        required
-                        fullWidth
-                        value={numBathrooms}
-                        onChange={(e) => setNumBathrooms(e.target.value)}
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <FaBath />
-                                </InputAdornment>
-                            ),
-                        }}
-                    />
-                </Grid>
-                <Grid item xs={12} sm={3}>
-                    <TextField
-                        type="number"
-                        required
-                        fullWidth
-                        label="Number of bedrooms"
-                        value={numBedrooms}
-                        onChange={(e) => setNumBedrooms(e.target.value)}
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <GiSofa />
-                                </InputAdornment>
-                            ),
-                        }}
-                    />
-                </Grid>
-                <Grid item xs={12} sm={3}>
-                    <TextField
-                        type="number"
-                        required
-                        fullWidth
-                        label="Number of halls"
-                        value={numHalls}
-                        onChange={(e) => setNumHalls(e.target.value)}
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <FaBed />
-                                </InputAdornment>
-                            ),
-                        }}
-                    />
-                </Grid>
-                <Grid item xs={12} sm={3}>
-                    <TextField
-                        type="number"
-                        required
-                        fullWidth
-                        label="Number of kitchens"
-                        value={numKitchens}
-                        onChange={(e) => setNumKitchens(e.target.value)}
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <TbToolsKitchen2 />
-                                </InputAdornment>
-                            ),
-                        }}
-                    />
-                </Grid>
+                <div className="grid-container">
+
+                    <Grid item xs={12} sm={2}>
+                        <TextField
+                            label="Number of Bathrooms"
+                            type="number"
+                            required
+                            fullWidth
+                            value={numBathrooms}
+                            onChange={(e) => setNumBathrooms(e.target.value)}
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <FaBath />
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={2}>
+                        <TextField
+                            type="number"
+                            required
+                            fullWidth
+                            label="Number of bedrooms"
+                            value={numBedrooms}
+                            onChange={(e) => setNumBedrooms(e.target.value)}
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <FaBed />
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={2}>
+                        <TextField
+                            type="number"
+                            required
+                            fullWidth
+                            label="Number of halls"
+                            value={numHalls}
+                            onChange={(e) => setNumHalls(e.target.value)}
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <GiSofa />
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={2}>
+                        <TextField
+                            type="number"
+                            required
+                            fullWidth
+                            label="Number of kitchens"
+                            value={numKitchens}
+                            onChange={(e) => setNumKitchens(e.target.value)}
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <TbToolsKitchen2 />
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={2}>
+                        <TextField
+                            type="number"
+                            required
+                            fullWidth
+                            label="Number of Balconies"
+                            value={numBalconies}
+                            onChange={(e) => setNumBalconies(e.target.value)}
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <MdBalcony />
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
+                    </Grid>
+                </div>
                 <Grid item xs={12}>
                     <Divider sx={{ marginTop: '50px' }}>
                         <div style={{ display: 'flex', columnGap: 10, justifyContent: 'center' }}>
@@ -466,12 +520,12 @@ export default function HouseTypeDetails({setHomeAddedId}) {
                             label="Elevator"
                         />
                         <FormControlLabel
-                            control={<Checkbox checked={balcony} onChange={(e) => setBalcony(e.target.checked ? 'balcony' : false)} color='primary' icon={<MdBalcony />} />}
-                            label="Balcony"
-                        />
-                        <FormControlLabel
                             control={<Checkbox checked={garage} onChange={(e) => setGarage(e.target.checked ? 'garage' : false)} color='primary' icon={<MdGarage />} />}
                             label="Garage"
+                        />
+                        <FormControlLabel
+                            control={<Checkbox checked={Accessable} onChange={(e) => setAccessable(e.target.checked ? 'Accessable' : false)} color='primary' icon={<AccessibleIcon />} />}
+                            label="Accessable"
                         />
                         <FormControlLabel
                             control={<Checkbox checked={gym} onChange={(e) => setGym(e.target.checked ? 'gym' : false)} color='primary' icon={<FaDumbbell />} />}
@@ -486,8 +540,8 @@ export default function HouseTypeDetails({setHomeAddedId}) {
                             label="Swimming Pool"
                         />
                         <FormControlLabel
-                            control={<Checkbox checked={mafrog} onChange={(e) => setMafrog(e.target.checked ? 'Mafrosh' : false)} color='primary' icon={<GiSofa />} />}
-                            label="Mafrosh"
+                            control={<Checkbox checked={mafrog} onChange={(e) => setMafrog(e.target.checked ? 'Furnished' : false)} color='primary' icon={<GiSofa />} />}
+                            label="Furnished"
                         />
                     </FormGroup>
                 </Grid>
@@ -514,7 +568,7 @@ export default function HouseTypeDetails({setHomeAddedId}) {
                         </GoogleMap>
                     </LoadScript>
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                {/* <Grid item xs={12} sm={6}>
                     <TextField
 
                         label="Notes"
@@ -522,9 +576,9 @@ export default function HouseTypeDetails({setHomeAddedId}) {
                         onChange={handleNotesChange}
                         multiline
                     />
-                </Grid>
+                </Grid> */}
 
-                <Grid item xs={6} container justifyContent="flex-end">
+                <Grid item xs={12} container justifyContent="flex-end">
                     <StyledButton variant="contained" type="submit" onClick={handleSnackBar}>
                         {isLoading ? <CircularProgress size={24} /> : 'Next'}
                     </StyledButton>
@@ -540,125 +594,3 @@ export default function HouseTypeDetails({setHomeAddedId}) {
     )
 }
 
-
-
-
-
-
-
-
-
-
-
-
-// import * as React from 'react';
-// import { useTheme } from '@mui/material/styles';
-// import Box from '@mui/material/Box';
-// import OutlinedInput from '@mui/material/OutlinedInput';
-// import InputLabel from '@mui/material/InputLabel';
-// import MenuItem from '@mui/material/MenuItem';
-// import FormControl from '@mui/material/FormControl';
-// import Select from '@mui/material/Select';
-// import Chip from '@mui/material/Chip';
-// import CloseIcon from '@mui/icons-material/Close';
-
-// const ITEM_HEIGHT = 48;
-// const ITEM_PADDING_TOP = 8;
-// const MenuProps = {
-//   PaperProps: {
-//     style: {
-//       maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-//       width: 250,
-//     },
-//   },
-// };
-
-// const names = [
-//   'Oliver Hansen',
-//   'Van Henry',
-//   'April Tucker',
-//   'Ralph Hubbard',
-//   'Omar Alexander',
-//   'Carlos Abbott',
-//   'Miriam Wagner',
-//   'Bradley Wilkerson',
-//   'Virginia Andrews',
-//   'Kelly Snyder',
-// ];
-
-// function getStyles(name, personName, theme) {
-//   return {
-//     fontWeight:
-//       personName.indexOf(name) === -1
-//         ? theme.typography.fontWeightRegular
-//         : theme.typography.fontWeightMedium,
-//   };
-// }
-
-// function SelectedValue({ value, onDelete }) {
-//   return (
-//     <Chip
-//       sx={{ mr: 0.5 }}
-//       label={value}
-//       onDelete={onDelete}
-//       deleteIcon={<CloseIcon />}
-//     />
-//   );
-// }
-
-// export default function MultipleSelectChip() {
-//   const theme = useTheme();
-//   const [personName, setPersonName] = React.useState([]);
-
-//   const handleChange = (event) => {
-//     const {
-//       target: { value },
-//     } = event;
-//     setPersonName(
-//       // On autofill we get a stringified value.
-//       typeof value === 'string' ? value.split(',') : value,
-//     );
-//   };
-
-//   return (
-//     <div>
-//       <FormControl sx={{ m: 1, width: 300 }}>
-//         <InputLabel id="demo-multiple-chip-label">Chip</InputLabel>
-//         <Select
-//           labelId="demo-multiple-chip-label"
-//           id="demo-multiple-chip"
-//           multiple
-//           value={personName}
-//           onChange={handleChange}
-//           input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-//           renderValue={(selected) => (
-//             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-//               {selected.map((value) => (
-//                 <SelectedValue
-//                   key={value}
-//                   value={value}
-//                   onDelete={() => {
-//                     setPersonName((names) =>
-//                       names.filter((name) => name !== value)
-//                     );
-//                   }}
-//                 />
-//               ))}
-//             </Box>
-//           )}
-//           MenuProps={MenuProps}
-//         >
-//           {names.map((name) => (
-//             <MenuItem
-//               key={name}
-//               value={name}
-//               style={getStyles(name, personName, theme)}
-//             >
-//               {name}
-//             </MenuItem>
-//           ))}
-//         </Select>
-//       </FormControl>
-//     </div>
-//   );
-// }

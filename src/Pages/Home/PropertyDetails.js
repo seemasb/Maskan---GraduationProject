@@ -7,11 +7,16 @@ import { IconButton, Typography } from "@material-ui/core";
 import { ArrowBack } from "@material-ui/icons";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import Loading from "../../Components/Loading";
 
 
 
 const DescriptionContainer = styled('div')({
-  padding: '40px 40px 0 40px'
+  padding: '40px 40px 0 40px',
+  display: 'flex' , 
+  justifyContent: 'center',
+  alignItems: 'center',
+  width: '100%'
 })
 
 const BackButtonWrapper = styled.div`
@@ -54,7 +59,7 @@ const BackButtonText = styled(Typography)`
 
 
 export default function PropertyDetails() {
-  const [propertyDetails , setPropertyDetails] = useState();
+  const [propertyDetails, setPropertyDetails] = useState();
   useEffect(() => {
     const getPropertyDetails = async () => {
       try {
@@ -65,30 +70,9 @@ export default function PropertyDetails() {
       }
     }
     getPropertyDetails()
-  },[])
+  }, [])
 
-    return (
-        <DescriptionContainer>
-
-            <Grid container spacing={3}>
-                <Grid item sm={12}>
-                    <BackButtonWrapper>
-                        <BackButtonIcon onClick={() => { }}>
-                            <ArrowBack />
-                        </BackButtonIcon>
-                        <BackButtonText variant="body1">Back to Search</BackButtonText>
-                    </BackButtonWrapper>
-                </Grid>
-                <Grid item md={8} sm={12}>
-                    {propertyDetails?<PropertyGallary propertyDetails={propertyDetails} />:<div>Loading...</div>}
-                    {propertyDetails?<PropertyDetailsS1 propertyDetails={propertyDetails} />:<div>Loading...</div>}
-                </Grid>
-                <Grid item md={4} sm={12}>
-                  {propertyDetails?<PropertyDetailsS2 propertyDetails={propertyDetails} />:<div>Loading...</div>}
-                </Grid>
-            </Grid>
-
-  {/* return (
+  return (
     <DescriptionContainer>
 
       <Grid container spacing={3}>
@@ -100,14 +84,19 @@ export default function PropertyDetails() {
             <BackButtonText variant="body1">Back to Search</BackButtonText>
           </BackButtonWrapper>
         </Grid>
-        <Grid item md={8} sm={12}>
-          <PropertyGallary />
-          <PropertyDetailsS1 />
-        </Grid>
-        <Grid item md={4} sm={12}>
-          <PropertyDetailsS2 />
-        </Grid>
-      </Grid> */}
+        {propertyDetails ? (
+          <>
+            <Grid item md={8} sm={12}>
+              <PropertyGallary propertyDetails={propertyDetails} />
+              <PropertyDetailsS1 propertyDetails={propertyDetails} />
+            </Grid>
+            <Grid item md={4} sm={12}>
+              <PropertyDetailsS2 propertyDetails={propertyDetails} />
+            </Grid>
+          </>
+        )
+          : <Loading />}
+      </Grid>
 
     </DescriptionContainer>
   )

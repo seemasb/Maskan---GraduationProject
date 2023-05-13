@@ -93,11 +93,7 @@ function HomeHero() {
         <Slogan1 variant="h4" align="center" gutterBottom>
           Let's find a home that's perfect for you !
         </Slogan1>
-        {/* <Slogan variant="h5">Your Home, Our Passion</Slogan> */}
         <FormContainer>
-          {/* <Typography variant="h4" align="center" gutterBottom>
-            Find Your Dream Home
-          </Typography> */}
           <SearchForm noValidate autoComplete="off">
             <SearchField
               variant="outlined"
@@ -109,12 +105,8 @@ function HomeHero() {
                 ),
               }}
             />
-            {/* <SearchButton variant="contained" size="large" fullWidth>
-              Search
-            </SearchButton> */}
           </SearchForm>
         </FormContainer>
-        {/* <Slogan variant="h5">Your Home, Our Passion</Slogan> */}
       </RootContainer>
     </HomeContainer>
   );
