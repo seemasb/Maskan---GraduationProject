@@ -24,7 +24,7 @@ import { styled } from '@mui/material/styles';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import axios from 'axios';
-
+import ROOT_URL from '../../config';
 
 const Alert = forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -146,7 +146,7 @@ export default function HouseTypeDetails({setHomeAddedId}) {
             'Authorization': 'Token '+ userToken
         }: header ={}
 
-        axios.post('http://127.0.0.1:8001/home_list/', {
+        axios.post(`${ROOT_URL}/properties/home_list/`, {
             PropertyData
         }, {
             headers: header

@@ -5,6 +5,7 @@ import { Schedule } from '@material-ui/icons';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import MuiAlert from '@mui/material/Alert';
 import axios from 'axios';
+import ROOT_URL from '../../config';
 
 const response = [
     {
@@ -128,7 +129,7 @@ const ScheduleTour = () => {
 
     useEffect(() => {
         async function getScheduleTourData() {
-            const res = await axios.get(`http://127.0.0.1:8001/reservations/short_slots/`);
+            const res = await axios.get(`${ROOT_URL}/reservations/short_slots/`);
             console.log('my result')
             console.log(res)
 
@@ -204,7 +205,7 @@ const ScheduleTour = () => {
             'Authorization': 'Token '+ userToken
         }: header ={};
         const res = await axios.patch(
-            'http://127.0.0.1:8001/reservations/reserve/'+selectedTimeSlot.id+'/', 
+            '${ROOT_URL}/reservations/reserve/'+selectedTimeSlot.id+'/', 
             {
                 "home": 7
             },

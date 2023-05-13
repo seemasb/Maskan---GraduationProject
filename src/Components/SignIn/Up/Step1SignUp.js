@@ -12,7 +12,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import axios from 'axios';
-
+import ROOT_URL from '../../../config';
 
 export default function Step1SignUp({ setActiveStep }) {
     const [FirstName, setFirstName] = useState('')
@@ -44,7 +44,7 @@ export default function Step1SignUp({ setActiveStep }) {
         e.preventDefault();
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
 
-        axios.post('http://127.0.0.1:8000/users/', {
+        axios.post(`${ROOT_URL}/accounts/users/`, {
 
                 first_name: FirstName,
                 laset_name: LastName,

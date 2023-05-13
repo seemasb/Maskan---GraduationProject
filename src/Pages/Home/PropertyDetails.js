@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { IconButton, Typography } from "@material-ui/core";
 import { ArrowBack } from "@material-ui/icons";
 import axios from "axios";
+import ROOT_URL from "../../config";
 import { useEffect, useState } from "react";
 
 
@@ -58,7 +59,7 @@ export default function PropertyDetails() {
   useEffect(() => {
     const getPropertyDetails = async () => {
       try {
-        const fetchData = await axios.get('http://127.0.0.1:8001/home/10/')
+        const fetchData = await axios.get(`${ROOT_URL}/properties/home/1/`)
         setPropertyDetails(fetchData.data)
       } catch (error) {
         console.log(error)

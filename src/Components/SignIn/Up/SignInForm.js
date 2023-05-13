@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import axios from 'axios';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import ROOT_URL from '../../../config';
 
 function Copyright(props) {
 
@@ -39,7 +40,7 @@ export default function SignInForm() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const SignInData = { username_or_email, password };
-    axios.post('http://127.0.0.1:8001/login/', {
+    axios.post(`${ROOT_URL}/accounts/login/`, {
       SignInData
     },)
       .then(function (response) {

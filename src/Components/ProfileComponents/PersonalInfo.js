@@ -20,7 +20,9 @@ import Grid from '@mui/material/Grid';
 // import ScheduleCreation from "./ScheduleCreation";
 import ScheduleCreation from './ScheduleCreation'
 import PersonalInfoTabs from "./PersonalInfoTabs";
-
+import axios from "axios";
+import ROOT_URL from "../../config";
+import { useEffect } from "react";
 const useStyles = makeStyles((theme) => ({
     root: {
         backgroundColor: "#ffffff",
@@ -73,25 +75,91 @@ const InfoTextField = styled(TextField)`
   width: 100%;
 `;
 
-const PersonalInfo = ({ profilePictureUrl, idPictureUrl, name, email, phoneNumber, birthdate }) => {
+// const PersonalInfo = ({ profilePictureUrl, idPictureUrl, name, email, phoneNumber, birthdate }) => {
+//     const classes = useStyles();
+
+//     const [editMode, setEditMode] = useState(false);
+//     const [editableName, setEditableName] = useState(name);
+//     const [editablePhone, setEditablePhone] = useState(phoneNumber);
+//     const [editableProfilePictureUrl, setEditableProfilePictureUrl] = useState(
+//         profilePictureUrl
+//     );
+//     const [editableIdPictureUrl, setEditableIdPictureUrl] = useState(
+//         idPictureUrl
+//     );
+
+//     const handleNameChange = (event) => {
+//         setEditableName(event.target.value);
+//     };
+//     const handlePhoneChange = (value) => {
+//         // setEditablePhone(event.target.value);
+//         setEditablePhone(value)
+//     };
+
+//     const handleProfilePictureChange = (event) => {
+//         setEditableProfilePictureUrl(URL.createObjectURL(event.target.files[0]));
+//     };
+
+//     const handleIdPictureChange = (event) => {
+//         setEditableIdPictureUrl(URL.createObjectURL(event.target.files[0]));
+//     };
+
+//     const handleSaveChanges = () => {
+//         // handle saving changes here
+//         setEditMode(false)
+//         console.log(
+//             "Saved changes to name:",
+//             editableName,
+//             "profile picture:",
+//             editableProfilePictureUrl,
+//             "ID picture:",
+//             editableIdPictureUrl
+//         );
+//     };
+const PersonalInfo = ({ id }) => {
     const classes = useStyles();
 
     const [editMode, setEditMode] = useState(false);
-    const [editableName, setEditableName] = useState(name);
-    const [editablePhone, setEditablePhone] = useState(phoneNumber);
-    const [editableProfilePictureUrl, setEditableProfilePictureUrl] = useState(
-        profilePictureUrl
-    );
-    const [editableIdPictureUrl, setEditableIdPictureUrl] = useState(
-        idPictureUrl
-    );
+    const [editableName, setEditableName] = useState('');
+    const [editablePhone, setEditablePhone] = useState('');
+    const [editableProfilePictureUrl, setEditableProfilePictureUrl] = useState('');
+    const [editableIdPictureUrl, setEditableIdPictureUrl] = useState('');
+    const [birthdate, setBirthdate] =useState('');
+    const [email, setEmail] =useState('');
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [data, setData] = useState(null);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                id =1;
+                const response = await axios.get(`${ROOT_URL}/accounts/account/${id}/`)
+                .then((response) => {
+                    setData(response.data);
+                    setEditableName(response.data.username);
+                    setEditablePhone(response.data.phone_number);
+                    setEditableProfilePictureUrl(response.data.profile.profile_picture);
+                    setEditableIdPictureUrl(response.data.profile.ID_card);
+                    setBirthdate(response.data.date_of_birth);
+                    setEmail(response.data.email);
+                });
+                // setData(response.data);
+                setLoading(false);
+            } catch (error) {
+                setError(error);
+                setLoading(false);
+            }
+        };
+        fetchData();
+    }, [id]);
 
     const handleNameChange = (event) => {
         setEditableName(event.target.value);
     };
-    const handlePhoneChange = (value) => {
-        // setEditablePhone(event.target.value);
-        setEditablePhone(value)
+
+    const handlePhoneChange = (event) => {
+        setEditablePhone(event.target.value);
     };
 
     const handleProfilePictureChange = (event) => {
@@ -102,18 +170,33 @@ const PersonalInfo = ({ profilePictureUrl, idPictureUrl, name, email, phoneNumbe
         setEditableIdPictureUrl(URL.createObjectURL(event.target.files[0]));
     };
 
-    const handleSaveChanges = () => {
-        // handle saving changes here
-        setEditMode(false)
-        console.log(
-            "Saved changes to name:",
-            editableName,
-            "profile picture:",
-            editableProfilePictureUrl,
-            "ID picture:",
-            editableIdPictureUrl
-        );
+    const handleSaveChanges = async () => {
+        id=1;
+        try {
+            id=1;
+            const response = await axios.patch(`${ROOT_URL}/accounts/account/${id}/`, {
+                name: editableName,
+                phone: editablePhone,
+                profilePictureUrl: editableProfilePictureUrl,
+                idPictureUrl: editableIdPictureUrl
+            });
+            setEditMode(false);
+            setData(response.data);
+            // optionally show a success message to the user
+        } catch (error) {
+            // handle any errors that occur during the POST request
+        }
     };
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return <div>Error: {error.message}</div>;
+    }
+
+    // const { name, email, phoneNumber, profilePictureUrl, idPictureUrl } = data;
 
     return (
         <Wrapper>

@@ -8,6 +8,7 @@ import DescriptionIcon from '@mui/icons-material/Description';
 import UploadIcon from '@mui/icons-material/Upload';
 import { styled } from '@mui/material/styles';
 import axios from 'axios';
+import ROOT_URL from '../../config';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -94,7 +95,7 @@ export default function StepperSellStep3({homeAddedId}) {
         console.log('total form data')
         console.log(formData)
         try {
-          const response = await axios.patch('http://127.0.0.1:8001/upload/'+ homeAddedId + '/', formData, {
+          const response = await axios.patch(`${ROOT_URL}/properties/upload/${homeAddedId}/`, formData, {
             headers: {
               'Content-Type': 'multipart/form-data',
             },
