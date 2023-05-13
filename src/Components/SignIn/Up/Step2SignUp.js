@@ -10,7 +10,7 @@ import {
   Avatar,
   DialogContent,
 } from '@mui/material';
-
+import ROOT_URL from '../../../config';
 
 export default function Step2SignUp() {
   const [value, setValue] = useState(dayjs(''));
@@ -57,17 +57,17 @@ export default function Step2SignUp() {
     e.preventDefault();
     console.log(profileFormData)
 
-    // axios.patch('/user', profileFormData ,{
-    //     headers:{
-    //       'Content-Type' : 'multipart/form-data'
-    //     }
-    //   })
-    //   .then(function (response) {
-    //     // console.log(response);
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });
+    axios.patch(`${ROOT_URL}/accounts/users/`, profileFormData ,{
+      headers:{
+        'Content-Type' : 'multipart/form-data'
+      }
+    })
+    .then(function (response) {
+      // console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
 }
 
   return (

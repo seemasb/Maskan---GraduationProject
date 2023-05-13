@@ -7,7 +7,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import axios from "axios";
-
+import ROOT_URL from '../../config';
 const StyledCard = styled(Card)`
   background-color: white;
   width: 40%;
@@ -101,7 +101,7 @@ const FreeTimeCard = () => {
         'Authorization': 'Token ' + userToken
       } : header = {};
       const res = await axios.post(
-        'http://127.0.0.1:8001/reservations/reserve/',
+        `${ROOT_URL}/reservations/reserve/`,
         {
           body:list
         },

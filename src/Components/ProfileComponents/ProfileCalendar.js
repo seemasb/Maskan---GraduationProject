@@ -7,7 +7,10 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import axios from 'axios';
+import ROOT_URL from '../../config';
+
 const localizer = momentLocalizer(moment);
+
 
 // const response = [
 //   {
@@ -98,7 +101,7 @@ export default function ProfileCalendar() {
         if (userToken) {
           header = { 'Authorization': 'Token ' + userToken };
         }
-        const res = await axios.get('http://127.0.0.1:8001/reservations/slots/', { headers: header });
+        const res = await axios.get(`${ROOT_URL}/reservations/slots/`, { headers: header });
         console.log(res)
         const events = res.data.map((res) => ({
           id: res.id,

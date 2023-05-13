@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
+import ROOT_URL from '../../config';
 import './Filteration.css'
 import {
   FormControl,
@@ -115,18 +116,18 @@ export default function Filteration() {
       features: featuresFinalVersion,
     }
 
-    const Search = async () => {
-      try {
-        const response = await axios.get('http://127.0.0.1:8001/houses/', {
-          params: {
-            city: city,
-            state: status,
-            type: type,
-            min_area: areaRange[0],
-            max_area: areaRange[1],
-            min_price: priceRange[0],
-            max_price: priceRange[1],
-            features: featuresFinalVersion.join(','),
+    const Search=async ()=>
+    {try {
+      const response = await axios.get(`${ROOT_URL}/properties/houses/`, { params:{
+        city: city,
+      state: status,
+      type: type,
+      min_area: areaRange[0],
+      max_area: areaRange[1],
+      min_price: priceRange[0],
+      max_price: priceRange[1],
+      bedrooms: 1,
+      features: featuresFinalVersion.join(','),
 
           }
         });
