@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Button } from '@material-ui/core';
 import { Favorite, Share, MailOutline } from '@material-ui/icons';
@@ -38,6 +38,34 @@ async function addToFavorite() {
 }
 
 const PropertyDetails = ({ propertyDetails }) => {
+  const [isFavourite, setIsFavourite] = useState(false);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const id_home = 1;
+        const userToken = localStorage.getItem('Token')
+        let header;
+        userToken ? header = {
+          'Authorization': 'Token ' + userToken
+        } : header = {}
+        axios.get(`${ROOT_URL}/properties/home/${id_home}/toggle_favorite/`, {}, {
+          headers: header
+        })
+        .then(function (response) {
+            setIsFavourite(response.data.is_favourite);
+            console.log(response.data);
+        })
+        .catch(function (error) {
+            console.log(error);
+            setIsFavourite(false);
+        });
+      } catch (error) {
+        console.log(error);
+        setIsFavourite(false);
+      }
+    };
+    fetchData();
+  }, []);
   return (
     <PropertyDetailsContainer>
       <DetailsContainer>
@@ -81,7 +109,7 @@ const PropertyDetails = ({ propertyDetails }) => {
       <ButtonsContainer>
         <ButtonContainer>
           <IconButton aria-label="add to favorites" onClick={addToFavorite}>
-            <Favorite />
+            <Favorite  color={(isFavourite)?"#ff9800":"#000000"}/>
           </IconButton>
           <IconButton aria-label="share">
             <Share />

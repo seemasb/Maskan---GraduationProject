@@ -4,7 +4,6 @@ import ScheduleTour from "./ScheduleTour";
 import avatar from '../../Images/h1.jpg'
 import styled from 'styled-components';
 
-
 const StyledPropertyDetailsS2 = styled.div`
   display: flex;
   flex-direction: column;
@@ -17,7 +16,7 @@ function PropertyDetailsS2({propertyDetails}) {
             <PropertyDetailsCard
                propertyDetails={propertyDetails}
             />
-            <OwnerCard avatarUrl={avatar} name={'Seema Sbouh'} bio={'hello my name is seema sbouh im an owner hhhh'} />
+            <OwnerCard avatarUrl={avatar} name={'Seema Sbouh'} bio={''} />
             <ScheduleTour />
         </StyledPropertyDetailsS2>
     );
