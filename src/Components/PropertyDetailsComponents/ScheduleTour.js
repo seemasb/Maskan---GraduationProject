@@ -115,7 +115,7 @@ width: 100%;
 //     margin-right: 10px;
 //   }
 // `;
-const ScheduleTour = () => {
+const ScheduleTour = ({ propertyDetails }) => {
     const [selectedDay, setSelectedDay] = useState(null);
     const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
     const [ColoredselectedTimeSlot, setColoredSelectedTimeSlot] = useState(null);
@@ -129,7 +129,11 @@ const ScheduleTour = () => {
 
     useEffect(() => {
         async function getScheduleTourData() {
-            const res = await axios.get(`${ROOT_URL}/reservations/short_slots/`);
+            const res = await axios.get(`${ROOT_URL}/reservations/short_slots/`, {
+                params: {
+                  property_owner_id : propertyDetails.owner
+                }
+              });
             console.log('my result')
             console.log(res)
 
@@ -161,7 +165,7 @@ const ScheduleTour = () => {
 
         getScheduleTourData();
 
-    },[])
+    }, [])
 
     const handleLeftArrowClick = () => {
         const scroller = document.getElementById('days-scroller');
@@ -197,22 +201,22 @@ const ScheduleTour = () => {
     const handleScheduleButtonClick = () => {
         console.log(selectedTimeSlot)
         //////////////////////////////////////////how to send axios with param/////////////////////
-        
+
         async function sendSlotId() {
-            const userToken =localStorage.getItem('Token')
-        let header;
-        userToken ? header={
-            'Authorization': 'Token '+ userToken
-        }: header ={};
-        const res = await axios.patch(
-            '${ROOT_URL}/reservations/reserve/'+selectedTimeSlot.id+'/', 
-            {
-                "home": 7
-            },
-            {
-                headers: header
-            }
-        );
+            const userToken = localStorage.getItem('Token')
+            let header;
+            userToken ? header = {
+                'Authorization': 'Token ' + userToken
+            } : header = {};
+            const res = await axios.patch(
+                `${ROOT_URL}/reservations/reserve/${selectedTimeSlot.id}/`,
+                {
+                    "home": propertyDetails.id
+                },
+                {
+                    headers: header
+                }
+            );
         }
 
         sendSlotId()
@@ -232,26 +236,26 @@ const ScheduleTour = () => {
                 <ArrowButton disabled={scrollPosition === 0} onClick={handleLeftArrowClick}>
                     {'<'}
                 </ArrowButton>
-                {daysAndDate ? 
-                <StyledDaysScroller id="days-scroller">
-                {daysAndDate.map((day , index)=> (
-                    <StyledDayButton
-                        key={index}
-                        variant="contained"
-                        selected={day === selectedDay}
-                        onClick={() => handleDayButtonClick(day)}
-                    >
-                        <div style={{ display: 'flex', flexDirection: 'column' }}>
-                            <span>{day.name}</span>
-                            <span>{day.date.split("-")[2]}</span>
-                        </div>
-                    </StyledDayButton>
-                ))}
-            </StyledDaysScroller>
-            : 
-            <div>Loading...</div>
-            }
-                
+                {daysAndDate ?
+                    <StyledDaysScroller id="days-scroller">
+                        {daysAndDate.map((day, index) => (
+                            <StyledDayButton
+                                key={index}
+                                variant="contained"
+                                selected={day === selectedDay}
+                                onClick={() => handleDayButtonClick(day)}
+                            >
+                                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                    <span>{day.name}</span>
+                                    <span>{day.date.split("-")[2]}</span>
+                                </div>
+                            </StyledDayButton>
+                        ))}
+                    </StyledDaysScroller>
+                    :
+                    <div>Loading...</div>
+                }
+
                 <ArrowButton
                     // disabled={
                     //     document.getElementById('days-scroller').scrollWidth - document.getElementById('days-scroller').clientWidth ===
@@ -276,7 +280,7 @@ const ScheduleTour = () => {
             </StyledDaysScroller> */}
             {selectedDay && (
                 <StyledTimeSlotsContainer>
-                    {daysFree.map((day , index) =>
+                    {daysFree.map((day, index) =>
                         day.date == selectedDay.date ?
                             <StyledTimeSlotButton
                                 key={index}

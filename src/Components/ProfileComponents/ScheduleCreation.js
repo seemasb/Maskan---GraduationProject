@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-// import { styled } from '@material-ui/core/styles';
 import styled from 'styled-components';
-
 import {
     FormControlLabel,
     FormGroup,
@@ -12,10 +10,10 @@ import {
     Card
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
-import ArrowDownward from '@material-ui/icons/ArrowDownward';
 import AddIcon from '@material-ui/icons/Add';
-import DateFnsUtils from '@date-io/date-fns';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import axios from 'axios';
+import ROOT_URL from '../../config';
 
 const ScheduleCreationWrapper = styled(Card)`
   display: flex;
@@ -87,46 +85,25 @@ border-radius: 12px !important;
 const ScheduleCreation = () => {
     const [days, setDays] = useState([
         {
-            label: 'Monday', value: false, times: [{
-                start: '00:00',
-                end: '00:00'
-            }]
+            label: 'Monday', value: false, times: []
         },
         {
-            label: 'Tuesday', value: false, times: [{
-                start: '00:00',
-                end: '00:00'
-            }]
+            label: 'Tuesday', value: false, times: []
         },
         {
-            label: 'Wednesday', value: false, times: [{
-                start: '00:00',
-                end: '00:00'
-            }]
+            label: 'Wednesday', value: false, times: []
         },
         {
-            label: 'Thursday', value: false, times: [{
-                start: '00:00',
-                end: '00:00'
-            }]
+            label: 'Thursday', value: false, times: []
         },
         {
-            label: 'Friday', value: false, times: [{
-                start: '00:00',
-                end: '00:00'
-            }]
+            label: 'Friday', value: false, times: []
         },
         {
-            label: 'Saturday', value: false, times: [{
-                start: '00:00',
-                end: '00:00'
-            }]
+            label: 'Saturday', value: false, times: []
         },
         {
-            label: 'Sunday', value: false, times: [{
-                start: '00:00',
-                end: '00:00'
-            }]
+            label: 'Sunday', value: false, times: []
         },
     ]);
 
@@ -140,7 +117,7 @@ const ScheduleCreation = () => {
         const newDays = [...days];
         newDays[dayIndex].times[timeIndex] = value;
         setDays(newDays);
-    };
+    }
 
     const handleTimePickerChangeStart = (dayIndex, timeIndex, value) => {
         const newDays = [...days];
@@ -171,13 +148,46 @@ const ScheduleCreation = () => {
     };
 
     const handleCreateSchedule = () => {
-        // TODO: Implement create schedule functionality
-        // days.map((day)=>{
-        //     day.value = false;
-        // })
+  
+            console.log('days', days)
+            let readyScheduleTemp = [];
+            // TODO: Implement create schedule functionality
+            days.map((day) => {
+                day.times.map((timeSlot) => {
+                    readyScheduleTemp.push({
+                        day: day.label,
+                        start: parseInt(timeSlot.start.split(":")[0]),
+                        end: parseInt(timeSlot.end.split(":")[0])
+                    })
+                })
+            })
+
+
+            const userToken = localStorage.getItem('Token')
+            let header;
+            userToken ? header = {
+                'Authorization': 'Token ' + userToken
+            } : header = {}
+
+            axios.post(`${ROOT_URL}/reservations/slots/`, {
+                list: readyScheduleTemp
+            }, {
+                headers: header
+            }
+            )
+                .then(function (response) {
+                    console.log(response);
+
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        
+
+
 
     };
-    console.log('days', days)
+
 
     return (
         <ScheduleCreationWrapper>
@@ -232,7 +242,7 @@ const ScheduleCreation = () => {
                                                     onClick={() =>
                                                         handleDeleteTimePicker(index, timeIndex)
                                                     }
-                                                    
+
                                                 />
                                             </IconButton>
                                         </DeleteButtonWrapper>
@@ -245,8 +255,8 @@ const ScheduleCreation = () => {
                 ))}
             </DayPickerWrapper>
 
-            <UpdateSchedule onClick={handleCreateSchedule} color="primary" 
-            variant="contained"
+            <UpdateSchedule onClick={handleCreateSchedule} color="primary"
+                variant="contained"
             // className={classes.button}
             // style={{ height: '48px', fontSize: '15px' , backgroundColor: "#fff", color: "#45729d" , }}
             >

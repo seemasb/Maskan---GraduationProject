@@ -15,50 +15,59 @@ import ROOT_URL from '../../config';
 
 // properties/home/<int:pk>/toggle_favorite/
 
-async function addToFavorite() {
-  const id_home = 1;
 
-  const userToken = localStorage.getItem('Token')
-  let header;
-  userToken ? header = {
-    'Authorization': 'Token ' + userToken
-  } : header = {}
-
-  axios.post(`${ROOT_URL}/properties/home/${id_home}/toggle_favorite/`, {}, {
-    headers: header
-  }
-  )
-    .then(function (response) {
-      console.log(response.data);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-
-}
 
 const PropertyDetails = ({ propertyDetails }) => {
   const [isFavourite, setIsFavourite] = useState(false);
+  
+  async function addToFavorite() {
+    const id_home = 1;
+
+    const userToken = localStorage.getItem('Token')
+    let header;
+    userToken ? header = {
+      'Authorization': 'Token ' + userToken
+    } : header = {}
+
+    axios.post(`${ROOT_URL}/properties/home/${id_home}/toggle_favorite/`, {}, {
+      headers: header
+    }
+    )
+      .then(function (response) {
+        console.log(response.data);
+        setIsFavourite(response.data.is_favorite)
+
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const id_home = 1;
-        const userToken = localStorage.getItem('Token')
-        let header;
-        userToken ? header = {
+        let userToken = localStorage.getItem('Token');
+        while (!userToken) {
+          // Wait until token is restored from local storage
+          await new Promise(resolve => setTimeout(resolve, 100));
+          userToken = localStorage.getItem('Token');
+        }
+        const header = userToken ? {
           'Authorization': 'Token ' + userToken
-        } : header = {}
-        axios.get(`${ROOT_URL}/properties/home/${id_home}/toggle_favorite/`, {}, {
+        } : {};
+        axios.get(`${ROOT_URL}/properties/home/${propertyDetails.id}/toggle_favorite/`, {
           headers: header
         })
-        .then(function (response) {
-            setIsFavourite(response.data.is_favourite);
+          .then(function (response) {
+            console.log('is fav:', response.data.is_favorite)
+            setIsFavourite(response.data.is_favorite);
             console.log(response.data);
-        })
-        .catch(function (error) {
+          })
+          .catch(function (error) {
             console.log(error);
             setIsFavourite(false);
-        });
+          });
       } catch (error) {
         console.log(error);
         setIsFavourite(false);
@@ -66,6 +75,7 @@ const PropertyDetails = ({ propertyDetails }) => {
     };
     fetchData();
   }, []);
+
   return (
     <PropertyDetailsContainer>
       <DetailsContainer>
@@ -108,9 +118,14 @@ const PropertyDetails = ({ propertyDetails }) => {
       <OwnerCard/> */}
       <ButtonsContainer>
         <ButtonContainer>
-          <IconButton aria-label="add to favorites" onClick={addToFavorite}>
-            <Favorite  color={(isFavourite)?"#ff9800":"#000000"}/>
-          </IconButton>
+          {localStorage.getItem('Token') ?
+            <IconButton aria-label="add to favorites" onClick={addToFavorite}>
+              <Favorite color={isFavourite ? 'primary' : 'disabled'} />
+            </IconButton>
+            :
+
+            <></>}
+
           <IconButton aria-label="share">
             <Share />
           </IconButton>

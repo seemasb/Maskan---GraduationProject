@@ -67,7 +67,7 @@ export default function Filteration() {
   const [showFeatures, setShowFeatures] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [featuresFinalVersion, setFeaturesFinalVersion] = useState([]);
-  const [cardsResponse, setCardsResponse] = useState([]);
+  const [cardsResponse, setCardsResponse] = useState(null);
   const [dataFlag, setDataFlag] = useState(false);
 
   const handleSubmit = (event) => {
@@ -150,7 +150,7 @@ export default function Filteration() {
     // if([]){
     //   console.log("trueeeeeeeeeee")
     // }
-    if (cardsResponse.length != 0) setDataFlag(true);
+    if (cardsResponse && cardsResponse.length == 0) setDataFlag(true);
     else setDataFlag(false);
 
   }, [cardsResponse])
@@ -463,13 +463,13 @@ export default function Filteration() {
 
       <div className="filterationHomeCards">
         <div className="FilteredCards">
-          {cardsResponse.length ?
+          {cardsResponse != null && cardsResponse.length ?
             cardsResponse.map((element) =>
               <Card data={element} key={element.id} />
             )
             :
-            <Loading />
-            // dataFlag ? <div>No data found</div> : <Loading />
+            // <Loading />
+            dataFlag ? <div>No data found</div> : <Loading />
 
           }
         </div>

@@ -12,6 +12,7 @@ import PropertyDetails from './Pages/Home/PropertyDetails';
 
 
 function App() {
+  // const [userLogged , setUserLogged] = useState(localStorage.getItem('Token') ? : null)
   return (
     <div className="App">
       <header>

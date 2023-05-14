@@ -133,7 +133,7 @@ const PersonalInfo = ({ id }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                id =1;
+                id =2;
                 const response = await axios.get(`${ROOT_URL}/accounts/account/${id}/`)
                 .then((response) => {
                     setData(response.data);

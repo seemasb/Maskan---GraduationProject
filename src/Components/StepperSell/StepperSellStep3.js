@@ -1,5 +1,5 @@
 import { Box, Button, Grid, CircularProgress } from '@mui/material';
-import { useState  , useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import { DropzoneArea } from "material-ui-dropzone";
 import { makeStyles } from "@material-ui/core/styles";
 import Divider from '@mui/material/Divider';
@@ -44,7 +44,18 @@ const StyledButton = styled(Button)({
     },
 });
 
-export default function StepperSellStep3({homeAddedId}) {
+const UploadBtnStye = styled(Button)`
+background-color: #45729d !important;
+    box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12) !important;
+    color: white !important;
+    padding: 8px !important;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+    border-radius: 7px !important;
+    font-size: 13px !important;
+`
+
+export default function StepperSellStep3({ homeAddedId }) {
 
     const [isLoading, setIsLoading] = useState(false);
     const classes = useStyles();
@@ -76,9 +87,14 @@ export default function StepperSellStep3({homeAddedId}) {
             preview: URL.createObjectURL(file),
             file: file,
         }));
-        setProperty([...property, ...newImages]);
-        console.log(property)
+        setProperty(newImages);
+
     };
+
+    useEffect(() => {
+        console.log(property)
+        console.log(ownershipImage)
+    }, [property])
 
 
 
@@ -91,18 +107,18 @@ export default function StepperSellStep3({homeAddedId}) {
         property.forEach((image) => {
             formData.append('images', image.file);
         });
-        formData.append('record' , Sellfile)
+        formData.append('record', Sellfile)
         console.log('total form data')
         console.log(formData)
         try {
-          const response = await axios.patch(`${ROOT_URL}/properties/upload/${homeAddedId}/`, formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-          });
-          console.log(response);
+            const response = await axios.patch(`${ROOT_URL}/properties/upload/${homeAddedId}/`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+            console.log(response);
         } catch (error) {
-          console.log(error);
+            console.log(error);
         }
     };
 
@@ -154,9 +170,9 @@ export default function StepperSellStep3({homeAddedId}) {
                         onChange={handleOwnershipImageChange}
                     />
                     <label htmlFor="photo-upload">
-                        <Button variant="contained" component="span">
+                        <UploadBtnStye variant="contained" component="span">
                             <UploadIcon /> Upload
-                        </Button>
+                        </UploadBtnStye>
                     </label>
                 </Box>
             </Grid>

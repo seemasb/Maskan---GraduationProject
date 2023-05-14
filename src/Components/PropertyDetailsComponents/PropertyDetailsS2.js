@@ -17,7 +17,7 @@ function PropertyDetailsS2({propertyDetails}) {
                propertyDetails={propertyDetails}
             />
             <OwnerCard avatarUrl={avatar} name={propertyDetails.owner_name} bio={'hello my name is seema sbouh im an owner hhhh'} />
-            <ScheduleTour />
+            <ScheduleTour propertyDetails={propertyDetails}/>
         </StyledPropertyDetailsS2>
     );
 }
