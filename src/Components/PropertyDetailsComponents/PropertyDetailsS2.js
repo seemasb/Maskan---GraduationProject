@@ -4,7 +4,6 @@ import ScheduleTour from "./ScheduleTour";
 import avatar from '../../Images/h1.jpg'
 import styled from 'styled-components';
 
-
 const StyledPropertyDetailsS2 = styled.div`
   display: flex;
   flex-direction: column;
