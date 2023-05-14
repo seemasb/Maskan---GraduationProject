@@ -9,6 +9,7 @@ import axios from "axios";
 import ROOT_URL from "../../config";
 import { useEffect, useState } from "react";
 import Loading from "../../Components/Loading";
+import { useParams } from "react-router-dom";
 
 
 
@@ -59,11 +60,13 @@ const BackButtonText = styled(Typography)`
 
 
 export default function PropertyDetails() {
+  let { propertyId } = useParams();
+  // console.log('in property details' , propertyId)
   const [propertyDetails, setPropertyDetails] = useState();
   useEffect(() => {
     const getPropertyDetails = async () => {
       try {
-        const fetchData = await axios.get(`${ROOT_URL}/properties/home/1/`)
+        const fetchData = await axios.get(`${ROOT_URL}/properties/home/${propertyId}/`)
         setPropertyDetails(fetchData.data)
       } catch (error) {
         console.log(error)

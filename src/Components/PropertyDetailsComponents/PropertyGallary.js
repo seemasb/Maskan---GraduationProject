@@ -1,75 +1,74 @@
 import { Carousel } from 'react-carousel-minimal';
 // import Pic1 from '../../Images/home1.jpg'
 import Pic2 from '../../Images/pool_1.jpg'
-import h1 from '../../Images/h1.jpg'
-import h2 from '../../Images/h2.jpg'
-import h3 from '../../Images/h3.jpg'
+import noImage from '../../Images/no-image.jpg'
 
-export default function PropertyGallary({propertyDetails}) {
-    const data = [
-        {
-            image: h1,
-            caption: ''
-        },
-        {
-            image: h2,
-            caption: ''
-        },
-        {
-            image: h3,
-            caption: ''
-        }
-    ]
-
-    const captionStyle = {
-        fontSize: '2em',
-        fontWeight: 'bold',
+export default function PropertyGallary({ propertyDetails }) {
+  console.log(propertyDetails)
+  const data = [
+    {
+      image: noImage,
+      caption: ''
+    },
+    {
+      image: noImage,
+      caption: ''
+    },
+    {
+      image: noImage,
+      caption: ''
     }
-    const slideNumberStyle = {
-        fontSize: '20px',
-        fontWeight: 'bold',
-    }
+  ]
 
-    return (
-        <div className="App">
-        <div style={{ textAlign: "center" }}>
-          {/* <h2>React Carousel Minimal</h2> */}
-          {/* <p>Easy to use, responsive and customizable carousel component for React Projects.</p> */}
-          <div style={{
-            // padding: "0 20px"
-          }}>
-            <Carousel
-              data={propertyDetails.images}
-              time={7000}
-              // width="650px"
-              width="100%"
-              height="500px"
-              captionStyle={captionStyle}
-              radius="20px"
-              slideNumber={true}
-              slideNumberStyle={slideNumberStyle}
-              captionPosition="bottom"
-              automatic={true}
-              dots={true}
-              pauseIconColor="white"
-              pauseIconSize="40px"
-              slideBackgroundColor="darkgrey"
-              slideImageFit="cover"
-              thumbnails={true}
-              thumbnailWidth="100px"
-              style={{
-                textAlign: "center",
-                // maxWidth: "850px",
-                maxWidth: "100%",
-                maxHeight: "500px",
-                margin: "0px 0 100px 0",
-              }}
-            />
-          </div>
+  const captionStyle = {
+    fontSize: '2em',
+    fontWeight: 'bold',
+  }
+  const slideNumberStyle = {
+    fontSize: '20px',
+    fontWeight: 'bold',
+  }
+
+  return (
+    <div className="App">
+      <div style={{ textAlign: "center" }}>
+        {/* <h2>React Carousel Minimal</h2> */}
+        {/* <p>Easy to use, responsive and customizable carousel component for React Projects.</p> */}
+        <div style={{
+          // padding: "0 20px"
+        }}>
+          <Carousel
+            data={propertyDetails.images.length ? propertyDetails.images : data}
+            time={7000}
+            // width="650px"
+            width="100%"
+            height="500px"
+            captionStyle={captionStyle}
+            radius="20px"
+            slideNumber={true}
+            slideNumberStyle={slideNumberStyle}
+            captionPosition="bottom"
+            automatic={true}
+            dots={true}
+            pauseIconColor="white"
+            pauseIconSize="40px"
+            slideBackgroundColor="darkgrey"
+            slideImageFit="cover"
+            thumbnails={true}
+            thumbnailWidth="100px"
+            style={{
+              textAlign: "center",
+              // maxWidth: "850px",
+              maxWidth: "100%",
+              maxHeight: "500px",
+              margin: "0px 0 100px 0",
+            }}
+          />
         </div>
       </div>
+    </div>
 
-)
+  )
 }
 
 

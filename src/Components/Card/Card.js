@@ -2,6 +2,7 @@ import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import Divider from '@mui/material/Divider';
 import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 import { useState } from 'react';
+import { Link } from "react-router-dom";
 import {
     IconButton,
 } from '@mui/material';
@@ -15,15 +16,17 @@ import { MdOutlineBed } from 'react-icons/md'
 
 export default function Card({ data }) {
     const [isFavorite, setIsFavorite] = useState(false);
+    console.log(data)
 
     const handleFavoriteClick = () => {
         setIsFavorite(!isFavorite);
     };
     return (
-        <div className="Card">
+        <Link to={`/detail/${data.id}`}  style={{ textDecoration: 'none'}}>
+            <div className="Card">
 
-            <img src={data.first_image ? data.first_image.image : Home1} className="cardImg"></img>
-            {/* <IconButton
+                <img src={data.first_image ? data.first_image.image : Home1} className="cardImg"></img>
+                {/* <IconButton
                         onClick={handleFavoriteClick}
                         sx={{
                             position: 'absolute'
@@ -33,36 +36,36 @@ export default function Card({ data }) {
                         {isFavorite ? <Favorite /> : <FavoriteBorder />}
                     </IconButton> */}
 
-            <div className='InfoSection'>
+                <div className='InfoSection'>
 
-                <div>
-                    <div className='CardLocationDiv'>
-                        <span><LocationOnOutlinedIcon sx={{ fontSize: 20 }} color="disabled" /></span>
-                        <span style={{whiteSpace: 'nowrap' , overflowX: 'hidden'}}>{data.location.address} , {data.location.city} </span>
+                    <div>
+                        <div className='CardLocationDiv'>
+                            <span><LocationOnOutlinedIcon sx={{ fontSize: 20 }} color="disabled" /></span>
+                            <span style={{ whiteSpace: 'nowrap', overflowX: 'hidden' }}>{data.location.address} , {data.location.city} </span>
+                        </div>
+
+                        <span className='CardTitle'>{data.price}$</span>
+
                     </div>
 
-                    <span className='CardTitle'>{data.price}$</span>
+                    <div className='featuresSection'>
+                        <div className='FeaturesDiv'>
+                            <ShowerOutlinedIcon className='featureIcon' fontSize="small" />
+                            <span>{data.living_space.bathrooms}</span>
+                            <span>Bathrooms</span>
+                        </div>
 
-                </div>
+                        <div className='FeaturesDiv'>
+                            <BedOutlinedIcon className='featureIcon' fontSize="small" />
+                            {/* <MdOutlineBed className='featureIcon'/> */}
+                            <span>{data.living_space.bedrooms}</span>
+                            <span>Bedrooms</span>
+                        </div>
 
-                <div className='featuresSection'>
-                    <div className='FeaturesDiv'>
-                        <ShowerOutlinedIcon className='featureIcon' fontSize="small" />
-                        <span>{data.living_space.bathrooms}</span>
-                        <span>Bathrooms</span>
+
                     </div>
-
-                    <div className='FeaturesDiv'>
-                        <BedOutlinedIcon className='featureIcon' fontSize="small" />
-                        {/* <MdOutlineBed className='featureIcon'/> */}
-                        <span>{data.living_space.bedrooms}</span>
-                        <span>Bedrooms</span>
-                    </div>
-
-
-                </div>
-                {/* <Divider /> */}
-                {/* <div className='footerCard'>
+                    {/* <Divider /> */}
+                    {/* <div className='footerCard'>
                     <IconButton
                         onClick={handleFavoriteClick}
                     // sx={{ marginLeft: 'auto' }}
@@ -75,7 +78,8 @@ export default function Card({ data }) {
                     </div>
 
                 </div> */}
+                </div>
             </div>
-        </div>
+        </Link>
     )
 }
