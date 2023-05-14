@@ -53,7 +53,7 @@ export default function Filteration() {
   const [status, setStatus] = useState("");
   const [type, setType] = useState("");
   const [areaRange, setAreaRange] = useState([300, 10000]);
-  const [priceRange, setPriceRange] = useState([50000, 1000000]);
+  const [priceRange, setPriceRange] = useState([1200, 1000000]);
   const [features, setFeatures] = useState({
     swimmingPool: false,
     garden: false,
@@ -61,8 +61,8 @@ export default function Filteration() {
     garage: false,
     Elevator: false,
     Gym: false,
-    Mafrosh: false,
-    accessable: false,
+    Furnished: false,
+    Accessable: false,
   });
   const [showFeatures, setShowFeatures] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -116,18 +116,18 @@ export default function Filteration() {
       features: featuresFinalVersion,
     }
 
-    const Search=async ()=>
-    {try {
-      const response = await axios.get(`${ROOT_URL}/properties/houses/`, { params:{
-        city: city,
-      state: status,
-      type: type,
-      min_area: areaRange[0],
-      max_area: areaRange[1],
-      min_price: priceRange[0],
-      max_price: priceRange[1],
-      bedrooms: 1,
-      features: featuresFinalVersion.join(','),
+    const Search = async () => {
+      try {
+        const response = await axios.get(`${ROOT_URL}/properties/houses/`, {
+          params: {
+            city: city,
+            state: status,
+            type: type,
+            min_area: areaRange[0],
+            max_area: areaRange[1],
+            min_price: priceRange[0],
+            max_price: priceRange[1],
+            features: featuresFinalVersion.join(','),
 
           }
         });
@@ -187,7 +187,7 @@ export default function Filteration() {
   const handleClearFilters = () => {
     setCity("");
     setStatus("")
-    setPriceRange([50000, 1000000]);
+    setPriceRange([1200, 1000000]);
     setAreaRange([300, 10000]);
     setFeatures({
       swimmingPool: false,
@@ -196,8 +196,8 @@ export default function Filteration() {
       garage: false,
       Elevator: false,
       Gym: false,
-      Mafrosh: false,
-      accessable: false,
+      Furnished: false,
+      Accessable: false,
     });
   };
 
@@ -286,7 +286,7 @@ export default function Filteration() {
                 onChange={handlePriceChange}
                 valueLabelDisplay="auto"
                 aria-labelledby="price-slider"
-                min={50000}
+                min={1200}
                 max={1000000}
                 size="small"
               />
@@ -295,7 +295,7 @@ export default function Filteration() {
 
 
           <div className="featuresANDsearchbtn">
-            <div style={{display: 'flex' , justifyContent: 'space-between' , width: '50%'}}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', width: '50%' }}>
               <FormControlLabel
                 control={<Switch checked={showFeatures} onChange={handleToggleFeatures} />}
                 label="Show features"
@@ -388,9 +388,9 @@ export default function Filteration() {
                   <FormControlLabel
                     control={
                       <Checkbox
-                        checked={features.accessable}
+                        checked={features.Accessable}
                         onChange={handleFeatureChange}
-                        name="accessable"
+                        name="Accessable"
                       />
                     }
                     label="Accessable"
@@ -401,7 +401,7 @@ export default function Filteration() {
                       },
                     }}
                   />
-                  
+
                   <FormControlLabel
                     control={
                       <Checkbox
@@ -437,9 +437,9 @@ export default function Filteration() {
                   <FormControlLabel
                     control={
                       <Checkbox
-                        checked={features.Mafrosh}
+                        checked={features.Furnished}
                         onChange={handleFeatureChange}
-                        name="Mafrosh"
+                        name="Furnished"
                       />
                     }
                     label="Furnished"

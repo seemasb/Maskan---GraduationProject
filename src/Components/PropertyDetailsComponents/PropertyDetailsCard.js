@@ -10,8 +10,32 @@ import LocationOnIcon from '@material-ui/icons/LocationOn';
 import Divider from '@mui/material/Divider';
 import OwnerCard from './OwnerCard';
 import { grey } from '@material-ui/core/colors';
+import axios from 'axios';
+import ROOT_URL from '../../config';
 
+// properties/home/<int:pk>/toggle_favorite/
 
+async function addToFavorite() {
+  const id_home = 1;
+
+  const userToken = localStorage.getItem('Token')
+  let header;
+  userToken ? header = {
+    'Authorization': 'Token ' + userToken
+  } : header = {}
+
+  axios.post(`${ROOT_URL}/properties/home/${id_home}/toggle_favorite/`, {}, {
+    headers: header
+  }
+  )
+    .then(function (response) {
+      console.log(response.data);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+}
 
 const PropertyDetails = ({ propertyDetails }) => {
   return (
@@ -56,7 +80,7 @@ const PropertyDetails = ({ propertyDetails }) => {
       <OwnerCard/> */}
       <ButtonsContainer>
         <ButtonContainer>
-          <IconButton aria-label="add to favorites">
+          <IconButton aria-label="add to favorites" onClick={addToFavorite}>
             <Favorite />
           </IconButton>
           <IconButton aria-label="share">
@@ -67,7 +91,7 @@ const PropertyDetails = ({ propertyDetails }) => {
           Request more info
         </Button> */}
 
-        <InfoButtonStyled  variant="contained" startIcon={<MailOutline />}>
+        <InfoButtonStyled variant="contained" startIcon={<MailOutline />}>
           Request more info
         </InfoButtonStyled>
       </ButtonsContainer>

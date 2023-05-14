@@ -106,15 +106,17 @@ export default function HouseTypeDetails({ setHomeAddedId }) {
     const [selectedDate, setSelectedDate] = useState('');
 
     const handleDateChange = (event) => {
-        console.log(event.target.value)
+        let year = event.target.value.split("-")
+        console.log(year[0])
         setSelectedDate(event.target.value);
+        setBuiltYear(year[0])
     };
 
 
 
     const handleSnackBar = (event) => {
         
-        let featuresArray = [elevator, garage, gym, garden, swimmingPool, mafrog . Accessable]
+        let featuresArray = [elevator, garage, gym, garden, swimmingPool, mafrog , Accessable]
         let featuresArrayFiltered = [];
         featuresArray.map((feature) => {
             if (feature) {
@@ -131,7 +133,7 @@ export default function HouseTypeDetails({ setHomeAddedId }) {
             area: area,
             state: status,
             description: notes,
-            built_year: selectedDate,
+            built_year: builtYear,
             type: 'AP',
             //owner: '22',
 
@@ -190,10 +192,6 @@ export default function HouseTypeDetails({ setHomeAddedId }) {
         }
 
         setOpen(false);
-    };
-
-    const handleBuiltYearChange = (date) => {
-        setBuiltYear(date);
     };
 
     const handleStatusChange = (event) => {

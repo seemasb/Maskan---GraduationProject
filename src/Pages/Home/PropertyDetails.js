@@ -14,10 +14,9 @@ import Loading from "../../Components/Loading";
 
 const DescriptionContainer = styled('div')({
   padding: '40px 40px 0 40px',
-  display: 'flex' , 
+  display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  width: '100%'
 })
 
 const BackButtonWrapper = styled.div`
@@ -86,19 +85,24 @@ export default function PropertyDetails() {
           </BackButtonWrapper>
         </Grid>
         {propertyDetails ? (
-          <>
-            <Grid item md={8} sm={12}>
-              <PropertyGallary propertyDetails={propertyDetails} />
-              <PropertyDetailsS1 propertyDetails={propertyDetails} />
-            </Grid>
-            <Grid item md={4} sm={12}>
-              <PropertyDetailsS2 propertyDetails={propertyDetails} />
-            </Grid>
-          </>
+          <Grid item md={8} sm={12}>
+            <PropertyGallary propertyDetails={propertyDetails} />
+            <PropertyDetailsS1 propertyDetails={propertyDetails} />
+          </Grid>
+
         )
           : <Loading />}
-      </Grid>
 
+
+        {propertyDetails ? (
+          <Grid item md={4} sm={12}>
+            <PropertyDetailsS2 propertyDetails={propertyDetails} />
+          </Grid>
+
+        )
+          : <Loading />}
+
+      </Grid>
     </DescriptionContainer>
   )
 }

@@ -13,7 +13,7 @@ import BedOutlinedIcon from '@mui/icons-material/BedOutlined';
 import { MdOutlineBed } from 'react-icons/md'
 
 
-export default function Card({data}) {
+export default function Card({ data }) {
     const [isFavorite, setIsFavorite] = useState(false);
 
     const handleFavoriteClick = () => {
@@ -22,7 +22,7 @@ export default function Card({data}) {
     return (
         <div className="Card">
 
-            <img src={data.first_image? data.first_image.image : Home1} className="cardImg"></img>
+            <img src={data.first_image ? data.first_image.image : Home1} className="cardImg"></img>
             {/* <IconButton
                         onClick={handleFavoriteClick}
                         sx={{
@@ -38,7 +38,7 @@ export default function Card({data}) {
                 <div>
                     <div className='CardLocationDiv'>
                         <span><LocationOnOutlinedIcon sx={{ fontSize: 20 }} color="disabled" /></span>
-                        <span>{data.location.address} , {data.location.city} </span>
+                        <span style={{whiteSpace: 'nowrap' , overflowX: 'hidden'}}>{data.location.address} , {data.location.city} </span>
                     </div>
 
                     <span className='CardTitle'>{data.price}$</span>

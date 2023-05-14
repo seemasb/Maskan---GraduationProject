@@ -17,6 +17,8 @@
     /* border: 1px solid #45729d; */
     border: 1px solid lightgray;
     box-shadow: 3px 4px 8px lightgray;
+    max-width: 270px;
+    height: fit-content;
 }
 
 .Card:hover{
