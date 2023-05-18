@@ -1,24 +1,26 @@
-import React from "react";
-import ReactPannellum, { getConfig } from "react-pannellum";
-import imgae360 from '../Images/360.jpg'
+import React from 'react';
+import ReactPannellum from 'react-pannellum';
 
-class Panorama extends React.Component {
+const Panorama = ({ image, index }) => {
+  console.log('img url:', image);
 
 
-    render() {
-        const config = {
-            autoRotate: -2,
-        };
-        return (
-            <div>
-                <ReactPannellum
-                    id="1"
-                    sceneId="firstScene"
-                    imageSource="https://res.insta360.com/static/49fcf323b6d04cb8f6a1a81fa6ec0436/3.jpg"
-                    config={config}
-                />
-            </div>
-        );
-    }
-}
+  const config = {
+    autoRotate: -2,
+    autoLoad: true,
+    // type: 'multires',
+  };
+
+  return (
+    <div>
+      <ReactPannellum
+        id={index.toString()}
+        sceneId="firstScene"
+        imageSource={image}
+        config={config}
+      />
+    </div>
+  );
+};
+
 export default Panorama;

@@ -14,7 +14,8 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import Panorama from "../../Components/Panorama";
 import ViewInArIcon from '@mui/icons-material/ViewInAr';
-
+import Carousel from '@brainhubeu/react-carousel';
+import '@brainhubeu/react-carousel/lib/style.css';
 
 
 
@@ -105,6 +106,16 @@ export default function PropertyDetails() {
           <Grid item md={8} sm={12}>
             <PropertyGallary propertyDetails={propertyDetails} />
             <PropertyDetailsS1 propertyDetails={propertyDetails} />
+            <Carousel
+              slidesPerPage={3}
+              slidesPerScroll={1}
+              animationSpeed={1000}
+              autoPlay={3000}
+              stopAutoPlayOnHover
+              infinite
+            >
+              <Panorama />
+            </Carousel>
           </Grid>
 
         )
@@ -114,7 +125,7 @@ export default function PropertyDetails() {
         {propertyDetails ? (
           <Grid item md={4} sm={12}>
             <PropertyDetailsS2 propertyDetails={propertyDetails} />
-            <Button onClick={handleClickOpen} className="SignInBtn" startIcon={<ViewInArIcon />}>
+            {/* <Button onClick={handleClickOpen} className="SignInBtn" startIcon={<ViewInArIcon />}>
               360 View
             </Button>
             <Dialog
@@ -124,7 +135,7 @@ export default function PropertyDetails() {
 
             >
               <Panorama />
-            </Dialog>
+            </Dialog> */}
           </Grid>
 
         )
