@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@brainhubeu/react-carousel": "^2.0.4",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@fontsource/roboto": "^4.5.8",
@@ -28,6 +29,7 @@
     "react-carousel-minimal": "^1.4.1",
     "react-dom": "^18.2.0",
     "react-icons": "^4.8.0",
+    "react-pannellum": "^0.2.13",
     "react-router-dom": "6.4",
     "react-scripts": "5.0.1",
     "react-spinners": "^0.13.8",
