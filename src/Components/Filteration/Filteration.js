@@ -21,6 +21,7 @@ import {
 import { styled } from '@mui/material/styles';
 import Card from "../Card/Card";
 import Loading from "../Loading";
+import { useLocation } from 'react-router-dom';
 
 const StyledButton = styled(Button)({
   background: 'linear-gradient(45deg, #45729d 30%, #94a3b5 90%)',
@@ -44,12 +45,14 @@ const StyledTextField = styled(TextField)({
   margin: '0 8px',
 })
 
-const cities = ["Jerusalem", "Ramallah", "Bethlehem", "Nablus", "Hebron"];
+const cities = ['New York', 'Los Angeles', 'Philadelphia', 'Phoenix', 'San Antonio', 'Houston'];
 const statuses = ["Rent", "Sell"];
 const types = ["Home", "Apartment"];
 
-export default function Filteration() {
-  const [city, setCity] = useState("");
+export default function Filteration({setHomesCoordinates}) {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const [city, setCity] = useState(searchParams.get('city'));
   const [status, setStatus] = useState("");
   const [type, setType] = useState("");
   const [areaRange, setAreaRange] = useState([300, 10000]);
@@ -69,6 +72,7 @@ export default function Filteration() {
   const [featuresFinalVersion, setFeaturesFinalVersion] = useState([]);
   const [cardsResponse, setCardsResponse] = useState(null);
   const [dataFlag, setDataFlag] = useState(false);
+  
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -131,9 +135,16 @@ export default function Filteration() {
 
           }
         });
-        // console.log(response.data);
-        console.log(FilterationReq);
+        console.log(city);
         setCardsResponse(response.data);
+        const newDataList = response.data.map(item => {
+          const { lat, lng } = item.location.data;
+          return {
+            ...item,
+            position: { lat, lng },
+          };
+        });
+        setHomesCoordinates(newDataList)
       } catch (error) {
         console.error(error);
       }

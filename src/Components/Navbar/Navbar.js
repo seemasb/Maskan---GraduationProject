@@ -2,9 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import SignInModal from '../SignIn/Up/SignInModal'
 import SignUpModal from '../SignIn/Up/SignUpModal'
+import SignOutModal from '../SignIn/Up/SignOutModal'
 import './Navbar.css';
 import RoofingIcon from '@mui/icons-material/Roofing';
+import PersonIcon from '@mui/icons-material/Person';
 
+import { Button, Tooltip } from '@mui/material';
 // function check() {
 //   const one = document.getElementById('home');
 //   one.textContent = 'hi';
@@ -74,7 +77,7 @@ export default function Navbar() {
               Contact-us
             </NavLink>
           </li>
-          <li>
+          {/* <li>
             <NavLink
               to="/Profile"
               className="naving"
@@ -85,14 +88,24 @@ export default function Navbar() {
             >
               Profile
             </NavLink>
-          </li>
+          </li> */}
         </ul>
       </div>
 
-
+      
       <div className='SigningDiv'>
-        <SignInModal />
-        <SignUpModal />
+      {localStorage.getItem('Token')? 
+      <>
+      <div>
+            <Tooltip title="Profile" arrow>
+                <Button onClick={()=>{window.location.href = '/Profile';}} className="SignInBtn" startIcon={<PersonIcon fontSize='48' />}>
+                    Profile
+                </Button>
+            </Tooltip>
+        </div>
+      <SignOutModal/></>:
+        <><SignInModal /><SignUpModal /></>}
+        
       </div>
     </div>
   );

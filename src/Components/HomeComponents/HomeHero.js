@@ -6,7 +6,10 @@ import Button from '@material-ui/core/Button';
 import SearchIcon from '@material-ui/icons/Search';
 import Typography from '@material-ui/core/Typography';
 import Hero from '../../Images/hero.jpg'
-
+import { Autocomplete,Paper  } from '@mui/material';
+import { useState,useEffect } from 'react';
+import { IconButton } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 const HomeContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -87,26 +90,83 @@ color: #2c4a66;
 `
 
 function HomeHero() {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [autocompleteOptions,serAutocompleteOptions] = useState([
+    'New York',
+    'Los Angeles',
+    'Philadelphia',
+    'Phoenix',
+    'San Antonio',
+    'Houston'
+  ]);
+  const navigate = useNavigate();
+  const handleSearchQueryChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  useEffect(() => {
+    console.log('Search query:', searchQuery);
+  }, [searchQuery]);
+
+
+  const handleSearchSubmit = (event) => {
+    event.preventDefault();
+    navigate(`/Properities?city=${searchQuery}`);
+    console.log('Search query:', searchQuery);
+  };
   return (
     <HomeContainer>
       <RootContainer maxWidth="md">
         <Slogan1 variant="h4" align="center" gutterBottom>
-          Let's find a home that's perfect for you !
+          Let's Find A Perfect Home For You !
         </Slogan1>
         <FormContainer>
-          <SearchForm noValidate autoComplete="off">
+          <SearchForm noValidate autoComplete="off" onSubmit={handleSearchSubmit}>
+            <Autocomplete
+              options={autocompleteOptions}
+              fullWidth ={true}
+              ListboxComponent={Paper}
+              renderInput={(params) => (
+                <SearchField
+                  {...params}
+                  variant="outlined"
+                  label="Search by city, address"
+                  placeholder="Enter city or address"
+                  value={searchQuery}
+                  onInput={handleSearchQueryChange}
+                  onChange={handleSearchQueryChange}
+                  fullWidth={true}
+                  InputProps={{
+                    ...params.InputProps,
+                    endAdornment: (
+                      <IconButton type="submit" aria-label="search">
+                        <SearchIcon fontSize="medium" color="primary" />
+                      </IconButton>
+                    ),
+                  }}
+                />
+              )}
+            />
+          </SearchForm>
+        </FormContainer>
+        {/* <FormContainer>
+          <SearchForm noValidate autoComplete="on" onSubmit={handleSearchSubmit}>
             <SearchField
               variant="outlined"
               label="Search by city, address"
               placeholder="Enter city or address"
+              value={searchQuery}
+              onChange={handleSearchQueryChange}
               InputProps={{
                 endAdornment: (
-                  <SearchIconWrapper fontSize="small" color="primary" />
+                  <IconButton type="submit" aria-label="search">
+                    <SearchIcon fontSize="medium" color="primary" />
+                  </IconButton>
                 ),
               }}
             />
           </SearchForm>
-        </FormContainer>
+        </FormContainer> */}
       </RootContainer>
     </HomeContainer>
   );

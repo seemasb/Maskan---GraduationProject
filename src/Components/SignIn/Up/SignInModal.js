@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Button from '@mui/material/Button';
+import {Button, Tooltip} from '@mui/material';
 import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
 import SignInForm from './SignInForm'
@@ -29,9 +29,11 @@ export default function SignInModal() {
 
   return (
     <div>
-      <Button  onClick={handleClickOpen} className="SignInBtn" startIcon={<LoginIcon />}>
+      <Tooltip  title="Sign In" arrow>
+      <Button  onClick={handleClickOpen} className="SignInBtn" startIcon={<LoginIcon fontSize='48'/>}>
         Sign In
       </Button>
+      </Tooltip>
       <BootstrapDialog
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"

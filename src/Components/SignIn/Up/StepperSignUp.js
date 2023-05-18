@@ -48,9 +48,12 @@ export default function HorizontalLinearStepper() {
       newSkipped = new Set(newSkipped.values());
       newSkipped.delete(activeStep);
     }
+    
 
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     setSkipped(newSkipped);
+    if(activeStep === steps.length - 1 )
+      window.location.href = '/'; 
   };
 
   const handleBack = () => {
