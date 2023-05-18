@@ -4,11 +4,11 @@ import FilterationHomeCards from '../FilterationHomeCards/FilterationHomeCards'
 import { useState } from 'react'
 
 
-export default function ProperitiesDisplayHalf() {
-    const [omeCards,setHomeCards] = useState([])
+export default function ProperitiesDisplayHalf({setHomesCoordinates}) {
+    const [homeCards,setHomeCards] = useState([])
     return (
         <div className='properitiesDisplayHalf'>
-            <Filteration />
+            <Filteration setHomesCoordinates={setHomesCoordinates}/>
             {/* <FilterationHomeCards/> */}
         </div>
     )

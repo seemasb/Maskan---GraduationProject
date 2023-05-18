@@ -49,6 +49,7 @@ export default function SignInForm() {
             const token =response.data['Token']
             localStorage.setItem('Token',token)
             console.log(localStorage.getItem('Token'))
+            window.location.href = '/'; 
         }
       })
       .catch(function (error) {

@@ -12,7 +12,7 @@ import './Card.css'
 import ShowerOutlinedIcon from '@mui/icons-material/ShowerOutlined';
 import BedOutlinedIcon from '@mui/icons-material/BedOutlined';
 import { MdOutlineBed } from 'react-icons/md'
-
+import noImage from '../../Images/no_image.jpg'
 
 export default function Card({ data }) {
     const [isFavorite, setIsFavorite] = useState(false);
@@ -25,7 +25,7 @@ export default function Card({ data }) {
         <Link to={`/detail/${data.id}`}  style={{ textDecoration: 'none'}}>
             <div className="Card">
 
-                <img src={data.first_image ? data.first_image.image : Home1} className="cardImg"></img>
+                <img src={data.first_image ? data.first_image.image : noImage} className="cardImg"></img>
                 {/* <IconButton
                         onClick={handleFavoriteClick}
                         sx={{
