@@ -41,7 +41,7 @@ export default function Card({ data }) {
                     <div>
                         <div className='CardLocationDiv'>
                             <span><LocationOnOutlinedIcon sx={{ fontSize: 20 }} color="disabled" /></span>
-                            <span style={{ whiteSpace: 'nowrap', overflowX: 'hidden' }}>{data.location.address} , {data.location.city} </span>
+                            <span>{data.location.address} , {data.location.city} </span>
                         </div>
 
                         <span className='CardTitle'>{data.price}$</span>

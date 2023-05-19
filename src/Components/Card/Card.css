@@ -41,10 +41,13 @@ background-color: white;
 
 .CardLocationDiv{
     color: gray;
-    font-weight: 300;
+    font-weight: 600;
     display: flex;
     column-gap: 7px;
     font-size: 13px;
+    white-space: break-spaces;
+    overflow-wrap: break-word;
+    align-items: center;
 }
 
 .InfoSection{

@@ -81,10 +81,10 @@ export default function PropertyDetails() {
       <Grid container spacing={3}>
         <Grid item sm={12}>
           <BackButtonWrapper>
-            <BackButtonIcon onClick={() => { }}>
+            <BackButtonIcon onClick={() => { window.location.href='/Properties'}} >
               <ArrowBack />
             </BackButtonIcon>
-            <BackButtonText variant="body1">Back to Search</BackButtonText>
+            <BackButtonText variant="body1" cursor='alise'>Back to Search</BackButtonText>
           </BackButtonWrapper>
         </Grid>
         {propertyDetails ? (
