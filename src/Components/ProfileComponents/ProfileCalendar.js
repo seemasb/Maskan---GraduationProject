@@ -118,36 +118,6 @@ export default function ProfileCalendar() {
     }
     updateFreeTimes()
 
-    // async function updateFreeTimes() {
-    //   const userToken = localStorage.getItem('Token')
-    //   let header;
-    //   userToken ? header = {
-    //     'Authorization': 'Token ' + userToken
-    //   } : header = {};
-    //   const res = await axios.get(
-    //     'http://127.0.0.1:8001/reservations/slots/',
-    //     {
-    //       headers: header
-    //     }
-    //   );
-    //   return res;
-    // }
-
-    // const response = updateFreeTimes()
-
-    // const events = response.data.map(res => {
-    //   return {
-    //     id: res.id,
-    //     title: res.username.toUpperCase() + " Visit",
-    //     start: new Date(res.year, res.month, res.day, res.start_time, 0),
-    //     end: new Date(res.year, res.month, res.day, res.end_time, 0),
-    //     name: res.username
-    //   };
-
-    // });
-
-    // setEvents(events)
-
   }, [])
 
   return (
