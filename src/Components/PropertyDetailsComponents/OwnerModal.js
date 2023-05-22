@@ -74,7 +74,7 @@ const OwnerModal = ({ owner, properties, isOpen, onClose }) => {
     return (
         <Modal
             className={classes.modal}
-            open={true}
+            open={false}
             //   onClose={onClose}
             aria-labelledby="real-estate-owner-modal-title"
             aria-describedby="real-estate-owner-modal-description"
