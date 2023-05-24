@@ -106,7 +106,7 @@ export default function PropertyDetails() {
           <Grid item md={8} sm={12}>
             <PropertyGallary propertyDetails={propertyDetails} />
             <PropertyDetailsS1 propertyDetails={propertyDetails} />
-            <Carousel
+            {/* <Carousel
               slidesPerPage={3}
               slidesPerScroll={1}
               animationSpeed={1000}
@@ -115,7 +115,7 @@ export default function PropertyDetails() {
               infinite
             >
               <Panorama />
-            </Carousel>
+            </Carousel> */}
           </Grid>
 
         )

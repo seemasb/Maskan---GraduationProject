@@ -14,7 +14,7 @@ const Panorama = ({ image, index }) => {
   return (
     <div>
       <ReactPannellum
-        id={index.toString()}
+        id={index}
         sceneId="firstScene"
         imageSource={image}
         config={config}
