@@ -24,7 +24,7 @@ export default function Home() {
       >
         {[1, 2, 3].map((index) =>
           <div style={{display: 'flex' , flexDirection: 'row'}}>
-            <Panorama image={imageUrl} index={index}/>
+            {/* <Panorama image={imageUrl} index={index}/> */}
           </div>
         )}
       </Carousel> 

@@ -151,8 +151,13 @@ export default function ProfileProperities() {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const userToken = localStorage.getItem('Token')
+        let header;
+        userToken ? header = {
+          'Authorization': 'Token ' + userToken
+        } : header = {};
         const endpoint = getEndpoint(selectedButton);
-        const response = await axios.get(endpoint);
+        const response = await axios.get(endpoint, {headers:header});
         setData(response.data);
         setCount(response.data.length);
       } catch (error) {

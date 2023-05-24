@@ -74,7 +74,7 @@ const PropertyDetails = ({ propertyDetails }) => {
       }
     };
     fetchData();
-  }, []);
+  }, [isFavourite]);
 
   return (
     <PropertyDetailsContainer>
