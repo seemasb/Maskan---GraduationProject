@@ -80,7 +80,8 @@ const PropertyDetails = ({ propertyDetails }) => {
     <PropertyDetailsContainer>
       <DetailsContainer>
         <div>
-          <Price>{propertyDetails.price}/Year</Price>
+          <Price>${propertyDetails.price}/Year</Price>
+          <EstimatedPrice>Maskan Estimated: <span style={{color: '#45729d'}}>${propertyDetails.prediction}</span></EstimatedPrice>
           <StyledLocation>
             <LocationOnIcon style={{ color: '#9e9e9e' }} />
             {propertyDetails.location.address}
@@ -213,6 +214,12 @@ const Price = styled.div`
   font-weight: bold;
 `;
 
+const EstimatedPrice = styled.div`
+  font-size: 20px;
+  font-weight: bold;
+  color: darkslategray;
+
+`;
 
 const StyledRow = styled.div`
   display: flex;
