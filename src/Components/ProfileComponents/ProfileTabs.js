@@ -117,21 +117,21 @@ const ProfileTabs = () => {
                             <Home style={{ color: selectedItem === 'Posted Properties' ? '#fff' : '#45729d' }} />
                             <MenuItemText primary="Posted Properties" selected={selectedItem === 'Posted Properties'} />
                         </MenuItem> */}
-                        <MenuItem button selected={selectedItem === 'Chat'} onClick={() => handleClick('Chat')}>
+                        {/* <MenuItem button selected={selectedItem === 'Chat'} onClick={() => handleClick('Chat')}>
 
                             <Forum style={{ color: selectedItem === 'Chat' ? '#fff' : '#45729d' }} />
                             <MenuItemText primary="Chat" selected={selectedItem === 'Chat'} />
-                        </MenuItem>
+                        </MenuItem> */}
                         <MenuItem button selected={selectedItem === 'Calendar'} onClick={() => handleClick('Calendar')}>
 
                             <CalendarToday style={{ color: selectedItem === 'Calendar' ? '#fff' : '#45729d' }} />
                             <MenuItemText primary="Calendar" selected={selectedItem === 'Calendar'} />
                         </MenuItem>
-                        <MenuItem button selected={selectedItem === 'Analytics'} onClick={() => handleClick('Analytics')}>
+                        {/* <MenuItem button selected={selectedItem === 'Analytics'} onClick={() => handleClick('Analytics')}>
 
                             <BarChart style={{ color: selectedItem === 'Analytics' ? '#fff' : '#45729d' }} />
                             <MenuItemText primary="Analytics" selected={selectedItem === 'Analytics'} />
-                        </MenuItem>
+                        </MenuItem> */}
                     </MenuList>
                 </Grid>
                 <Grid item xs={10}>
