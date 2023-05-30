@@ -21,7 +21,7 @@ const PropertyDetails = ({ propertyDetails }) => {
   const [isFavourite, setIsFavourite] = useState(false);
   
   async function addToFavorite() {
-    const id_home = 1;
+    // const id_home = 1;
 
     const userToken = localStorage.getItem('Token')
     let header;
@@ -29,7 +29,7 @@ const PropertyDetails = ({ propertyDetails }) => {
       'Authorization': 'Token ' + userToken
     } : header = {}
 
-    axios.post(`${ROOT_URL}/properties/home/${id_home}/toggle_favorite/`, {}, {
+    axios.post(`${ROOT_URL}/properties/home/${propertyDetails.id}/toggle_favorite/`, {}, {
       headers: header
     }
     )
