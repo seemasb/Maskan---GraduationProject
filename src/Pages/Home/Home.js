@@ -15,20 +15,6 @@ export default function Home() {
     <div className="HomeBody">
       <HomeHero />
       <WhatWeDo />
-      <Carousel
-        plugins={['arrows']}
-        slidesPerPage={3}
-        slidesPerScroll={1}
-        draggable={false}
-        infinite
-      >
-        {[1, 2, 3].map((index) =>
-          <div style={{display: 'flex' , flexDirection: 'row'}}>
-            {/* <Panorama image={imageUrl} index={index}/> */}
-          </div>
-        )}
-      </Carousel> 
-      {/* <Panorama /> */}
       <OwnerModal />
       <Footer />
       {/* <PopularListing/> */}

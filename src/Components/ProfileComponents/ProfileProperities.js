@@ -1,94 +1,10 @@
-// import React from "react";
-// import { Box, Button, Typography } from "@material-ui/core";
-// import { Favorite, HourglassEmpty, PostAdd } from "@material-ui/icons";
-// import styled from "styled-components";
-
-// const StyledButton = styled(Button)`
-//   && {
-//     background-color: #fff;
-//     border: 2px solid #45729d;
-//     border-radius: 10px;
-//     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-//     color: #45729d;
-//     margin: 10px;
-//     padding: 10px;
-//     text-transform: none;
-
-//     &:hover {
-//       border-color: #fff;
-//       color: #fff;
-//       background-color: #45729d;
-//     }
-
-//     &.Mui-selected {
-//       border-color: #fff;
-//       color: #fff;
-//       background-color: #45729d;
-//     }
-//   }
-// `;
-
-// const ButtonWithIcon = ({ icon, label, count, selected, onClick }) => (
-//   <StyledButton
-//     variant="outlined"
-//     startIcon={icon}
-//     selected={selected}
-//     onClick={onClick}
-//   >
-//     <Box display="flex" flexDirection="column" alignItems="center">
-//       <Box display="flex" alignItems="center">
-//         {count !== undefined && (
-//           <Typography variant="h5" color="textPrimary">
-//             {count}{" "}
-//           </Typography>
-//         )}
-//         <Typography variant="h6" color="textPrimary">
-//           {label}
-//         </Typography>
-//       </Box>
-//       <Typography variant="body2" color="textSecondary">
-//         {count !== undefined && `${count} ${label.toLowerCase()}`}
-//       </Typography>
-//     </Box>
-//   </StyledButton>
-// );
-
-// const ProfileProperities = () => (
-//   <Box display="flex" flexWrap="wrap">
-//     <ButtonWithIcon
-//       icon={<Favorite />}
-//       label="Favorite Properties"
-//       count={7}
-//       selected={false}
-//       onClick={() => console.log("Favorite Properties clicked")}
-//     />
-//     <ButtonWithIcon
-//       icon={<HourglassEmpty />}
-//       label="Pending Properties"
-//       count={3}
-//       selected={true}
-//       onClick={() => console.log("Pending Properties clicked")}
-//     />
-//     <ButtonWithIcon
-//       icon={<PostAdd />}
-//       label="Posted Properties"
-//       count={12}
-//       selected={false}
-//       onClick={() => console.log("Posted Properties clicked")}
-//     />
-//   </Box>
-// );
-
-// export default ProfileProperities;
-
-
 import React from 'react';
 import Button from '@mui/material/Button';
 import AddHomeWorkTwoToneIcon from '@mui/icons-material/AddHomeWorkTwoTone';
 import FavoriteTwoToneIcon from '@mui/icons-material/FavoriteTwoTone';
 import HourglassFullTwoToneIcon from '@mui/icons-material/HourglassFullTwoTone';
 import styled from 'styled-components';
-// import { useState } from 'react';
+import Carousel from '@brainhubeu/react-carousel';
 import Card from '../Card/Card';
 import { Grid } from '@material-ui/core';
 import { useState, useEffect } from "react";
@@ -157,7 +73,7 @@ export default function ProfileProperities() {
           'Authorization': 'Token ' + userToken
         } : header = {};
         const endpoint = getEndpoint(selectedButton);
-        const response = await axios.get(endpoint, {headers:header});
+        const response = await axios.get(endpoint, { headers: header });
         setData(response.data);
         setCount(response.data.length);
       } catch (error) {
@@ -201,7 +117,7 @@ export default function ProfileProperities() {
             setSelectedButton("pending");
           }}
         >
-        <StyleTitle>{(selectedButton === "pending" && count !== null) && `${count} `}Pending</StyleTitle>
+          <StyleTitle>{(selectedButton === "pending" && count !== null) && `${count} `}Pending</StyleTitle>
         </StyledButton>
         <StyledButton
           variant="contained"
@@ -211,40 +127,46 @@ export default function ProfileProperities() {
             setSelectedButton("posted");
           }}
         >
-        <StyleTitle>{(selectedButton === "posted" && count !== null) && `${count} `}Posted</StyleTitle>
+          <StyleTitle>{(selectedButton === "posted" && count !== null) && `${count} `}Posted</StyleTitle>
         </StyledButton>
       </ButtonsDiv>
       <div>
         {selectedButton === "favorites" &&
           (
-            <div style={{ display: "flex", columnGap: "40px" }}>
-                {data.length > 0 ? 
+            // <div style={{ display: "flex", columnGap: "40px" }}>
+            <Carousel
+              plugins={['arrows']}
+              slidesPerScroll={1}
+              infinite
+              itemWidth={280}
+            >
+              {data.length > 0 ?
                 (
-                    data.map((item) => (<Card key={item.id} data={item} />))) : 
+                  data.map((item) => (<Card key={item.id} data={item} />))) :
                 (
-                    <StyledNoResult>No Posted properties</StyledNoResult>
+                  <StyledNoResult>No Posted properties</StyledNoResult>
                 )}
-            </div>
-        )}
-        
+            </Carousel>
+          )}
+
         {selectedButton === "pending" && (
-            <div style={{ display: "flex", columnGap: "40px" }}>
-                {data.length > 0 ? 
-                (
-                    data.map((item) => (<Card key={item.id} data={item} />))) : 
-                (
-                    <StyledNoResult>No Posted properties</StyledNoResult>
-                )}
-            </div>
+          <div style={{ display: "flex", columnGap: "40px" }}>
+            {data.length > 0 ?
+              (
+                data.map((item) => (<Card key={item.id} data={item} />))) :
+              (
+                <StyledNoResult>No Posted properties</StyledNoResult>
+              )}
+          </div>
         )}
         {selectedButton === "posted" && (
           <div style={{ display: "flex", columnGap: "40px" }}>
-            {data.length > 0 ? 
-            (
-                data.map((item) => (<Card key={item.id} data={item} />))) : 
-            (
+            {data.length > 0 ?
+              (
+                data.map((item) => (<Card key={item.id} data={item} />))) :
+              (
                 <StyledNoResult>No Posted properties</StyledNoResult>
-            )}
+              )}
           </div>
         )}
       </div>
@@ -297,7 +219,7 @@ export default function ProfileProperities() {
 //                     </div>
 //                     ||
 //                     selectedButton == "posted" && <StyledNoResult>No Posted properties</StyledNoResult>
-//                     // <Grid spacing={3}> 
+//                     // <Grid spacing={3}>
 //                     //     <Grid item md={4}>
 //                     //         <Card />
 //                     //     </Grid>

@@ -1,9 +1,10 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { GoogleMap, LoadScript, Marker, InfoBox } from "@react-google-maps/api";
 import HomeCard from '../HomeCard.js/HomeCard'
 import iconMarker from '../../Images/home.png'
+import MapCard from "./MapCard";
 
-const Map = ({homesCoordinates}) => {
+const Map = ({ homesCoordinates }) => {
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [center, setCenter] = useState({ lat: 37.7749, lng: -122.4194 });
   // const [mapref, setMapRef] = useState(null);
@@ -21,27 +22,27 @@ const Map = ({homesCoordinates}) => {
     width: "100%",
   };
 
-  
 
-/*  const markers = [
-    {
-      position: {
-        lat: 37.7749,
-        lng: -122.4194,
+
+  /*  const markers = [
+      {
+        position: {
+          lat: 37.7749,
+          lng: -122.4194,
+        },
+        name: "San Francisco",
+        info: "A beautiful city",
       },
-      name: "San Francisco",
-      info: "A beautiful city",
-    },
-    {
-      position: {
-        lat: 40.7128,
-        lng: -74.006, 
+      {
+        position: {
+          lat: 40.7128,
+          lng: -74.006, 
+        },
+        name: "New York",
+        info: "The Big Apple",
       },
-      name: "New York",
-      info: "The Big Apple",
-    },
-  ];
-*/
+    ];
+  */
   const markerOptions = {
     //  animation: window.google.maps.Animation.BOUNCE,
   };
@@ -76,20 +77,20 @@ const Map = ({homesCoordinates}) => {
         mapContainerStyle={mapContainerStyle}
         center={center}
         zoom={10}
-        // onLoad={handleOnLoad}
-        // onCenterChanged={handleCenterChanged}
-        
+      // onLoad={handleOnLoad}
+      // onCenterChanged={handleCenterChanged}
+
       >
-        {homesCoordinates&&homesCoordinates.map((marker, index) => (
+        {homesCoordinates && homesCoordinates.map((marker, index) => (
           <Marker
-            key={index}
+            key={marker.id}
             position={marker.position}
             onClick={() => handleMarkerClick(marker)}
             options={markerOptions}
             icon={{
-                url: iconMarker,
-                // scaledSize: new window.google.maps.Size(50, 50) // set the size of the icon
-              }}
+              url: iconMarker,
+              // scaledSize: new window.google.maps.Size(50, 50) // set the size of the icon
+            }}
           />
         ))}
         {selectedMarker && (
@@ -97,7 +98,8 @@ const Map = ({homesCoordinates}) => {
             position={selectedMarker.position}
             onCloseClick={handleCloseInfoBox}
           >
-            <HomeCard/>
+            {/* <HomeCard selectedMarker={selectedMarker} /> */}
+            <MapCard selectedMarker={selectedMarker} setSelectedMarker={setSelectedMarker} />
           </InfoBox>
         )}
       </GoogleMap>

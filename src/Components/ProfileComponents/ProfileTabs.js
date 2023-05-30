@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { List, ListItem, ListItemIcon, ListItemText, Grid } from '@material-ui/core';
 import { Person, Home, Star, Forum, CalendarToday, BarChart } from '@material-ui/icons';
@@ -10,6 +10,8 @@ import ProfileProperities from './ProfileProperities';
 import ProfilePic from '../../Images/Sima.jpg'
 import WidgetsOutlinedIcon from '@mui/icons-material/WidgetsOutlined';
 import { Divider } from '@mui/material';
+import axios from 'axios';
+import ROOT_URL from '../../config';
 
 const SidebarContainer = styled.div`
   height: 100vh;
@@ -79,11 +81,39 @@ font-weight: 600;
 
 const ProfileTabs = () => {
     const [selectedItem, setSelectedItem] = useState('Personal Info');
+    const [userId, setUserId] = useState();
 
     const handleClick = (text) => {
         console.log(`You clicked on ${text}`);
         setSelectedItem(text);
     };
+
+
+    useEffect(() => {
+        async function getUserId() {
+            try {
+                const token = localStorage.getItem('Token')
+                if (token !== null) {
+                    const response = await axios.get(`${ROOT_URL}/accounts/users/${token}/`);
+                    if (response.status === 200) {
+                        const user = response.data;
+                        console.log('user id::' , response.data)
+                        setUserId(user.id)
+
+                    }
+                    else {
+                        console.log(response.data);
+                    }
+                } else {
+                    console.log('Value does not exist'); // Value does not exist
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        getUserId()
+    }, [])
 
     return (
         <SidebarContainer>
@@ -117,27 +147,27 @@ const ProfileTabs = () => {
                             <Home style={{ color: selectedItem === 'Posted Properties' ? '#fff' : '#45729d' }} />
                             <MenuItemText primary="Posted Properties" selected={selectedItem === 'Posted Properties'} />
                         </MenuItem> */}
-                        <MenuItem button selected={selectedItem === 'Chat'} onClick={() => handleClick('Chat')}>
+                        {/* <MenuItem button selected={selectedItem === 'Chat'} onClick={() => handleClick('Chat')}>
 
                             <Forum style={{ color: selectedItem === 'Chat' ? '#fff' : '#45729d' }} />
                             <MenuItemText primary="Chat" selected={selectedItem === 'Chat'} />
-                        </MenuItem>
+                        </MenuItem> */}
                         <MenuItem button selected={selectedItem === 'Calendar'} onClick={() => handleClick('Calendar')}>
 
                             <CalendarToday style={{ color: selectedItem === 'Calendar' ? '#fff' : '#45729d' }} />
                             <MenuItemText primary="Calendar" selected={selectedItem === 'Calendar'} />
                         </MenuItem>
-                        <MenuItem button selected={selectedItem === 'Analytics'} onClick={() => handleClick('Analytics')}>
+                        {/* <MenuItem button selected={selectedItem === 'Analytics'} onClick={() => handleClick('Analytics')}>
 
                             <BarChart style={{ color: selectedItem === 'Analytics' ? '#fff' : '#45729d' }} />
                             <MenuItemText primary="Analytics" selected={selectedItem === 'Analytics'} />
-                        </MenuItem>
+                        </MenuItem> */}
                     </MenuList>
                 </Grid>
                 <Grid item xs={10}>
                     <SidebarContent>
                         {
-                            selectedItem == "Personal Info" && <PersonalInfo email={'seema.sbouh512@gmail.com'} phoneNumber={'0597292545'} birthdate={'5/10/2000'} profilePictureUrl={ProfilePic} name={'Sima Sbouh'}/>
+                            selectedItem == "Personal Info" && userId && <PersonalInfo id={userId} />
                             ||
                             selectedItem == "Calendar" && <ProfileCalendar />
                             ||

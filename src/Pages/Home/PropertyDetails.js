@@ -64,6 +64,19 @@ const BackButtonText = styled(Typography)`
 `;
 
 
+const StyledDiv = styled.div`
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  padding-bottom: 43px;
+
+  /* Media query to make the div responsive */
+//   @media (max-width: 768px) {
+//     width: 90%;
+//   }
+`;
+
 
 export default function PropertyDetails() {
   let { propertyId } = useParams();
@@ -89,14 +102,20 @@ export default function PropertyDetails() {
     }
     getPropertyDetails()
   }, [])
+  const imageUrl = 'https://res.insta360.com/static/49fcf323b6d04cb8f6a1a81fa6ec0436/3.jpg';
 
+  const images360 = [
+    'https://i0.wp.com/www.samrohn.com/wp-content/uploads/50-RSB-360-Virtual-Tour-0001.jpg?fit=600%2C300',
+    'https://res.insta360.com/static/49fcf323b6d04cb8f6a1a81fa6ec0436/3.jpg',
+    'https://thumbs.dreamstime.com/b/360-virtual-tour-photo-house-bedroom-165152107.jpg'
+  ]
   return (
     <DescriptionContainer>
 
       <Grid container spacing={3}>
         <Grid item sm={12}>
           <BackButtonWrapper>
-            <BackButtonIcon onClick={() => { window.location.href='/Properties'}} >
+            <BackButtonIcon onClick={() => { window.location.href = '/Properties' }} >
               <ArrowBack />
             </BackButtonIcon>
             <BackButtonText variant="body1" cursor='alise'>Back to Search</BackButtonText>
@@ -105,18 +124,40 @@ export default function PropertyDetails() {
         {propertyDetails ? (
           <Grid item md={8} sm={12}>
             <PropertyGallary propertyDetails={propertyDetails} />
+            <StyledDiv>
+              <h2>360 Property view </h2>
+              <Carousel
+                plugins={['arrows']}
+                slidesPerPage={3}
+                slidesPerScroll={1}
+                draggable={false}
+                infinite
+              >
+                {images360.map((item, index) =>
+                  <div style={{ display: 'flex', flexDirection: 'row' }}>
+                    <Panorama image={item} index={index} />
+                  </div>
+                )}
+              </Carousel>
+            </StyledDiv>
             <PropertyDetailsS1 propertyDetails={propertyDetails} />
+            {/* <Grid item md={8} sm={12}> */}
             {/* <Carousel
-              slidesPerPage={3}
-              slidesPerScroll={1}
-              animationSpeed={1000}
-              autoPlay={3000}
-              stopAutoPlayOnHover
-              infinite
-            >
-              <Panorama />
-            </Carousel> */}
+                plugins={['arrows']}
+                slidesPerPage={3}
+                slidesPerScroll={1}
+                draggable={false}
+                infinite
+              >
+                {images360.map((item, index) =>
+                  <div style={{ display: 'flex', flexDirection: 'row' }}>
+                    <Panorama image={item} index={index} />
+                  </div>
+                )}
+              </Carousel> */}
+            {/* </Grid> */}
           </Grid>
+
 
         )
           : <Loading />}

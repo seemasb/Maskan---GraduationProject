@@ -138,12 +138,14 @@ export default function Filteration({setHomesCoordinates}) {
         console.log(city);
         setCardsResponse(response.data);
         const newDataList = response.data.map(item => {
+          // console.log('item::' , item)
           const { lat, lng } = item.location.data;
           return {
             ...item,
             position: { lat, lng },
           };
         });
+        // console.log('newData' , newDataList)
         setHomesCoordinates(newDataList)
       } catch (error) {
         console.error(error);

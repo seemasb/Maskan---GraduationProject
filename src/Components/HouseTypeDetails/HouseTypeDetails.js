@@ -1,5 +1,5 @@
 import './HouseTypeDetails.css'
-import { useState, forwardRef } from 'react';
+import { useState, forwardRef, useRef, useEffect } from 'react';
 import { TextField, Checkbox, FormControlLabel, FormGroup, Button, Grid } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
@@ -24,6 +24,8 @@ import MuiAlert from '@mui/material/Alert';
 import axios from 'axios';
 import AccessibleIcon from '@mui/icons-material/Accessible'
 import ROOT_URL from '../../config';
+
+
 
 const Alert = forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -75,15 +77,27 @@ const StyledButton = styled(Button)({
     },
 });
 
+const StyledButtonGeo = styled(Button)({
+    background: 'linear-gradient(45deg, #45729d 30%, #94a3b5 90%)',
+    borderRadius: 3,
+    height: 30,
+    border: 0,
+    color: 'white !important',
+    '&:hover': {
+        boxShadow: '0 6px 10px 5px #94a3b5',
+    },
+});
+
+
 export default function HouseTypeDetails({ setHomeAddedId }) {
     const [area, setArea] = useState('');
     const [numFloors, setNumFloors] = useState('');
     const [city, setCity] = useState('');
-    const [address, setAddress] = useState('');
-    const [location, setLocation] = useState({
-        lat: 1,
-        lng: 1,
-    });
+    // const [address, setAddress] = useState('');
+    // const [location, setLocation] = useState({
+    //     lat: 1,
+    //     lng: 1,
+    // });
     const [numBathrooms, setNumBathrooms] = useState(0);
     const [numBedrooms, setNumBedrooms] = useState(0);
     const [numHalls, setNumHalls] = useState(0);
@@ -104,6 +118,52 @@ export default function HouseTypeDetails({ setHomeAddedId }) {
     const [isLoading, setIsLoading] = useState(false);
     const [open, setOpen] = useState(false);
     const [selectedDate, setSelectedDate] = useState('');
+    ////////////////Geocoding////////////////////////////
+    const [address, setAddress] = useState('');
+    const [location, setLocation] = useState({
+        lat: 1,
+        lng: 1,
+    });
+
+
+    const handleAddressChange = (event) => {
+        setAddress(event.target.value);
+    };
+
+    const handleLocationChange = (e) => {
+        setLocation({
+            lat: e.latLng.lat(),
+            lng: e.latLng.lng(),
+        });
+    };
+
+    const handleGeocoding = async () => {
+        try {
+            const response = await fetch(
+                `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=AIzaSyDujT1RL6XFVqzXmWm887Z9S3SN5ISSVg0`
+            );
+            const data = await response.json();
+
+            if (data.results.length > 0) {
+                const { lat, lng } = data.results[0].geometry.location;
+                console.log({ lat, lng })
+                // setLatitude(lat);
+                // setLongitude(lng);
+                setLocation({
+                    lat: lat,
+                    lng: lng,
+                })
+            } else {
+                setLocation({
+                    lat: 1,
+                    lng: 1,
+                })
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+
 
     const handleDateChange = (event) => {
         let year = event.target.value.split("-")
@@ -115,8 +175,8 @@ export default function HouseTypeDetails({ setHomeAddedId }) {
 
 
     const handleSnackBar = (event) => {
-        
-        let featuresArray = [elevator, garage, gym, garden, swimmingPool, mafrog , Accessable]
+
+        let featuresArray = [elevator, garage, gym, garden, swimmingPool, mafrog, Accessable]
         let featuresArrayFiltered = [];
         featuresArray.map((feature) => {
             if (feature) {
@@ -212,9 +272,9 @@ export default function HouseTypeDetails({ setHomeAddedId }) {
     };
 
 
-    const handleLocationChange = (location) => {
-        setLocation(location);
-    };
+    // const handleLocationChange = (location) => {
+    //     setLocation(location);
+    // };
 
     // const handleDelete = (chipToDelete: string) => {
     //     setPersonName((chips) => chips.filter((chip) => chip !== chipToDelete));
@@ -403,7 +463,7 @@ export default function HouseTypeDetails({ setHomeAddedId }) {
                         multiline
                         required
                         fullWidth
-                        style={{marginTop: 5}}
+                        style={{ marginTop: 5 }}
                     />
                 </Grid>
 
@@ -544,7 +604,7 @@ export default function HouseTypeDetails({ setHomeAddedId }) {
                         />
                     </FormGroup>
                 </Grid>
-                <Grid item xs={12}>
+                {/* <Grid item xs={12}>
                     <Divider sx={{ marginTop: '50px' }}>
                         <div style={{ display: 'flex', columnGap: 10, justifyContent: 'center' }}>
                             <h4>Drop a location</h4>
@@ -566,6 +626,35 @@ export default function HouseTypeDetails({ setHomeAddedId }) {
                             {location && <Marker position={location} />}
                         </GoogleMap>
                     </LoadScript>
+                </Grid> */}
+                <Grid item xs={12}>
+                    <Divider sx={{ marginTop: '50px' }}>
+                        <div style={{ display: 'flex', columnGap: 10, justifyContent: 'center' }}>
+                            <h4>Drop a location</h4>
+                            <AddLocationAltRoundedIcon color="primary" sx={{ fontSize: 40, marginTop: '20px' }} />
+                        </div>
+                    </Divider>
+                    <div style={{ display: 'flex', marginBottom: 15, alignItems: 'baseline' }}>
+                        <TextField
+                        label="Enter address"
+                        value={address}
+                        onChange={handleAddressChange}
+                        fullWidth
+                        sx={{ marginBottom: '20px' }}
+                    />
+                        <StyledButtonGeo onClick={handleGeocoding}>Geocode</StyledButtonGeo>
+                    </div>
+                    <LoadScript googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}>
+                        <GoogleMap
+                            mapContainerStyle={{ height: '400px', width: '100%' }}
+                            center={location}
+                            zoom={16}
+                            onClick={(e) => handleLocationChange(e)}
+                        >
+                            {location && <Marker position={location} />}
+                        </GoogleMap>
+                    </LoadScript>
+
                 </Grid>
                 {/* <Grid item xs={12} sm={6}>
                     <TextField

@@ -124,26 +124,28 @@ const PersonalInfo = ({ id }) => {
     const [editablePhone, setEditablePhone] = useState('');
     const [editableProfilePictureUrl, setEditableProfilePictureUrl] = useState('');
     const [editableIdPictureUrl, setEditableIdPictureUrl] = useState('');
-    const [birthdate, setBirthdate] =useState('');
-    const [email, setEmail] =useState('');
+    const [birthdate, setBirthdate] = useState('');
+    const [email, setEmail] = useState('');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [data, setData] = useState(null);
 
+
     useEffect(() => {
         const fetchData = async () => {
             try {
-                id =2;
+                // id =2;
+                let ROOT_URL = "http://18.198.203.6:8000";
                 const response = await axios.get(`${ROOT_URL}/accounts/account/${id}/`)
-                .then((response) => {
-                    setData(response.data);
-                    setEditableName(response.data.username);
-                    setEditablePhone(response.data.phone_number);
-                    setEditableProfilePictureUrl(response.data.profile.profile_picture);
-                    setEditableIdPictureUrl(response.data.profile.ID_card);
-                    setBirthdate(response.data.date_of_birth);
-                    setEmail(response.data.email);
-                });
+                    .then((response) => {
+                        setData(response.data);
+                        setEditableName(response.data.username);
+                        setEditablePhone(response.data.phone_number);
+                        setEditableProfilePictureUrl(response.data.profile.profile_picture);
+                        setEditableIdPictureUrl(response.data.profile.ID_card);
+                        setBirthdate(response.data.date_of_birth);
+                        setEmail(response.data.email);
+                    });
                 // setData(response.data);
                 setLoading(false);
             } catch (error) {
@@ -171,9 +173,9 @@ const PersonalInfo = ({ id }) => {
     };
 
     const handleSaveChanges = async () => {
-        id=1;
+        id = 1;
         try {
-            id=1;
+            id = 1;
             const response = await axios.patch(`${ROOT_URL}/accounts/account/${id}/`, {
                 name: editableName,
                 phone: editablePhone,
@@ -223,7 +225,7 @@ const PersonalInfo = ({ id }) => {
 
                                 <StyledIconButton aria-label="edit" >
                                     {
-                                        editMode ? <DoneOutlineIcon onClick={handleSaveChanges}/> : <EditIcon onClick={() => { setEditMode(true) }}/>
+                                        editMode ? <DoneOutlineIcon onClick={handleSaveChanges} /> : <EditIcon onClick={() => { setEditMode(true) }} />
                                     }
                                 </StyledIconButton>
                             </div>
@@ -321,7 +323,7 @@ const PersonalInfo = ({ id }) => {
                     >
                         Save Changes
                     </Button> */}
-                    <PersonalInfoTabs email={email} phoneNumber={editablePhone} birthdate={birthdate} editMode={editMode}  handlePhoneChange={handlePhoneChange}/>
+                    <PersonalInfoTabs email={email} phoneNumber={editablePhone} birthdate={birthdate} editMode={editMode} handlePhoneChange={handlePhoneChange} />
                 </InfoCardContent>
             </InfoCard>
             {/* <FreeTimeCard /> */}
