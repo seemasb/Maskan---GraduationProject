@@ -11,12 +11,10 @@ import {
   Checkbox,
   FormControlLabel,
   FormGroup,
-  Box,
   Button,
   Switch,
   CircularProgress,
-  Slider,
-  Typography,
+  Slider
 } from "@mui/material";
 import { styled } from '@mui/material/styles';
 import Card from "../Card/Card";
@@ -41,13 +39,11 @@ const StyledResetFilters = styled(Button)({
   padding: 5
 })
 
-const StyledTextField = styled(TextField)({
-  margin: '0 8px',
-})
+
 
 const cities = ['New York', 'Los Angeles', 'Philadelphia', 'Phoenix', 'San Antonio', 'Houston'];
 const statuses = ["Rent", "Sell"];
-const types = ["Home", "Apartment"];
+// const types = ["Home", "Apartment"];
 
 export default function Filteration({setHomesCoordinates}) {
   const location = useLocation();
@@ -137,13 +133,15 @@ export default function Filteration({setHomesCoordinates}) {
           }
         });
         console.log(city);
-        if(response.status == 204){
+        if(response.status === 204){
           setDataFlag(false);
           setIsLoading(false);
         }
-        else if(response.status ==200){
+        else if(response.status ===200){
+          setDataFlag(true);
           setIsLoading(false);
           setCardsResponse(response.data);
+
 
         }
         const newDataList = response.data.map(item => {
@@ -161,9 +159,6 @@ export default function Filteration({setHomesCoordinates}) {
       }
     }
     Search();
-    setIsLoading(false);
-
-    console.log(featuresFinalVersion)
   }, [featuresFinalVersion])
 
   // useEffect(() => {
