@@ -3,7 +3,7 @@ import styled from "styled-components";
 import {
     Avatar,
     Button,
-    Card,
+    Card as muiCard,
     CardContent,
     TextField,
     IconButton
@@ -14,7 +14,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import DoneOutlineIcon from '@mui/icons-material/DoneOutline';
 import ScheduleCreation from './ScheduleCreation'
 import PersonalInfoTabs from "./PersonalInfoTabs";
-import {Card as propertyCard} from "../Card/Card";
+import Card from "../Card/Card";
 import axios from "axios";
 import ROOT_URL from "../../config";
 import { useEffect } from "react";
@@ -35,7 +35,7 @@ const Wrapper = styled.div`
   align-items: flex-start;
 //   flex-direction: column;
   width: 100%;
-//   margin: auto;
+ margin-bottom: 30px;
 
 `;
 
@@ -50,7 +50,7 @@ const Name = styled.span`
     align-self: center;
 `
 
-const InfoCard = styled(Card)`
+const InfoCard = styled(muiCard)`
 //   margin-top: 16px;
 //   padding: 25px;
   width: 50%;
@@ -164,12 +164,11 @@ const PersonalInfo = ({ id }) => {
               } : header = {};
               const response = await axios.get(`${ROOT_URL}/properties/visited_home_list/`, { headers: header });
               setBrowseData(response.data);
-              console.log(response.data)
             } catch (error) {
               console.log(error);
             }
-        };
-        fetchBrowseData();
+          };
+          fetchBrowseData();
         fetchData();
     }, [id]);
 
@@ -354,7 +353,7 @@ const PersonalInfo = ({ id }) => {
                     infinite
                     itemWidth={280}
                 >
-                {browseData.map((item) => (<propertyCard key={item.id} data={item} />))}
+                    {browseData.map((item) => (<Card key={item.id} data={item} />))}
                   </Carousel>
                 )
                 :

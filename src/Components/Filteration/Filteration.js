@@ -68,10 +68,10 @@ export default function Filteration({setHomesCoordinates}) {
     Accessable: false,
   });
   const [showFeatures, setShowFeatures] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [featuresFinalVersion, setFeaturesFinalVersion] = useState([]);
   const [cardsResponse, setCardsResponse] = useState(null);
-  const [dataFlag, setDataFlag] = useState(false);
+  const [dataFlag, setDataFlag] = useState(true);
   
 
   const handleSubmit = (event) => {
@@ -122,6 +122,7 @@ export default function Filteration({setHomesCoordinates}) {
 
     const Search = async () => {
       try {
+        setIsLoading(true);
         const response = await axios.get(`${ROOT_URL}/properties/houses/`, {
           params: {
             city: city,
@@ -136,7 +137,15 @@ export default function Filteration({setHomesCoordinates}) {
           }
         });
         console.log(city);
-        setCardsResponse(response.data);
+        if(response.status == 204){
+          setDataFlag(false);
+          setIsLoading(false);
+        }
+        else if(response.status ==200){
+          setIsLoading(false);
+          setCardsResponse(response.data);
+
+        }
         const newDataList = response.data.map(item => {
           // console.log('item::' , item)
           const { lat, lng } = item.location.data;
@@ -157,16 +166,13 @@ export default function Filteration({setHomesCoordinates}) {
     console.log(featuresFinalVersion)
   }, [featuresFinalVersion])
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    console.log('im in use effect: ', cardsResponse)
-    // if([]){
-    //   console.log("trueeeeeeeeeee")
-    // }
-    if (cardsResponse && cardsResponse.length == 0) setDataFlag(true);
-    else setDataFlag(false);
+  //   console.log('im in use effect: ', cardsResponse)
+  //   if (cardsResponse && cardsResponse.length == 0) setDataFlag(true);
+  //   else setDataFlag(false);
 
-  }, [cardsResponse])
+  // }, [cardsResponse])
   const handleToggleFeatures = () => {
     setShowFeatures(!showFeatures);
   };
@@ -476,7 +482,20 @@ export default function Filteration({setHomesCoordinates}) {
 
       <div className="filterationHomeCards">
         <div className="FilteredCards">
-          {cardsResponse != null && cardsResponse.length ?
+          {dataFlag?
+          (
+            cardsResponse != null && !isLoading?
+            cardsResponse.map((element) =>
+              <Card data={element} key={element.id} />
+            )
+            : <Loading />
+          )
+          :
+          <div>No data found</div>
+          }
+
+
+          {/* {cardsResponse != null && cardsResponse.length ?
             cardsResponse.map((element) =>
               <Card data={element} key={element.id} />
             )
@@ -484,7 +503,7 @@ export default function Filteration({setHomesCoordinates}) {
             // <Loading />
             dataFlag ? <div>No data found</div> : <Loading />
 
-          }
+          } */}
         </div>
       </div>
     </div>
