@@ -6,20 +6,15 @@ import {
     Card,
     CardContent,
     TextField,
-    InputAdornment,
     IconButton
 } from "@material-ui/core";
-import PhoneIcon from '@material-ui/icons/Phone';
-import EmailIcon from '@material-ui/icons/Email';
-import DateRangeIcon from '@material-ui/icons/DateRange';
+import Carousel from '@brainhubeu/react-carousel';
 import { makeStyles } from "@material-ui/core/styles";
 import EditIcon from '@material-ui/icons/Edit';
 import DoneOutlineIcon from '@mui/icons-material/DoneOutline';
-import FreeTimeCard from "./FreeTimeCard";
-import Grid from '@mui/material/Grid';
-// import ScheduleCreation from "./ScheduleCreation";
 import ScheduleCreation from './ScheduleCreation'
 import PersonalInfoTabs from "./PersonalInfoTabs";
+import {Card as propertyCard} from "../Card/Card";
 import axios from "axios";
 import ROOT_URL from "../../config";
 import { useEffect } from "react";
@@ -31,7 +26,6 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: "#45729d",
         color: "#ffffff",
         marginTop: theme.spacing(2),
-        // marginRight: theme.spacing(1),
     },
 }));
 
@@ -74,7 +68,16 @@ const InfoTextField = styled(TextField)`
   margin-top: 16px;
   width: 100%;
 `;
-
+const StyledNoResult = styled('div')`
+    width: inherit;
+    max-height: 100%;
+    min-height: 200px;
+    display: flex;
+    font-size: 40px;
+    align-items: center;
+    justify-content: center;
+    color: darkgray;
+`
 // const PersonalInfo = ({ profilePictureUrl, idPictureUrl, name, email, phoneNumber, birthdate }) => {
 //     const classes = useStyles();
 
@@ -129,13 +132,12 @@ const PersonalInfo = ({ id }) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [data, setData] = useState(null);
+    const [browseData, setBrowseData] = useState([]);
 
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // id =2;
-                let ROOT_URL = "http://18.198.203.6:8000";
                 const response = await axios.get(`${ROOT_URL}/accounts/account/${id}/`)
                     .then((response) => {
                         setData(response.data);
@@ -153,6 +155,21 @@ const PersonalInfo = ({ id }) => {
                 setLoading(false);
             }
         };
+        const fetchBrowseData = async () => {
+            try {
+              const userToken = localStorage.getItem('Token')
+              let header;
+              userToken ? header = {
+                'Authorization': 'Token ' + userToken
+              } : header = {};
+              const response = await axios.get(`${ROOT_URL}/properties/visited_home_list/`, { headers: header });
+              setBrowseData(response.data);
+              console.log(response.data)
+            } catch (error) {
+              console.log(error);
+            }
+        };
+        fetchBrowseData();
         fetchData();
     }, [id]);
 
@@ -173,9 +190,7 @@ const PersonalInfo = ({ id }) => {
     };
 
     const handleSaveChanges = async () => {
-        id = 1;
         try {
-            id = 1;
             const response = await axios.patch(`${ROOT_URL}/accounts/account/${id}/`, {
                 name: editableName,
                 phone: editablePhone,
@@ -201,6 +216,7 @@ const PersonalInfo = ({ id }) => {
     // const { name, email, phoneNumber, profilePictureUrl, idPictureUrl } = data;
 
     return (
+        <>
         <Wrapper>
             <InfoCard className={classes.root}>
                 <InfoCardContent>
@@ -326,9 +342,29 @@ const PersonalInfo = ({ id }) => {
                     <PersonalInfoTabs email={email} phoneNumber={editablePhone} birthdate={birthdate} editMode={editMode} handlePhoneChange={handlePhoneChange} />
                 </InfoCardContent>
             </InfoCard>
-            {/* <FreeTimeCard /> */}
             <ScheduleCreation />
         </Wrapper>
+        <Wrapper>
+        {
+            (browseData.length > 0 ?
+                (
+                <Carousel
+                    plugins={['arrows']}
+                    slidesPerScroll={1}
+                    infinite
+                    itemWidth={280}
+                >
+                {browseData.map((item) => (<propertyCard key={item.id} data={item} />))}
+                  </Carousel>
+                )
+                :
+                (
+                  <StyledNoResult>No property browse history available</StyledNoResult>
+                )
+            )
+        }
+        </Wrapper>
+        </>
     )
 }
 
