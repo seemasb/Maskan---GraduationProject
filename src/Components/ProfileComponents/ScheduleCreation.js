@@ -148,41 +148,40 @@ const ScheduleCreation = () => {
     };
 
     const handleCreateSchedule = () => {
-  
-            console.log('days', days)
-            let readyScheduleTemp = [];
-            // TODO: Implement create schedule functionality
-            days.map((day) => {
-                day.times.map((timeSlot) => {
-                    readyScheduleTemp.push({
-                        day: day.label,
-                        start: parseInt(timeSlot.start.split(":")[0]),
-                        end: parseInt(timeSlot.end.split(":")[0])
-                    })
+
+        console.log('days', days)
+        let readyScheduleTemp = [];
+        // TODO: Implement create schedule functionality
+        days.map((day) => {
+            day.times.map((timeSlot) => {
+                readyScheduleTemp.push({
+                    day: day.label,
+                    start: parseInt(timeSlot.start.split(":")[0]),
+                    end: parseInt(timeSlot.end.split(":")[0])
                 })
             })
+        })
 
 
-            const userToken = localStorage.getItem('Token')
-            let header;
-            userToken ? header = {
-                'Authorization': 'Token ' + userToken
-            } : header = {}
+        const userToken = localStorage.getItem('Token')
+        let header;
+        userToken ? header = {
+            'Authorization': 'Token ' + userToken
+        } : header = {}
 
-            axios.post(`${ROOT_URL}/reservations/slots/`, {
-                list: readyScheduleTemp
-            }, {
-                headers: header
-            }
-            )
-                .then(function (response) {
-                    console.log(response);
+        axios.post(`${ROOT_URL}/reservations/slots/`, {
+            list: readyScheduleTemp
+        }, {
+            headers: header
+        }
+        ).then(function (response) {
+                console.log(response);
 
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-        
+        })
+        .catch(function (error) {
+                console.log(error);
+        });
+
 
 
 
