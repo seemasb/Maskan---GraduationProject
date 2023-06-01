@@ -80,7 +80,7 @@ const PropertyDetails = ({ propertyDetails }) => {
     <PropertyDetailsContainer>
       <DetailsContainer>
         <div>
-          <Price>{propertyDetails.price}{propertyDetails.state==="S"?' $':'$ / Year'}</Price>
+          <Price>{propertyDetails.price.toLocaleString('en-US')}{propertyDetails.state==="S"?' $':'$ / Year'}</Price>
           <EstimatedPrice>Maskan Estimated: <span style={{color: '#45729d'}}>$609500</span></EstimatedPrice>
           <StyledLocation>
             <LocationOnIcon style={{ color: '#9e9e9e' }} />
