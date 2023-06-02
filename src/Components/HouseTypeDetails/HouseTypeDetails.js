@@ -1,5 +1,5 @@
 import './HouseTypeDetails.css'
-import { useState, forwardRef, useRef, useEffect } from 'react';
+import { useState, forwardRef } from 'react';
 import { TextField, Checkbox, FormControlLabel, FormGroup, Button, Grid } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
@@ -13,7 +13,6 @@ import { TbToolsKitchen2 } from 'react-icons/tb';
 import Divider from '@mui/material/Divider';
 import { FaDumbbell, FaTree, FaSwimmingPool } from 'react-icons/fa';
 import { MdElevator, MdBalcony, MdGarage } from 'react-icons/md';
-import { AiFillInfoCircle } from 'react-icons/ai'
 import HelpOutlinedIcon from '@mui/icons-material/HelpOutlined';
 import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
 import BuildCircleRoundedIcon from '@mui/icons-material/BuildCircleRounded';
@@ -52,11 +51,6 @@ const styles = {
     }
 };
 
-const currencyOptions = [
-    { value: 'USD', label: '$' },
-    { value: 'EUR', label: '€' },
-    { value: 'GBP', label: '£' },
-];
 
 const statusOptions = [
     { value: 'sell', label: 'Sell' },
@@ -121,8 +115,8 @@ export default function HouseTypeDetails({ setHomeAddedId }) {
     ////////////////Geocoding////////////////////////////
     const [address, setAddress] = useState('');
     const [location, setLocation] = useState({
-        lat: 1,
-        lng: 1,
+        lat: 39,
+        lng: -97,
     });
 
 
@@ -648,7 +642,7 @@ export default function HouseTypeDetails({ setHomeAddedId }) {
                         <GoogleMap
                             mapContainerStyle={{ height: '400px', width: '100%' }}
                             center={location}
-                            zoom={16}
+                            zoom={4}
                             onClick={(e) => handleLocationChange(e)}
                         >
                             {location && <Marker position={location} />}

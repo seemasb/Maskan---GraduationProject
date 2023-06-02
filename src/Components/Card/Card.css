@@ -18,7 +18,7 @@
     border: 1px solid lightgray;
     box-shadow: 3px 4px 8px lightgray;
     max-width: 270px;
-    height: fit-content;
+    height: 100%;
 }
 
 .Card:hover{
@@ -57,6 +57,7 @@ background-color: white;
     border-radius: 0 0 13px 13px;
     padding: 11px;
     row-gap: 15px;
+    height: 100%;
 }
 
 .featuresSection {
