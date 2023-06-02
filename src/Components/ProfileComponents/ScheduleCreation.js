@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , forwardRef } from 'react';
 import styled from 'styled-components';
 import {
     FormControlLabel,
@@ -14,6 +14,12 @@ import AddIcon from '@material-ui/icons/Add';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import axios from 'axios';
 import ROOT_URL from '../../config';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+
+const Alert = forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const ScheduleCreationWrapper = styled(Card)`
   display: flex;
@@ -83,6 +89,7 @@ border-radius: 12px !important;
 `;
 
 const ScheduleCreation = () => {
+    const [open, setOpen] = useState(false);
     const [days, setDays] = useState([
         {
             label: 'Monday', value: false, times: []
@@ -148,42 +155,66 @@ const ScheduleCreation = () => {
     };
 
     const handleCreateSchedule = () => {
-  
-            console.log('days', days)
-            let readyScheduleTemp = [];
-            // TODO: Implement create schedule functionality
-            days.map((day) => {
-                day.times.map((timeSlot) => {
-                    readyScheduleTemp.push({
-                        day: day.label,
-                        start: parseInt(timeSlot.start.split(":")[0]),
-                        end: parseInt(timeSlot.end.split(":")[0])
-                    })
+
+        console.log('days', days)
+        let readyScheduleTemp = [];
+        // TODO: Implement create schedule functionality
+        days.map((day) => {
+            day.times.map((timeSlot) => {
+                readyScheduleTemp.push({
+                    day: day.label,
+                    start: parseInt(timeSlot.start.split(":")[0]),
+                    end: parseInt(timeSlot.end.split(":")[0])
                 })
             })
+        })
 
 
-            const userToken = localStorage.getItem('Token')
-            let header;
-            userToken ? header = {
-                'Authorization': 'Token ' + userToken
-            } : header = {}
+        const userToken = localStorage.getItem('Token')
+        let header;
+        userToken ? header = {
+            'Authorization': 'Token ' + userToken
+        } : header = {}
 
-            axios.post(`${ROOT_URL}/reservations/slots/`, {
-                list: readyScheduleTemp
-            }, {
-                headers: header
-            }
-            )
-                .then(function (response) {
-                    console.log(response);
+        axios.post(`${ROOT_URL}/reservations/slots/`, {
+            list: readyScheduleTemp
+        }, {
+            headers: header
+        }
+        )
+            .then(function (response) {
+                console.log(response);
 
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-        
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
 
+        setOpen(true)
+
+        setDays([
+            {
+                label: 'Monday', value: false, times: []
+            },
+            {
+                label: 'Tuesday', value: false, times: []
+            },
+            {
+                label: 'Wednesday', value: false, times: []
+            },
+            {
+                label: 'Thursday', value: false, times: []
+            },
+            {
+                label: 'Friday', value: false, times: []
+            },
+            {
+                label: 'Saturday', value: false, times: []
+            },
+            {
+                label: 'Sunday', value: false, times: []
+            },
+        ])
 
 
     };
@@ -262,6 +293,12 @@ const ScheduleCreation = () => {
             >
                 Update Schedule
             </UpdateSchedule>
+
+            <Snackbar open={open} autoHideDuration={3000}>
+                <Alert severity="success" sx={{ width: '100%' }}>
+                    Schedule Updated Successfully!
+                </Alert>
+            </Snackbar>
         </ScheduleCreationWrapper>
     )
 }

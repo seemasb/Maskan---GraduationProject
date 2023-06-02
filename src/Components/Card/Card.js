@@ -44,7 +44,7 @@ export default function Card({ data }) {
                             <span>{data.location.address} , {data.location.city} </span>
                         </div>
 
-                        <span className='CardTitle'>{data.price}$</span>
+                        <span className='CardTitle'>{data.price.toLocaleString()}$</span>
 
                     </div>
 
