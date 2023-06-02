@@ -201,7 +201,7 @@ export default function Filteration({setHomesCoordinates}) {
   const handleClearFilters = () => {
     setCity("");
     setStatus("")
-    setPriceRange([1200, 1000000]);
+    setPriceRange([1200, 10000000]);
     setAreaRange([300, 10000]);
     setFeatures({
       swimmingPool: false,
