@@ -81,7 +81,7 @@ const PropertyDetails = ({ propertyDetails }) => {
       <DetailsContainer>
         <div>
           <Price>{propertyDetails.price.toLocaleString('en-US')}{propertyDetails.state==="S"?' $':'$ / Year'}</Price>
-          <EstimatedPrice>Maskan Estimated: <span style={{color: '#45729d'}}>$609500</span></EstimatedPrice>
+          <EstimatedPrice>Maskan Estimated: <span style={{color: '#45729d'}}>{propertyDetails.prediction && propertyDetails.state==="S"?propertyDetails.prediction.toLocaleString('en-US'):'---'} $</span></EstimatedPrice>
           <StyledLocation>
             <LocationOnIcon style={{ color: '#9e9e9e' }} />
             {propertyDetails.location.address}

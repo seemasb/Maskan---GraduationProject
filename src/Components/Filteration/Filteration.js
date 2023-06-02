@@ -52,7 +52,7 @@ export default function Filteration({setHomesCoordinates}) {
   const [status, setStatus] = useState("");
   const [type, setType] = useState("");
   const [areaRange, setAreaRange] = useState([300, 10000]);
-  const [priceRange, setPriceRange] = useState([1200, 1000000]);
+  const [priceRange, setPriceRange] = useState([1200, 10000000]);
   const [features, setFeatures] = useState({
     swimmingPool: false,
     garden: false,
@@ -301,7 +301,7 @@ export default function Filteration({setHomesCoordinates}) {
                 valueLabelDisplay="auto"
                 aria-labelledby="price-slider"
                 min={1200}
-                max={1000000}
+                max={10000000}
                 size="small"
               />
             </div>

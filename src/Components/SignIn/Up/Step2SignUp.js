@@ -57,7 +57,7 @@ export default function Step2SignUp() {
     e.preventDefault();
     console.log(profileFormData)
 
-    axios.patch(`${ROOT_URL}/accounts/users/`, profileFormData ,{
+    axios.patch(`${ROOT_URL}/accounts/profile/403/`, profileFormData ,{
       headers:{
         'Content-Type' : 'multipart/form-data'
       }
