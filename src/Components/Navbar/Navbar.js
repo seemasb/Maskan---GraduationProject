@@ -62,7 +62,7 @@ export default function Navbar() {
               activeStyle={{ color: '#45729d' }}
 
             >
-              Sell Properity
+              Sell Property
             </NavLink>
           </li>
           <li>
