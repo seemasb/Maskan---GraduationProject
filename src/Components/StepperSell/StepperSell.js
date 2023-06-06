@@ -114,9 +114,9 @@ export default function StepperSell() {
             case 0:
                 return <StepperSellStep1 onChange={handlePropertyTypeChange}/>
             case 1:
-                return <HouseTypeDetails setHomeAddedId={setHomeAddedId}/>
+                return <HouseTypeDetails setHomeAddedId={setHomeAddedId} handleNext={handleNext}/>
             case 2:
-                return <StepperSellStep3 homeAddedId={homeAddedId}/>
+                return <StepperSellStep3 homeAddedId={homeAddedId} handleNext={handleNext}/>
 
             default: return <Success/>
         }

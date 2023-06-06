@@ -89,7 +89,7 @@ const StyledButtonGeo = styled(Button)({
 });
 
 
-export default function HouseTypeDetails({ setHomeAddedId }) {
+export default function HouseTypeDetails({ setHomeAddedId , handleNext }) {
     const [area, setArea] = useState('');
     const [numFloors, setNumFloors] = useState('');
     const [city, setCity] = useState('');
@@ -243,6 +243,7 @@ export default function HouseTypeDetails({ setHomeAddedId }) {
         console.log('in sending');
         console.log(PropertyData);
         setOpen(true);
+        handleNext()
 
     };
 

@@ -55,7 +55,7 @@ background-color: #45729d !important;
     font-size: 13px !important;
 `
 
-export default function StepperSellStep3({ homeAddedId }) {
+export default function StepperSellStep3({ homeAddedId  , handleNext}) {
 
     const [isLoading, setIsLoading] = useState(false);
     const classes = useStyles();
@@ -110,6 +110,7 @@ export default function StepperSellStep3({ homeAddedId }) {
         formData.append('record', Sellfile)
         console.log('total form data')
         console.log(formData)
+        handleNext()
         try {
             const response = await axios.patch(`${ROOT_URL}/properties/upload/${homeAddedId}/`, formData, {
                 headers: {
@@ -117,6 +118,7 @@ export default function StepperSellStep3({ homeAddedId }) {
                 },
             });
             console.log(response);
+            
         } catch (error) {
             console.log(error);
         }
