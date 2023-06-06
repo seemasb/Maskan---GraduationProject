@@ -60,7 +60,6 @@ export default function Filteration({setHomesCoordinates}) {
   const [features, setFeatures] = useState({
     swimmingPool: false,
     garden: false,
-    balcony: false,
     garage: false,
     Elevator: false,
     Gym: false,
@@ -205,7 +204,6 @@ export default function Filteration({setHomesCoordinates}) {
     setFeatures({
       swimmingPool: false,
       garden: false,
-      balcony: false,
       garage: false,
       Elevator: false,
       Gym: false,
@@ -359,22 +357,6 @@ export default function Filteration({setHomesCoordinates}) {
                       />
                     }
                     label="Garden"
-                    sx={{
-                      color: '#94a3b5',
-                      '& .MuiFormControlLabel-label': {
-                        fontSize: '0.9rem', // set the font size to 0.9rem
-                      },
-                    }}
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={features.balcony}
-                        onChange={handleFeatureChange}
-                        name="balcony"
-                      />
-                    }
-                    label="Balcony"
                     sx={{
                       color: '#94a3b5',
                       '& .MuiFormControlLabel-label': {
