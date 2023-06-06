@@ -51,7 +51,7 @@ const SidebarContent = styled.div`
     border-radius: 38px;
     margin: 30px;
     padding: 50px 50px 85px 50px;
-    
+    height: 74vh;
     // margin-top: 27px;
     // margin-bottom: 27px;
 `

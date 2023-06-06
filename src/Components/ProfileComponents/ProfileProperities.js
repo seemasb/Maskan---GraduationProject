@@ -51,14 +51,9 @@ transition: border-color 0.2s ease-in-out;
     color: white !important;
 }
 `
-const StyledNoResult = styled('div')`
-    width: inherit;
-    max-height: 100%;
-    min-height: 200px;
-    display: flex;
-    font-size: 40px;
-    align-items: center;
-    justify-content: center;
+
+const StyledNoResult = styled('span')`
+    font-size: 22px;
     color: darkgray;
 `
 
@@ -136,54 +131,43 @@ export default function ProfileProperities() {
         </StyledButton>
       </ButtonsDiv>
       <div>
-        {selectedButton === "favorites" &&(data.length > 0 ?
-            (
-              <Carousel
-                plugins={['arrows']}
-                slidesPerScroll={1}
-                infinite
-                itemWidth={280}
-              >
-                {data.map((item) => (<Card key={item.id} data={item} />))}
-              </Carousel>
-            )
-            :
-            (
-              <StyledNoResult>No Posted properties</StyledNoResult>
-            )
-        )}
+        {selectedButton === "favorites" &&
+          (
+            // <div style={{ display: "flex", columnGap: "40px" }}>
+            <Carousel
+              plugins={['arrows']}
+              slidesPerScroll={1}
+              infinite
+              itemWidth={280}
+            >
+              {data.length > 0 ?
+                (
+                  data.map((item) => (<Card key={item.id} data={item} />))) :
+                (
+                  <StyledNoResult>No Posted properties</StyledNoResult>
+                )}
+            </Carousel>
+          )}
 
-        {selectedButton === "pending" && (data.length > 0 ?
-            (
-              <Carousel
-                plugins={['arrows']}
-                slidesPerScroll={1}
-                infinite
-                itemWidth={280}
-              >
-                {data.map((item) => (<Card key={item.id} data={item} />))}
-              </Carousel>
-            )
-            :
-            (
-              <StyledNoResult>No Posted properties</StyledNoResult>
-            )
+        {selectedButton === "pending" && (
+          <div style={{ display: "flex", columnGap: "40px" }}>
+            {data.length > 0 ?
+              (
+                data.map((item) => (<Card key={item.id} data={item} />))) :
+              (
+                <StyledNoResult>No Posted properties</StyledNoResult>
+              )}
+          </div>
         )}
-        {selectedButton === "posted" && (data.length > 0 ?
-            (
-              <Carousel
-                plugins={['arrows']}
-                slidesPerScroll={1}
-                infinite
-                itemWidth={280}
-              >
-                {data.map((item) => (<Card key={item.id} data={item} />))}
-              </Carousel>
-            )
-            :
-            (
-              <StyledNoResult>No Posted properties</StyledNoResult>
-            )
+        {selectedButton === "posted" && (
+          <div style={{ display: "flex", columnGap: "40px" }}>
+            {data.length > 0 ?
+              (
+                data.map((item) => (<Card key={item.id} data={item} />))) :
+              (
+                <StyledNoResult>No Posted properties</StyledNoResult>
+              )}
+          </div>
         )}
       </div>
     </ProfileProperitiesContainer>

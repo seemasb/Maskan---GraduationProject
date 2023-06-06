@@ -146,7 +146,7 @@ export default function StepperSellStep3({ homeAddedId }) {
                 <DropzoneArea
                     acceptedFiles={["image/*"]}
                     dropzoneClass={classes.dropzone}
-                    filesLimit={25}
+                    filesLimit={10}
                     onChange={handleDropzoneChange}
                 />
             </Grid>

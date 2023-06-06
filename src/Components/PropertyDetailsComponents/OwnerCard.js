@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
@@ -6,8 +6,7 @@ import ReportIcon from '@material-ui/icons/Report';
 import MessageIcon from '@material-ui/icons/Message';
 import styled from 'styled-components';
 import { grey } from '@material-ui/core/colors';
-import axios from 'axios';
-import ROOT_URL from '../../config';
+
 const OwnerContainer = styled.div`
   background-color: white;
 //   box-shadow: 0px 0px 10px ${grey[400]};
@@ -122,32 +121,13 @@ const StyledIcon = styled(MessageIcon)`
   font-size: 32px;
 `;
 
-const OwnerCard = ({ avatarUrl, name, ownerID }) => {
-  const [ownerData, setOwnerData] = useState(null)
-  useEffect(() => {
-    const getOwnerData = async () => {
-      try {
-        const fetchData = await axios.get(`${ROOT_URL}/accounts/account/${ownerID}/`)
-        setOwnerData(fetchData.data)
-        console.log(fetchData.data.profile.profile_picture)
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    getOwnerData()
-  }, [])
-
+const OwnerCard = ({ avatarUrl, name, bio }) => {
     return (
         <OwnerContainer>
             <Section1>
-              { ownerData && ownerData.profile.profile_picturse?
-                <AvatarImage alt={name} src={ownerData.profile.profile_picture}/>
-                :<AvatarImage alt={name} src={avatarUrl} />
-              }
+                <AvatarImage alt={name} src={avatarUrl} />
                 <OwnerInfo>
-                  {(ownerData !== null)?
-                    <OwnerName>{ownerData.username}</OwnerName>
-                    :<OwnerName>{name}</OwnerName>}
+                    <OwnerName>{name}</OwnerName>
                     <OwnerSpan>Owner</OwnerSpan>
                     {/* <OwnerBio>{bio}</OwnerBio> */}
                 </OwnerInfo>
