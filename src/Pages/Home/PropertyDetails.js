@@ -10,7 +10,10 @@ import ROOT_URL from "../../config";
 import { useEffect, useState } from "react";
 import Loading from "../../Components/Loading";
 import { useParams } from "react-router-dom";
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
 import Panorama from "../../Components/Panorama";
+import ViewInArIcon from '@mui/icons-material/ViewInAr';
 import Carousel from '@brainhubeu/react-carousel';
 import '@brainhubeu/react-carousel/lib/style.css';
 
@@ -77,25 +80,30 @@ const StyledDiv = styled.div`
 
 export default function PropertyDetails() {
   let { propertyId } = useParams();
+  // console.log('in property details' , propertyId)
   const [propertyDetails, setPropertyDetails] = useState();
-  
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   useEffect(() => {
     const getPropertyDetails = async () => {
       try {
-        const userToken = localStorage.getItem('Token')
-        let header;
-        userToken ? header = {
-          'Authorization': 'Token ' + userToken
-        } : header = {};
-        const fetchData = await axios.get(`${ROOT_URL}/properties/home/${propertyId}/`, { headers: header })
+        const fetchData = await axios.get(`${ROOT_URL}/properties/home/${propertyId}/`)
         setPropertyDetails(fetchData.data)
       } catch (error) {
         console.log(error)
       }
     }
     getPropertyDetails()
-  },[])
- 
+  }, [])
+  const imageUrl = 'https://res.insta360.com/static/49fcf323b6d04cb8f6a1a81fa6ec0436/3.jpg';
+
   const images360 = [
     'https://i0.wp.com/www.samrohn.com/wp-content/uploads/50-RSB-360-Virtual-Tour-0001.jpg?fit=600%2C300',
     'https://res.insta360.com/static/49fcf323b6d04cb8f6a1a81fa6ec0436/3.jpg',
@@ -107,7 +115,7 @@ export default function PropertyDetails() {
       <Grid container spacing={3}>
         <Grid item sm={12}>
           <BackButtonWrapper>
-            <BackButtonIcon onClick={() => { window.location.href = '/Properities' }} >
+            <BackButtonIcon onClick={() => { window.location.href = '/Properties' }} >
               <ArrowBack />
             </BackButtonIcon>
             <BackButtonText variant="body1" cursor='alise'>Back to Search</BackButtonText>

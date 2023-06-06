@@ -1,9 +1,17 @@
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
+import Divider from '@mui/material/Divider';
+import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 import { useState } from 'react';
 import { Link } from "react-router-dom";
+import {
+    IconButton,
+} from '@mui/material';
+import { Favorite, FavoriteBorder, Home } from '@mui/icons-material';
+import Home1 from '../../Images/pool_1.jpg'
 import './Card.css'
 import ShowerOutlinedIcon from '@mui/icons-material/ShowerOutlined';
 import BedOutlinedIcon from '@mui/icons-material/BedOutlined';
+import { MdOutlineBed } from 'react-icons/md'
 import noImage from '../../Images/no_image.jpg'
 
 export default function Card({ data }) {
@@ -36,7 +44,7 @@ export default function Card({ data }) {
                             <span>{data.location.address} , {data.location.city} </span>
                         </div>
 
-                        <span className='CardTitle'>{data.price.toLocaleString('en-US')} $</span>
+                        <span className='CardTitle'>{data.price}$</span>
 
                     </div>
 

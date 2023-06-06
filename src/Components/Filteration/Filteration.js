@@ -11,10 +11,12 @@ import {
   Checkbox,
   FormControlLabel,
   FormGroup,
+  Box,
   Button,
   Switch,
   CircularProgress,
-  Slider
+  Slider,
+  Typography,
 } from "@mui/material";
 import { styled } from '@mui/material/styles';
 import Card from "../Card/Card";
@@ -39,11 +41,13 @@ const StyledResetFilters = styled(Button)({
   padding: 5
 })
 
-
+const StyledTextField = styled(TextField)({
+  margin: '0 8px',
+})
 
 const cities = ['New York', 'Los Angeles', 'Philadelphia', 'Phoenix', 'San Antonio', 'Houston'];
 const statuses = ["Rent", "Sell"];
-// const types = ["Home", "Apartment"];
+const types = ["Home", "Apartment"];
 
 export default function Filteration({setHomesCoordinates}) {
   const location = useLocation();
@@ -52,7 +56,7 @@ export default function Filteration({setHomesCoordinates}) {
   const [status, setStatus] = useState("");
   const [type, setType] = useState("");
   const [areaRange, setAreaRange] = useState([300, 10000]);
-  const [priceRange, setPriceRange] = useState([1200, 10000000]);
+  const [priceRange, setPriceRange] = useState([1200, 1000000]);
   const [features, setFeatures] = useState({
     swimmingPool: false,
     garden: false,
@@ -63,10 +67,10 @@ export default function Filteration({setHomesCoordinates}) {
     Accessable: false,
   });
   const [showFeatures, setShowFeatures] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [featuresFinalVersion, setFeaturesFinalVersion] = useState([]);
   const [cardsResponse, setCardsResponse] = useState(null);
-  const [dataFlag, setDataFlag] = useState(true);
+  const [dataFlag, setDataFlag] = useState(false);
   
 
   const handleSubmit = (event) => {
@@ -117,7 +121,6 @@ export default function Filteration({setHomesCoordinates}) {
 
     const Search = async () => {
       try {
-        setIsLoading(true);
         const response = await axios.get(`${ROOT_URL}/properties/houses/`, {
           params: {
             city: city,
@@ -132,17 +135,7 @@ export default function Filteration({setHomesCoordinates}) {
           }
         });
         console.log(city);
-        if(response.status === 204){
-          setDataFlag(false);
-          setIsLoading(false);
-        }
-        else if(response.status ===200){
-          setDataFlag(true);
-          setIsLoading(false);
-          setCardsResponse(response.data);
-
-
-        }
+        setCardsResponse(response.data);
         const newDataList = response.data.map(item => {
           // console.log('item::' , item)
           const { lat, lng } = item.location.data;
@@ -158,15 +151,21 @@ export default function Filteration({setHomesCoordinates}) {
       }
     }
     Search();
+    setIsLoading(false);
+
+    console.log(featuresFinalVersion)
   }, [featuresFinalVersion])
 
-  // useEffect(() => {
+  useEffect(() => {
 
-  //   console.log('im in use effect: ', cardsResponse)
-  //   if (cardsResponse && cardsResponse.length == 0) setDataFlag(true);
-  //   else setDataFlag(false);
+    console.log('im in use effect: ', cardsResponse)
+    // if([]){
+    //   console.log("trueeeeeeeeeee")
+    // }
+    if (cardsResponse && cardsResponse.length == 0) setDataFlag(true);
+    else setDataFlag(false);
 
-  // }, [cardsResponse])
+  }, [cardsResponse])
   const handleToggleFeatures = () => {
     setShowFeatures(!showFeatures);
   };
@@ -200,7 +199,7 @@ export default function Filteration({setHomesCoordinates}) {
   const handleClearFilters = () => {
     setCity("");
     setStatus("")
-    setPriceRange([1200, 10000000]);
+    setPriceRange([1200, 1000000]);
     setAreaRange([300, 10000]);
     setFeatures({
       swimmingPool: false,
@@ -299,7 +298,7 @@ export default function Filteration({setHomesCoordinates}) {
                 valueLabelDisplay="auto"
                 aria-labelledby="price-slider"
                 min={1200}
-                max={10000000}
+                max={1000000}
                 size="small"
               />
             </div>
@@ -459,20 +458,7 @@ export default function Filteration({setHomesCoordinates}) {
 
       <div className="filterationHomeCards">
         <div className="FilteredCards">
-          {dataFlag?
-          (
-            cardsResponse != null && !isLoading?
-            cardsResponse.map((element) =>
-              <Card data={element} key={element.id} />
-            )
-            : <Loading />
-          )
-          :
-          <div>No data found</div>
-          }
-
-
-          {/* {cardsResponse != null && cardsResponse.length ?
+          {cardsResponse != null && cardsResponse.length ?
             cardsResponse.map((element) =>
               <Card data={element} key={element.id} />
             )
@@ -480,7 +466,7 @@ export default function Filteration({setHomesCoordinates}) {
             // <Loading />
             dataFlag ? <div>No data found</div> : <Loading />
 
-          } */}
+          }
         </div>
       </div>
     </div>
