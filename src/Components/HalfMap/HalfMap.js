@@ -76,7 +76,7 @@ const Map = ({ homesCoordinates }) => {
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
         center={center}
-        zoom={10}
+        zoom={8}
       // onLoad={handleOnLoad}
       // onCenterChanged={handleCenterChanged}
 
